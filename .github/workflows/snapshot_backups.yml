@@ -1,0 +1,23 @@
+name: Snapshot Backups
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # daily at 02:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  snapshot:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run snapshot script
+        run: |
+          pwsh -NoProfile -NoLogo -Command ". .\scripts\lib\ProjectConfig.ps1; $d = $ProjectConfig.Backup.RetentionDays; ./scripts/create_snapshot.ps1 -Root . -OutDir backups -Compress -RetentionDays $d"
+
+      - name: Upload snapshot artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo-snapshot
+          path: backups/snapshot-*.zip

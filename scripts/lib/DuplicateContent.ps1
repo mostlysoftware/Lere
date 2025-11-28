@@ -5,6 +5,36 @@
 .DESCRIPTION
   Provides Get-DuplicateBlocks and Write-DuplicateReport which other scripts
   can call programmatically. Supports excludes and configurable min-lines.
+
+  Note for callers:
+  - Get-DuplicateBlocks returns an array of objects: @{ Hash; Count; Instances = [ { File, Line, Snippet } ] }
+  - Write-DuplicateReport serializes the duplicates to a timestamped JSON file and returns the file path.
+
+  Performance:
+  - Scans all included files and computes sliding windows of size MinLines. Memory usage grows with total scanned lines.
+  - For very large repositories consider increasing MinLines or adding ExcludePaths to limit scope.
+
+.EXAMPLE
+  # Programmatic use from health_check.ps1
+  . $PSScriptRoot\DuplicateContent.ps1
+  $dups = Get-DuplicateBlocks -RootPath $root -IncludePaths @('chat_context') -MinLines 8 -Extensions @('.md','.ps1')
+  $report = Write-DuplicateReport -Duplicates $dups -OutDir (Join-Path $scriptDir 'audit-data') -Prefix 'duplicates'
+
+.PARAMETER RootPath
+  The repository root path to scan.
+
+.PARAMETER IncludePaths
+  Relative subpaths under RootPath to include in the scan (e.g., 'chat_context').
+
+.PARAMETER MinLines
+  Minimum number of lines that form a block to be considered for duplication.
+
+.PARAMETER Extensions
+  File extensions to include during the scan.
+
+.PARAMETER ExcludePaths
+  Relative paths under RootPath to exclude (prefix match).
+
 #>
 
 function Get-DuplicateBlocks {

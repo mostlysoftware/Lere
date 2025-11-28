@@ -1,0 +1,38 @@
+name: Pester tests (Windows)
+
+on:
+  pull_request:
+  push:
+    branches: ['main']
+  workflow_dispatch: {}
+
+jobs:
+  pester-windows:
+    name: Run Pester on Windows
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install PowerShell modules and run Pester
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Write-Host 'Ensure Pester is available (installing to CurrentUser if needed)'
+          try {
+              Import-Module Pester -ErrorAction Stop
+          } catch {
+              Install-Module Pester -Force -Scope CurrentUser -AllowClobber
+              Import-Module Pester -ErrorAction Stop
+          }
+
+          Write-Host 'Running Pester tests...'
+          # Run tests and emit NUnit XML for artifact upload
+          Invoke-Pester -Path tests -OutputFile pester-results.xml -OutputFormat NUnitXml
+          if ($LASTEXITCODE -ne 0) { Write-Error 'Pester reported failures'; exit $LASTEXITCODE }
+
+      - name: Upload Pester results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pester-results
+          path: pester-results.xml

@@ -1,0 +1,1647 @@
+﻿{
+    "Timestamp":  "2025-11-28T07:31:34.5277312-06:00",
+    "Root":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere",
+    "Suggestions":  [
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  6,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\general-chat-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\general-chat-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\general-chat-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\general-chat-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\offloads\\pointer-guidelines.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\general-chat-context.md"
+                                      ],
+                            "Examples":  [
+                                             "# Find reasoning-thread hashes\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\[#([^\\]]+)\\]\u0027 | Select-Object Path,LineNumber,Line\\n# Find changelog anchors\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\[changelog-entry:\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}\\]\u0027 | Select-Object Path,LineNumber,Line\\n# Find session markers\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\(Session \\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}\\)\u0027 | Select-Object Path,LineNumber,Line",
+                                             "# Find reasoning-thread hashes\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\[#([^\\]]+)\\]\u0027 | Select-Object Path,LineNumber,Line\\n# Find changelog anchors\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\[changelog-entry:\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}\\]\u0027 | Select-Object Path,LineNumber,Line\\n# Find session markers\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\(Session \\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}\\)\u0027 | Select-Object Path,LineNumber,Line",
+                                             "# Find reasoning-thread hashes\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\[#([^\\]]+)\\]\u0027 | Select-Object Path,LineNumber,Line\\n# Find changelog anchors\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\[changelog-entry:\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}\\]\u0027 | Select-Object Path,LineNumber,Line\\n# Find session markers\\nGet-ChildItem -Path \"c:\\Users\\user\\Dropbox\\Dev\\Lere\\chat_context\" -Recurse -Include *.md |\\nSelect-String -Pattern \u0027\\(Session \\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}\\)\u0027 | Select-Object Path,LineNumber,Line"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\session-context.md"
+                                      ],
+                            "Examples":  [
+                                             "## (Session YYYY-MM-DD HH:MM)\\n\u003c!-- metadata\\nPriority: high\\nStatus: closed\\nLast-updated: YYYY-MM-DD HH:MM\\nArchived: false\\n--\u003e\\n**Summary:** [1-3 sentence summary of what was done]\\n**Decisions made:** [link using `[#reasoning-thread]` if applicable] \u003c!-- example --\u003e\\n**Changelog entries:** [add `[changelog-entry:YYYY-MM-DD HH:MM]` anchors to `changelog-context.md` and reference here]\\n**Follow-ups / TODOs:** [short actionable items]\\n**Notes:** [any blockers or unexpected findings]",
+                                             "## (Session YYYY-MM-DD HH:MM)\\n\u003c!-- metadata\\nPriority: high\\nStatus: closed\\nLast-updated: YYYY-MM-DD HH:MM\\nArchived: false\\n--\u003e\\n**Summary:** [1-3 sentence summary of what was done]\\n**Decisions made:** [link using `[#reasoning-thread]` if applicable] \u003c!-- example --\u003e\\n**Changelog entries:** [add `[changelog-entry:YYYY-MM-DD HH:MM]` anchors to `changelog-context.md` and reference here]\\n**Follow-ups / TODOs:** [short actionable items]\\n**Notes:** [any blockers or unexpected findings]",
+                                             "## (Session YYYY-MM-DD HH:MM)\\n\u003c!-- metadata\\nPriority: high\\nStatus: closed\\nLast-updated: YYYY-MM-DD HH:MM\\nArchived: false\\n--\u003e\\n**Summary:** [1-3 sentence summary of what was done]\\n**Decisions made:** [link using `[#reasoning-thread]` if applicable] \u003c!-- example --\u003e\\n**Changelog entries:** [add `[changelog-entry:YYYY-MM-DD HH:MM]` anchors to `changelog-context.md` and reference here]\\n**Follow-ups / TODOs:** [short actionable items]\\n**Notes:** [any blockers or unexpected findings]"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\open-questions-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\open-questions-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\open-questions-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\open-questions-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\open-questions-context.md"
+                                      ],
+                            "Examples":  [
+                                             "- How to handle X? \u003c!-- status: open --\u003e",
+                                             "- How to handle X? \u003c!-- status: open --\u003e",
+                                             "- How to handle X? \u003c!-- status: open --\u003e"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\reasoning-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\reasoning-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\reasoning-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\reasoning-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\reasoning-context.md"
+                                      ],
+                            "Examples":  [
+                                             "## Reasoning Thread: [thread-name]\\n\u003c!-- status: open | resolved --\u003e\\n| Field | Value |\\n|-------|-------|\\n| **Question** | What problem are we solving? |\\n| **Options** | A) Option 1 B) Option 2 C) Option 3 |\\n| **Decision** | What we chose and why |\\n| **Next** | Changelog entry, implementation steps |\\n### Notes (optional)\\n- Context, constraints, follow-ups",
+                                             "## Reasoning Thread: [thread-name]\\n\u003c!-- status: open | resolved --\u003e\\n| Field | Value |\\n|-------|-------|\\n| **Question** | What problem are we solving? |\\n| **Options** | A) Option 1 B) Option 2 C) Option 3 |\\n| **Decision** | What we chose and why |\\n| **Next** | Changelog entry, implementation steps |\\n### Notes (optional)\\n- Context, constraints, follow-ups",
+                                             "## Reasoning Thread: [thread-name]\\n\u003c!-- status: open | resolved --\u003e\\n| Field | Value |\\n|-------|-------|\\n| **Question** | What problem are we solving? |\\n| **Options** | A) Option 1 B) Option 2 C) Option 3 |\\n| **Decision** | What we chose and why |\\n| **Next** | Changelog entry, implementation steps |\\n### Notes (optional)\\n- Context, constraints, follow-ups"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\session-context.md"
+                                      ],
+                            "Examples":  [
+                                             "## (Session 2025-11-27 22:00)\\n\u003c!-- metadata\\nPriority: low\\nStatus: closed\\nLast-updated: 2025-11-27 22:00\\nArchived: false\\n--\u003e\\n**Summary:** Codified edit cycle and created pointer syntax thread.\\n**Decisions made:** [#edit-cycle-convention], [#pointer-syntax-standard]\\n**Changelog entries:** [changelog-entry:2025-11-27 22:00], [changelog-entry:2025-11-27 22:15]\\n**Follow-ups / TODOs:** retrofit changelog anchors for historical entries",
+                                             "## (Session 2025-11-27 22:00)\\n\u003c!-- metadata\\nPriority: low\\nStatus: closed\\nLast-updated: 2025-11-27 22:00\\nArchived: false\\n--\u003e\\n**Summary:** Codified edit cycle and created pointer syntax thread.\\n**Decisions made:** [#edit-cycle-convention], [#pointer-syntax-standard]\\n**Changelog entries:** [changelog-entry:2025-11-27 22:00], [changelog-entry:2025-11-27 22:15]\\n**Follow-ups / TODOs:** retrofit changelog anchors for historical entries",
+                                             "## (Session 2025-11-27 22:00)\\n\u003c!-- metadata\\nPriority: low\\nStatus: closed\\nLast-updated: 2025-11-27 22:00\\nArchived: false\\n--\u003e\\n**Summary:** Codified edit cycle and created pointer syntax thread.\\n**Decisions made:** [#edit-cycle-convention], [#pointer-syntax-standard]\\n**Changelog entries:** [changelog-entry:2025-11-27 22:00], [changelog-entry:2025-11-27 22:15]\\n**Follow-ups / TODOs:** retrofit changelog anchors for historical entries"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\session-context.md"
+                                      ],
+                            "Examples":  [
+                                             "## (Session 2025-11-27 21:45)\\n\u003c!-- metadata\\nPriority: low\\nStatus: open\\nLast-updated: 2025-11-27 21:45\\nArchived: false\\n--\u003e\\n**Attendees:** user, Copilot\\n**Goal(s):** Codify edit cycle; establish pointer syntax\\n**Files in scope:** `general-chat-context.md`, `reasoning-context.md`, `changelog-context.md`\\n**Expected outputs:** reasoning stubs + changelog anchors",
+                                             "## (Session 2025-11-27 21:45)\\n\u003c!-- metadata\\nPriority: low\\nStatus: open\\nLast-updated: 2025-11-27 21:45\\nArchived: false\\n--\u003e\\n**Attendees:** user, Copilot\\n**Goal(s):** Codify edit cycle; establish pointer syntax\\n**Files in scope:** `general-chat-context.md`, `reasoning-context.md`, `changelog-context.md`\\n**Expected outputs:** reasoning stubs + changelog anchors",
+                                             "## (Session 2025-11-27 21:45)\\n\u003c!-- metadata\\nPriority: low\\nStatus: open\\nLast-updated: 2025-11-27 21:45\\nArchived: false\\n--\u003e\\n**Attendees:** user, Copilot\\n**Goal(s):** Codify edit cycle; establish pointer syntax\\n**Files in scope:** `general-chat-context.md`, `reasoning-context.md`, `changelog-context.md`\\n**Expected outputs:** reasoning stubs + changelog anchors"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\README.md"
+                                      ],
+                            "Examples":  [
+                                             "\u003c!-- example --\u003e",
+                                             "\u003c!-- example --\u003e",
+                                             "\u003c!-- example --\u003e"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\README.md"
+                                      ],
+                            "Examples":  [
+                                             "(Memory File)\\n# [Title] Context\\n**Purpose:** One-line description.\\n---\\n[Content sections...]",
+                                             "(Memory File)\\n# [Title] Context\\n**Purpose:** One-line description.\\n---\\n[Content sections...]",
+                                             "(Memory File)\\n# [Title] Context\\n**Purpose:** One-line description.\\n---\\n[Content sections...]"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\README.md"
+                                      ],
+                            "Examples":  [
+                                             "powershell.exe -ExecutionPolicy Bypass -File \"scripts/audit.ps1\"",
+                                             "powershell.exe -ExecutionPolicy Bypass -File \"scripts/audit.ps1\"",
+                                             "powershell.exe -ExecutionPolicy Bypass -File \"scripts/audit.ps1\""
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\session-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\session-context.md"
+                                      ],
+                            "Examples":  [
+                                             "## (Session YYYY-MM-DD HH:MM)\\n\u003c!-- metadata\\nPriority: low\\nStatus: open\\nLast-updated: YYYY-MM-DD HH:MM\\nArchived: false\\n--\u003e\\n**Attendees:** [names]\\n**Goal(s):** [short goal list]\\n**Files in scope:** [list files]\\n**Quick context:** [1-2 sentence context]\\n**Expected outputs:** [decisions, PRs, tickets]",
+                                             "## (Session YYYY-MM-DD HH:MM)\\n\u003c!-- metadata\\nPriority: low\\nStatus: open\\nLast-updated: YYYY-MM-DD HH:MM\\nArchived: false\\n--\u003e\\n**Attendees:** [names]\\n**Goal(s):** [short goal list]\\n**Files in scope:** [list files]\\n**Quick context:** [1-2 sentence context]\\n**Expected outputs:** [decisions, PRs, tickets]",
+                                             "## (Session YYYY-MM-DD HH:MM)\\n\u003c!-- metadata\\nPriority: low\\nStatus: open\\nLast-updated: YYYY-MM-DD HH:MM\\nArchived: false\\n--\u003e\\n**Attendees:** [names]\\n**Goal(s):** [short goal list]\\n**Files in scope:** [list files]\\n**Quick context:** [1-2 sentence context]\\n**Expected outputs:** [decisions, PRs, tickets]"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  5,
+                            "Risk":  "low",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\general-chat-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055048\\chat_context\\general-chat-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055103\\chat_context\\general-chat-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-055129\\chat_context\\general-chat-context.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\general-chat-context.md"
+                                      ],
+                            "Examples":  [
+                                             "Lere/ # project root\\n+-- chat_context/ # persistent session \u0026 design memory\\n| +-- archives/ # archived sessions, reasoning, questions\\n| +-- changelog-context.md # durable ledger of structural changes\\n| +-- reasoning-context.md # decision threads and trade-off analysis\\n| +-- session-context.md # session scratchpad and summaries\\n+-- datapacks/ # datapacks for the project (data-layer)\\n| +-- lere_guardian/ # Phase 1 datapack scaffold\\n+-- plugins/ # server plugin source (Gradle projects)\\n| +-- lere_core/ # prototype Paper plugin (zone commands)\\n| +-- lere_multiplayer/ # multiplayer scaffold: AccessManager, visibility\\n+-- scripts/ # PowerShell automation scripts\\n| +-- audit.ps1 # pointer validation, manifest generation\\n| +-- audit-data/ # manifests and logs (operational artifacts)\\n| +-- lib/ # shared script libraries\\n+-- docs/ # optional design docs and exportable notes\\n+-- README.md",
+                                             "Lere/ # project root\\n+-- chat_context/ # persistent session \u0026 design memory\\n| +-- archives/ # archived sessions, reasoning, questions\\n| +-- changelog-context.md # durable ledger of structural changes\\n| +-- reasoning-context.md # decision threads and trade-off analysis\\n| +-- session-context.md # session scratchpad and summaries\\n+-- datapacks/ # datapacks for the project (data-layer)\\n| +-- lere_guardian/ # Phase 1 datapack scaffold\\n+-- plugins/ # server plugin source (Gradle projects)\\n| +-- lere_core/ # prototype Paper plugin (zone commands)\\n| +-- lere_multiplayer/ # multiplayer scaffold: AccessManager, visibility\\n+-- scripts/ # PowerShell automation scripts\\n| +-- audit.ps1 # pointer validation, manifest generation\\n| +-- audit-data/ # manifests and logs (operational artifacts)\\n| +-- lib/ # shared script libraries\\n+-- docs/ # optional design docs and exportable notes\\n+-- README.md",
+                                             "Lere/ # project root\\n+-- chat_context/ # persistent session \u0026 design memory\\n| +-- archives/ # archived sessions, reasoning, questions\\n| +-- changelog-context.md # durable ledger of structural changes\\n| +-- reasoning-context.md # decision threads and trade-off analysis\\n| +-- session-context.md # session scratchpad and summaries\\n+-- datapacks/ # datapacks for the project (data-layer)\\n| +-- lere_guardian/ # Phase 1 datapack scaffold\\n+-- plugins/ # server plugin source (Gradle projects)\\n| +-- lere_core/ # prototype Paper plugin (zone commands)\\n| +-- lere_multiplayer/ # multiplayer scaffold: AccessManager, visibility\\n+-- scripts/ # PowerShell automation scripts\\n| +-- audit.ps1 # pointer validation, manifest generation\\n| +-- audit-data/ # manifests and logs (operational artifacts)\\n| +-- lib/ # shared script libraries\\n+-- docs/ # optional design docs and exportable notes\\n+-- README.md"
+                                         ],
+                            "Recommendation":  "Consider moving this command snippet into a single helper script and reference it from docs."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  4,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\FileCache.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Write-Atomically.ps1"
+                                      ],
+                            "Examples":  [
+                                             "}\\n# Only export when loaded as a module (not dot-sourced)\\nif ($MyInvocation.MyCommand.ScriptBlock.Module) {",
+                                             "}\\n# Only export when loaded as a module (not dot-sourced)\\nif ($MyInvocation.MyCommand.ScriptBlock.Module) {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  4,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_sessions.ps1"
+                                      ],
+                            "Examples":  [
+                                             " [string]$Root = \"$PSScriptRoot\\..\"\\n)\\n# Load shared libraries",
+                                             " [string]$Root = \"$PSScriptRoot\\..\"\\n)\\n# Load shared libraries"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  4,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_sessions.ps1"
+                                      ],
+                            "Examples":  [
+                                             ")\\n# Load shared libraries\\n$libDir = Join-Path $PSScriptRoot \u0027lib\u0027",
+                                             ")\\n# Load shared libraries\\n$libDir = Join-Path $PSScriptRoot \u0027lib\u0027"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "if (-not $success) {\\n Write-Host \"Error: Unable to create archive file after $maxRetries attempts: $archiveFile\" -ForegroundColor Red\\n exit 2",
+                                             "if (-not $success) {\\n Write-Host \"Error: Unable to create archive file after $maxRetries attempts: $archiveFile\" -ForegroundColor Red\\n exit 2"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             ". (Join-Path $libDir \u0027ArchiveWriter.ps1\u0027)\\n$maxRetries = 5\\n$delayMs = 250",
+                                             ". (Join-Path $libDir \u0027ArchiveWriter.ps1\u0027)\\n$maxRetries = 5\\n$delayMs = 250"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " }\\n } catch { }\\n }",
+                                             " }\\n } catch { }\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\create_snapshot.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\find_repetitive_tasks.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\generate_scripts_summary.ps1"
+                                      ],
+                            "Examples":  [
+                                             "#\u003e\\nparam(\\n [string]$Root = (Resolve-Path -Path (Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Path -Parent) -ChildPath \u0027..\u0027)).Path,",
+                                             "#\u003e\\nparam(\\n [string]$Root = (Resolve-Path -Path (Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Path -Parent) -ChildPath \u0027..\u0027)).Path,"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Status = \u0027open\u0027\\n LastUpdated = $null\\n Archived = $false",
+                                             " Status = \u0027open\u0027\\n LastUpdated = $null\\n Archived = $false"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "} else {\\n $hasWriteLib = $false\\n}",
+                                             "} else {\\n $hasWriteLib = $false\\n}"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "$maxRetries = 5\\n$delayMs = 250\\n$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join \"`n\") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8",
+                                             "$maxRetries = 5\\n$delayMs = 250\\n$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join \"`n\") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "$writeLibPath = Join-Path $libDir \u0027Write-Atomically.ps1\u0027\\nif (Test-Path $writeLibPath) {\\n . $writeLibPath",
+                                             "$writeLibPath = Join-Path $libDir \u0027Write-Atomically.ps1\u0027\\nif (Test-Path $writeLibPath) {\\n . $writeLibPath"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "## Write archive atomically via shared writer\\n. (Join-Path $libDir \u0027ArchiveWriter.ps1\u0027)\\n$maxRetries = 5",
+                                             "## Write archive atomically via shared writer\\n. (Join-Path $libDir \u0027ArchiveWriter.ps1\u0027)\\n$maxRetries = 5"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\FileCache.ps1"
+                                      ],
+                            "Examples":  [
+                                             " #\u003e\\n param(\\n [hashtable]$Cache = $null,",
+                                             " #\u003e\\n param(\\n [hashtable]$Cache = $null,"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join \"`n\") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8\\nif (-not $success) {\\n Write-Host \"Error: Unable to create archive file after $maxRetries attempts: $archiveFile\" -ForegroundColor Red",
+                                             "$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join \"`n\") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8\\nif (-not $success) {\\n Write-Host \"Error: Unable to create archive file after $maxRetries attempts: $archiveFile\" -ForegroundColor Red"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Priority = \u0027low\u0027\\n Status = \u0027open\u0027\\n LastUpdated = $null",
+                                             " Priority = \u0027low\u0027\\n Status = \u0027open\u0027\\n LastUpdated = $null"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "}\\n## Write archive atomically via shared writer\\n. (Join-Path $libDir \u0027ArchiveWriter.ps1\u0027)",
+                                             "}\\n## Write archive atomically via shared writer\\n. (Join-Path $libDir \u0027ArchiveWriter.ps1\u0027)"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $hasWriteLib = $true\\n} else {\\n $hasWriteLib = $false",
+                                             " $hasWriteLib = $true\\n} else {\\n $hasWriteLib = $false"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\AuditRotation.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\generate_prune_index.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tools\\run_prune.ps1"
+                                      ],
+                            "Examples":  [
+                                             "#\u003e\\n[CmdletBinding()]\\nparam(",
+                                             "#\u003e\\n[CmdletBinding()]\\nparam("
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\ArchiveManager.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\generate_prune_index.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\run_prune.tests.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $tries++\\n Start-Sleep -Milliseconds (200 * $tries)\\n }",
+                                             " $tries++\\n Start-Sleep -Milliseconds (200 * $tries)\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " . $writeLibPath\\n $hasWriteLib = $true\\n} else {",
+                                             " . $writeLibPath\\n $hasWriteLib = $true\\n} else {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\ArchiveManager.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\generate_prune_index.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\run_prune.tests.ps1"
+                                      ],
+                            "Examples":  [
+                                             " break\\n } catch {\\n $tries++",
+                                             " break\\n } catch {\\n $tries++"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\ArchiveManager.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\generate_prune_index.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\run_prune.tests.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Start-Sleep -Milliseconds (200 * $tries)\\n }\\n }",
+                                             " Start-Sleep -Milliseconds (200 * $tries)\\n }\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " #\u003e\\n param(\\n [Parameter(Mandatory=$true)]",
+                                             " #\u003e\\n param(\\n [Parameter(Mandatory=$true)]"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\ArchiveManager.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\generate_prune_index.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\run_prune.tests.ps1"
+                                      ],
+                            "Examples":  [
+                                             " } catch {\\n $tries++\\n Start-Sleep -Milliseconds (200 * $tries)",
+                                             " } catch {\\n $tries++\\n Start-Sleep -Milliseconds (200 * $tries)"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "$delayMs = 250\\n$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join \"`n\") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8\\nif (-not $success) {",
+                                             "$delayMs = 250\\n$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join \"`n\") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8\\nif (-not $success) {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\FileCache.ps1"
+                                      ],
+                            "Examples":  [
+                                             " param(\\n [hashtable]$Cache = $null,\\n [Parameter(Mandatory=$true)]",
+                                             " param(\\n [hashtable]$Cache = $null,\\n [Parameter(Mandatory=$true)]"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ReasoningCritique.ps1"
+                                      ],
+                            "Examples":  [
+                                             " }\\n return $result\\n}",
+                                             " }\\n return $result\\n}"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " if (Test-Path $temp) { Remove-Item -Force $temp -ErrorAction SilentlyContinue }\\n return\\n }",
+                                             " if (Test-Path $temp) { Remove-Item -Force $temp -ErrorAction SilentlyContinue }\\n return\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "if (Test-Path $writeLibPath) {\\n . $writeLibPath\\n $hasWriteLib = $true",
+                                             "if (Test-Path $writeLibPath) {\\n . $writeLibPath\\n $hasWriteLib = $true"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  3,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Write-Host \"Error: Unable to create archive file after $maxRetries attempts: $archiveFile\" -ForegroundColor Red\\n exit 2\\n}",
+                                             " Write-Host \"Error: Unable to create archive file after $maxRetries attempts: $archiveFile\" -ForegroundColor Red\\n exit 2\\n}"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\check_build_env.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\setup_gradle_wrapper.ps1"
+                                      ],
+                            "Examples":  [
+                                             "$shared = Join-Path $PSScriptRoot \u0027lib\\Test-CommandExists.ps1\u0027\\nif (Test-Path $shared) {\\n . $shared",
+                                             "$shared = Join-Path $PSScriptRoot \u0027lib\\Test-CommandExists.ps1\u0027\\nif (Test-Path $shared) {\\n . $shared"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $currentSection = $Matches[1].Trim()\\n continue\\n }",
+                                             " $currentSection = $Matches[1].Trim()\\n continue\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\audit.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $found = Get-ChildItem -Path $dir -Filter \u0027session-archive*.md\u0027 -ErrorAction SilentlyContinue\\n if ($found) { continue }\\n }",
+                                             " $found = Get-ChildItem -Path $dir -Filter \u0027session-archive*.md\u0027 -ErrorAction SilentlyContinue\\n if ($found) { continue }\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\find_repetitive_tasks.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\generate_scripts_summary.ps1"
+                                      ],
+                            "Examples":  [
+                                             " [switch]$Force\\n)\\nSet-StrictMode -Version Latest",
+                                             " [switch]$Force\\n)\\nSet-StrictMode -Version Latest"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $threads += [PSCustomObject]@{\\n Name = $currentName\\n Start = $currentStart",
+                                             " $threads += [PSCustomObject]@{\\n Name = $currentName\\n Start = $currentStart"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $result = [PSCustomObject]@{\\n Priority = \u0027low\u0027\\n Status = \u0027open\u0027",
+                                             " $result = [PSCustomObject]@{\\n Priority = \u0027low\u0027\\n Status = \u0027open\u0027"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $result.LastUpdated = [datetime]::ParseExact($dateStr, \u0027yyyy-MM-dd\u0027, $null)\\n }\\n } catch { }",
+                                             " $result.LastUpdated = [datetime]::ParseExact($dateStr, \u0027yyyy-MM-dd\u0027, $null)\\n }\\n } catch { }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\check_build_env.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\setup_gradle_wrapper.ps1"
+                                      ],
+                            "Examples":  [
+                                             "} else {\\n function Test-CommandExists {\\n param([string]$Cmd)",
+                                             "} else {\\n function Test-CommandExists {\\n param([string]$Cmd)"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " )\\n $result = [PSCustomObject]@{\\n Priority = \u0027low\u0027",
+                                             " )\\n $result = [PSCustomObject]@{\\n Priority = \u0027low\u0027"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\check_build_env.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\setup_gradle_wrapper.ps1"
+                                      ],
+                            "Examples":  [
+                                             " param([string]$Cmd)\\n return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null\\n }",
+                                             " param([string]$Cmd)\\n return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1"
+                                      ],
+                            "Examples":  [
+                                             " if ($line -match \u0027^##\\s+(.+)\u0027) {\\n $currentSection = $Matches[1].Trim()\\n continue",
+                                             " if ($line -match \u0027^##\\s+(.+)\u0027) {\\n $currentSection = $Matches[1].Trim()\\n continue"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $skip = $false\\n foreach ($exFull in $excludeFulls) { if ($_.FullName -like \"$exFull*\") { $skip = $true; break } }\\n -not $skip",
+                                             " $skip = $false\\n foreach ($exFull in $excludeFulls) { if ($_.FullName -like \"$exFull*\") { $skip = $true; break } }\\n -not $skip"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             "# Ensure archives dir exists\\nif (-not (Test-Path $archiveDir)) { New-Item -ItemType Directory -Path $archiveDir | Out-Null }\\n# Build archive content",
+                                             "# Ensure archives dir exists\\nif (-not (Test-Path $archiveDir)) { New-Item -ItemType Directory -Path $archiveDir | Out-Null }\\n# Build archive content"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\generate_manifest.ps1"
+                                      ],
+                            "Examples":  [
+                                             " bom = $bom\\n newline = $newline\\n lastWrite = $f.LastWriteTimeUtc.ToString(\u0027o\u0027)",
+                                             " bom = $bom\\n newline = $newline\\n lastWrite = $f.LastWriteTimeUtc.ToString(\u0027o\u0027)"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ArchiveManager.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\generate_prune_index.tests.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $manifest = [pscustomobject]@{\\n Operator = $env:USERNAME\\n Timestamp = (Get-Date).ToUniversalTime().ToString(\u0027o\u0027)",
+                                             " $manifest = [pscustomobject]@{\\n Operator = $env:USERNAME\\n Timestamp = (Get-Date).ToUniversalTime().ToString(\u0027o\u0027)"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tools\\run_prune.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $archiveManifest = Apply-ArchiveManifest -ManifestPath $manifestPath\\n Write-Host \"Archive manifest: $archiveManifest\"\\n }",
+                                             " $archiveManifest = Apply-ArchiveManifest -ManifestPath $manifestPath\\n Write-Host \"Archive manifest: $archiveManifest\"\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1"
+                                      ],
+                            "Examples":  [
+                                             "\"@\\n$archiveEntries = @()\\n$archiveEntries += $archiveHeader",
+                                             "\"@\\n$archiveEntries = @()\\n$archiveEntries += $archiveHeader"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\generate_manifest.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $bomBytes = New-Object byte[] 4\\n $read = $fs.Read($bomBytes, 0, 4)\\n $fs.Close()",
+                                             " $bomBytes = New-Object byte[] 4\\n $read = $fs.Read($bomBytes, 0, 4)\\n $fs.Close()"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\DuplicateContent.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\scan_duplicates.ps1"
+                                      ],
+                            "Examples":  [
+                                             " [int]$MinLines = 5,\\n [string[]]$Extensions = @(\u0027.md\u0027, \u0027.ps1\u0027, \u0027.txt\u0027),\\n [string[]]$ExcludePaths = @()",
+                                             " [int]$MinLines = 5,\\n [string[]]$Extensions = @(\u0027.md\u0027, \u0027.ps1\u0027, \u0027.txt\u0027),\\n [string[]]$ExcludePaths = @()"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\generate_manifest.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $entry = [PSCustomObject]@{\\n path = $rel -replace \u0027\\\\\u0027,\u0027/\u0027\\n fullPath = $full",
+                                             " $entry = [PSCustomObject]@{\\n path = $rel -replace \u0027\\\\\u0027,\u0027/\u0027\\n fullPath = $full"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1"
+                                      ],
+                            "Examples":  [
+                                             " #\u003e\\n param([string]$Path)\\n try {",
+                                             " #\u003e\\n param([string]$Path)\\n try {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Name = $currentName\\n Start = $currentStart\\n End = $endIdx",
+                                             " Name = $currentName\\n Start = $currentStart\\n End = $endIdx"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\audit.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $leaf = Split-Path $resolved -Leaf\\n if ($leaf -match \u0027^session-archive\u0027) {\\n $dir = Split-Path $resolved -Parent",
+                                             " $leaf = Split-Path $resolved -Leaf\\n if ($leaf -match \u0027^session-archive\u0027) {\\n $dir = Split-Path $resolved -Parent"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Write-Atomically.ps1"
+                                      ],
+                            "Examples":  [
+                                             " [CmdletBinding()]\\n param(\\n [Parameter(Mandatory=$true)]",
+                                             " [CmdletBinding()]\\n param(\\n [Parameter(Mandatory=$true)]"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\detect_change_loop.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " }\\n return $false\\n}",
+                                             " }\\n return $false\\n}"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " }\\n }\\n return $result",
+                                             " }\\n }\\n return $result"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\check_build_env.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\setup_gradle_wrapper.ps1"
+                                      ],
+                            "Examples":  [
+                                             " function Test-CommandExists {\\n param([string]$Cmd)\\n return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null",
+                                             " function Test-CommandExists {\\n param([string]$Cmd)\\n return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\create_snapshot.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\find_repetitive_tasks.ps1"
+                                      ],
+                            "Examples":  [
+                                             "Set-StrictMode -Version Latest\\nfunction Write-JsonAtomic($obj, $outPath) {\\n $tmp = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetFileName($outPath) + \".tmp.$([System.Diagnostics.Process]::GetCurrentProcess().Id)\")",
+                                             "Set-StrictMode -Version Latest\\nfunction Write-JsonAtomic($obj, $outPath) {\\n $tmp = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetFileName($outPath) + \".tmp.$([System.Diagnostics.Process]::GetCurrentProcess().Id)\")"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\FileCache.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Write-Atomically.ps1"
+                                      ],
+                            "Examples":  [
+                                             " [Parameter(Mandatory=$true)]\\n [string]$Path,\\n [Parameter(Mandatory=$true)]",
+                                             " [Parameter(Mandatory=$true)]\\n [string]$Path,\\n [Parameter(Mandatory=$true)]"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " foreach ($exFull in $excludeFulls) { if ($_.FullName -like \"$exFull*\") { $skip = $true; break } }\\n -not $skip\\n }",
+                                             " foreach ($exFull in $excludeFulls) { if ($_.FullName -like \"$exFull*\") { $skip = $true; break } }\\n -not $skip\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Archived = $false\\n HasMetadata = $false\\n }",
+                                             " Archived = $false\\n HasMetadata = $false\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " } else {\\n $result.LastUpdated = [datetime]::ParseExact($dateStr, \u0027yyyy-MM-dd\u0027, $null)\\n }",
+                                             " } else {\\n $result.LastUpdated = [datetime]::ParseExact($dateStr, \u0027yyyy-MM-dd\u0027, $null)\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " if (Get-Command -Name Test-ReasoningQuality -ErrorAction SilentlyContinue) {\\n Test-ReasoningQuality -Path $contextDir -IncludeArchives\\n }",
+                                             " if (Get-Command -Name Test-ReasoningQuality -ErrorAction SilentlyContinue) {\\n Test-ReasoningQuality -Path $contextDir -IncludeArchives\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $jsonPath = $null\\n }\\n } else {",
+                                             " $jsonPath = $null\\n }\\n } else {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " End = $endIdx\\n Text = ($lines[$currentStart..$endIdx] -join \"`n\")\\n }",
+                                             " End = $endIdx\\n Text = ($lines[$currentStart..$endIdx] -join \"`n\")\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " # Apply global excludes (path prefixes)\\n $excludeFulls = @()\\n foreach ($ex in $GlobalExcludes) { $excludeFulls += (Join-Path $root $ex) }",
+                                             " # Apply global excludes (path prefixes)\\n $excludeFulls = @()\\n foreach ($ex in $GlobalExcludes) { $excludeFulls += (Join-Path $root $ex) }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ProjectConfig.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ReasoningCritique.ps1"
+                                      ],
+                            "Examples":  [
+                                             " VerbosePenalty = 10\\n NoSummaryPenalty = 20\\n ManyQuestionsPenalty = 15",
+                                             " VerbosePenalty = 10\\n NoSummaryPenalty = 20\\n ManyQuestionsPenalty = 15"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\check_build_env.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\setup_gradle_wrapper.ps1"
+                                      ],
+                            "Examples":  [
+                                             " . $shared\\n} else {\\n function Test-CommandExists {",
+                                             " . $shared\\n} else {\\n function Test-CommandExists {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " }\\n Write-Host \"\"\\n }",
+                                             " }\\n Write-Host \"\"\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " param(\\n [string]$RootPath = $root\\n )",
+                                             " param(\\n [string]$RootPath = $root\\n )"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ArchiveManager.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\generate_prune_index.tests.ps1"
+                                      ],
+                            "Examples":  [
+                                             " }\\n $manifest = [pscustomobject]@{\\n Operator = $env:USERNAME",
+                                             " }\\n $manifest = [pscustomobject]@{\\n Operator = $env:USERNAME"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ProjectConfig.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " MaxOpenQuestions = 10\\n MaxHighPriorityOpen = 0\\n MaxDeferredQuestions = 20",
+                                             " MaxOpenQuestions = 10\\n MaxHighPriorityOpen = 0\\n MaxDeferredQuestions = 20"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $result.LastUpdated = [datetime]::ParseExact($dateStr, \u0027yyyy-MM-dd HH:mm\u0027, $null)\\n } else {\\n $result.LastUpdated = [datetime]::ParseExact($dateStr, \u0027yyyy-MM-dd\u0027, $null)",
+                                             " $result.LastUpdated = [datetime]::ParseExact($dateStr, \u0027yyyy-MM-dd HH:mm\u0027, $null)\\n } else {\\n $result.LastUpdated = [datetime]::ParseExact($dateStr, \u0027yyyy-MM-dd\u0027, $null)"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ArchiveManager.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tools\\run_prune.ps1"
+                                      ],
+                            "Examples":  [
+                                             " [string] $RuleId = \u0027manual\u0027,\\n [ValidateSet(\u0027low\u0027,\u0027medium\u0027,\u0027high\u0027)][string] $Risk = \u0027medium\u0027,\\n [ValidateSet(\u0027low\u0027,\u0027medium\u0027,\u0027high\u0027)][string] $Impact = \u0027low\u0027,",
+                                             " [string] $RuleId = \u0027manual\u0027,\\n [ValidateSet(\u0027low\u0027,\u0027medium\u0027,\u0027high\u0027)][string] $Risk = \u0027medium\u0027,\\n [ValidateSet(\u0027low\u0027,\u0027medium\u0027,\u0027high\u0027)][string] $Impact = \u0027low\u0027,"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\audit.ps1"
+                                      ],
+                            "Examples":  [
+                                             " } else {\\n if (-not (Test-Path $resolved)) {\\n $leaf = Split-Path $resolved -Leaf",
+                                             " } else {\\n if (-not (Test-Path $resolved)) {\\n $leaf = Split-Path $resolved -Leaf"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Test-ScriptsSummaryFreshness -OutFile \u0027SCRIPTS.md\u0027\\n # Look for repetitive tasks / automation opportunities\\n Test-AutomationOpportunities -RootPath $root",
+                                             " Test-ScriptsSummaryFreshness -OutFile \u0027SCRIPTS.md\u0027\\n # Look for repetitive tasks / automation opportunities\\n Test-AutomationOpportunities -RootPath $root"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1"
+                                      ],
+                            "Examples":  [
+                                             "$newLines += \"\"\\n$newLines += \"---\"\\n$newLines += \"\"",
+                                             "$newLines += \"\"\\n$newLines += \"---\"\\n$newLines += \"\""
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\check_build_env.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\setup_gradle_wrapper.ps1"
+                                      ],
+                            "Examples":  [
+                                             "if (Test-Path $shared) {\\n . $shared\\n} else {",
+                                             "if (Test-Path $shared) {\\n . $shared\\n} else {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1"
+                                      ],
+                            "Examples":  [
+                                             "$libDir = Join-Path $PSScriptRoot \u0027lib\u0027\\n$writeLibPath = Join-Path $libDir \u0027Write-Atomically.ps1\u0027\\nif (Test-Path $writeLibPath) {",
+                                             "$libDir = Join-Path $PSScriptRoot \u0027lib\u0027\\n$writeLibPath = Join-Path $libDir \u0027Write-Atomically.ps1\u0027\\nif (Test-Path $writeLibPath) {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ArchiveWriter.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Write-Atomically.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $success = $true\\n break\\n } catch {",
+                                             " $success = $true\\n break\\n } catch {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ProjectConfig.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ReasoningCritique.ps1"
+                                      ],
+                            "Examples":  [
+                                             " NoSummaryPenalty = 20\\n ManyQuestionsPenalty = 15\\n ContradictionPenalty = 30",
+                                             " NoSummaryPenalty = 20\\n ManyQuestionsPenalty = 15\\n ContradictionPenalty = 30"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\generate_manifest.ps1"
+                                      ],
+                            "Examples":  [
+                                             " sha256 = $hashObj.Hash\\n bom = $bom\\n newline = $newline",
+                                             " sha256 = $hashObj.Hash\\n bom = $bom\\n newline = $newline"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ArchiveManager.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tools\\run_prune.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $tmp = \"$manifestPath.tmp\"\\n $manifest | ConvertTo-Json -Depth 6 | Out-File -FilePath $tmp -Encoding UTF8\\n Move-Item -Force -LiteralPath $tmp -Destination $manifestPath",
+                                             " $tmp = \"$manifestPath.tmp\"\\n $manifest | ConvertTo-Json -Depth 6 | Out-File -FilePath $tmp -Encoding UTF8\\n Move-Item -Force -LiteralPath $tmp -Destination $manifestPath"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\ArchiveManager.tests.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\tests\\run_prune.tests.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $tries = 0\\n while ($tries -lt 6) {\\n try {",
+                                             " $tries = 0\\n while ($tries -lt 6) {\\n try {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\schedule_health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " if (-not (Test-Path $logDir)) {\\n New-Item -ItemType Directory -Path $logDir -Force | Out-Null\\n }",
+                                             " if (-not (Test-Path $logDir)) {\\n New-Item -ItemType Directory -Path $logDir -Force | Out-Null\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_changelog.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_questions.ps1"
+                                      ],
+                            "Examples":  [
+                                             "# Load shared libraries\\n$libDir = Join-Path $PSScriptRoot \u0027lib\u0027\\n$writeLibPath = Join-Path $libDir \u0027Write-Atomically.ps1\u0027",
+                                             "# Load shared libraries\\n$libDir = Join-Path $PSScriptRoot \u0027lib\u0027\\n$writeLibPath = Join-Path $libDir \u0027Write-Atomically.ps1\u0027"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\audit.ps1"
+                                      ],
+                            "Examples":  [
+                                             " if ($leaf -match \u0027^session-archive\u0027) {\\n $dir = Split-Path $resolved -Parent\\n $found = Get-ChildItem -Path $dir -Filter \u0027session-archive*.md\u0027 -ErrorAction SilentlyContinue",
+                                             " if ($leaf -match \u0027^session-archive\u0027) {\\n $dir = Split-Path $resolved -Parent\\n $found = Get-ChildItem -Path $dir -Filter \u0027session-archive*.md\u0027 -ErrorAction SilentlyContinue"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\check_build_env.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\setup_gradle_wrapper.ps1"
+                                      ],
+                            "Examples":  [
+                                             " return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null\\n }\\n}",
+                                             " return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null\\n }\\n}"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\schedule_health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " # Ensure log directory exists\\n if (-not (Test-Path $logDir)) {\\n New-Item -ItemType Directory -Path $logDir -Force | Out-Null",
+                                             " # Ensure log directory exists\\n if (-not (Test-Path $logDir)) {\\n New-Item -ItemType Directory -Path $logDir -Force | Out-Null"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $excludeFulls = @()\\n foreach ($ex in $GlobalExcludes) { $excludeFulls += (Join-Path $root $ex) }\\n if ($excludeFulls.Count -gt 0) {",
+                                             " $excludeFulls = @()\\n foreach ($ex in $GlobalExcludes) { $excludeFulls += (Join-Path $root $ex) }\\n if ($excludeFulls.Count -gt 0) {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\audit.ps1"
+                                      ],
+                            "Examples":  [
+                                             " if ($resolved -like \u0027*[*?]*\u0027) {\\n $dir = Split-Path $resolved -Parent\\n $pat = Split-Path $resolved -Leaf",
+                                             " if ($resolved -like \u0027*[*?]*\u0027) {\\n $dir = Split-Path $resolved -Parent\\n $pat = Split-Path $resolved -Leaf"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\create_snapshot.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\find_repetitive_tasks.ps1"
+                                      ],
+                            "Examples":  [
+                                             ")\\nSet-StrictMode -Version Latest\\nfunction Write-JsonAtomic($obj, $outPath) {",
+                                             ")\\nSet-StrictMode -Version Latest\\nfunction Write-JsonAtomic($obj, $outPath) {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\ArchiveManager.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1"
+                                      ],
+                            "Examples":  [
+                                             " }\\n foreach ($f in $files) {\\n try {",
+                                             " }\\n foreach ($f in $files) {\\n try {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\find_repetitive_tasks.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Count = $e.Count\\n Risk = $risk\\n Files = $e.Files",
+                                             " Count = $e.Count\\n Risk = $risk\\n Files = $e.Files"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\New-Manifest.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\generate_manifest.ps1"
+                                      ],
+                            "Examples":  [
+                                             " newline = $newline\\n lastWrite = $f.LastWriteTimeUtc.ToString(\u0027o\u0027)\\n }",
+                                             " newline = $newline\\n lastWrite = $f.LastWriteTimeUtc.ToString(\u0027o\u0027)\\n }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\DuplicateContent.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\scan_duplicates.ps1"
+                                      ],
+                            "Examples":  [
+                                             " [string[]]$IncludePaths = @(\u0027chat_context\u0027),\\n [int]$MinLines = 5,\\n [string[]]$Extensions = @(\u0027.md\u0027, \u0027.ps1\u0027, \u0027.txt\u0027),",
+                                             " [string[]]$IncludePaths = @(\u0027chat_context\u0027),\\n [int]$MinLines = 5,\\n [string[]]$Extensions = @(\u0027.md\u0027, \u0027.ps1\u0027, \u0027.txt\u0027),"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\prune_reasoning.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Start = $currentStart\\n End = $endIdx\\n Text = ($lines[$currentStart..$endIdx] -join \"`n\")",
+                                             " Start = $currentStart\\n End = $endIdx\\n Text = ($lines[$currentStart..$endIdx] -join \"`n\")"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\FileCache.ps1"
+                                      ],
+                            "Examples":  [
+                                             " [hashtable]$Cache = $null,\\n [Parameter(Mandatory=$true)]\\n [string]$Path,",
+                                             " [hashtable]$Cache = $null,\\n [Parameter(Mandatory=$true)]\\n [string]$Path,"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1"
+                                      ],
+                            "Examples":  [
+                                             " Write-Host \"Checking scripts...\" -ForegroundColor Yellow\\n Test-FileHygiene -Path $scriptDir -Category \u0027scripts\u0027\\n Test-PowerShellQuality -Path $scriptDir",
+                                             " Write-Host \"Checking scripts...\" -ForegroundColor Yellow\\n Test-FileHygiene -Path $scriptDir -Category \u0027scripts\u0027\\n Test-PowerShellQuality -Path $scriptDir"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\check_build_env.ps1",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\setup_gradle_wrapper.ps1"
+                                      ],
+                            "Examples":  [
+                                             "# Prefer shared helper if present; fall back to local definition for compatibility\\n$shared = Join-Path $PSScriptRoot \u0027lib\\Test-CommandExists.ps1\u0027\\nif (Test-Path $shared) {",
+                                             "# Prefer shared helper if present; fall back to local definition for compatibility\\n$shared = Join-Path $PSScriptRoot \u0027lib\\Test-CommandExists.ps1\u0027\\nif (Test-Path $shared) {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\audit.ps1"
+                                      ],
+                            "Examples":  [
+                                             " $dir = Split-Path $resolved -Parent\\n $found = Get-ChildItem -Path $dir -Filter \u0027session-archive*.md\u0027 -ErrorAction SilentlyContinue\\n if ($found) { continue }",
+                                             " $dir = Split-Path $resolved -Parent\\n $found = Get-ChildItem -Path $dir -Filter \u0027session-archive*.md\u0027 -ErrorAction SilentlyContinue\\n if ($found) { continue }"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\lib\\Parse-EntryMetadata.ps1"
+                                      ],
+                            "Examples":  [
+                                             " LastUpdated = $null\\n Archived = $false\\n HasMetadata = $false",
+                                             " LastUpdated = $null\\n Archived = $false\\n HasMetadata = $false"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "script-sequence",
+                            "Count":  2,
+                            "Risk":  "medium",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\audit.ps1"
+                                      ],
+                            "Examples":  [
+                                             " if (-not (Test-Path $resolved)) {\\n $leaf = Split-Path $resolved -Leaf\\n if ($leaf -match \u0027^session-archive\u0027) {",
+                                             " if (-not (Test-Path $resolved)) {\\n $leaf = Split-Path $resolved -Leaf\\n if ($leaf -match \u0027^session-archive\u0027) {"
+                                         ],
+                            "Recommendation":  "Consider refactoring into a shared function in scripts/lib."
+                        },
+                        {
+                            "Type":  "doc-code-block",
+                            "Count":  2,
+                            "Risk":  "high",
+                            "Files":  [
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\plugins\\lere_core\\README.md",
+                                          "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\plugins\\lere_multiplayer\\README.md"
+                                      ],
+                            "Examples":  [
+                                             ".\\gradlew.bat build",
+                                             ".\\gradlew.bat build"
+                                         ],
+                            "Recommendation":  "Review for possible library extraction; requires manual review."
+                        }
+                    ]
+}

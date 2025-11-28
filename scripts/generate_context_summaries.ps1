@@ -1,0 +1,77 @@
+<#
+.SYNOPSIS
+Generates per-file context summaries (.summary.md) for large markdown context files.
+
+.DESCRIPTION
+Walks the `chat_context` tree and writes a small preview file next to each markdown source so LLMs can load summaries
+first. The writer is atomic (temp-file then move) to avoid partial writes.
+
+.PARAMETER Root
+Root folder to scan (default: chat_context)
+
+.PARAMETER PreviewLines
+Number of lines to include in the preview (default 40)
+
+.PARAMETER MaxLines
+If a file exceeds this many lines treat it as large and add a truncation note (default 800)
+
+.PARAMETER Force
+Force regeneration of summaries even if up-to-date
+#>
+
+param(
+  [string]$Root = 'chat_context',
+  [int]$PreviewLines = 40,
+  [int]$MaxLines = 800,
+  [switch]$Force
+)
+
+Set-StrictMode -Version Latest
+
+if (-not (Test-Path $Root)) {
+  Write-Error "Root path not found: $Root"
+  exit 2
+}
+
+Get-ChildItem -Path $Root -Recurse -File -Include *.md -ErrorAction SilentlyContinue |
+  Where-Object { $_.FullName -notmatch '\\archives\\' } |
+  ForEach-Object {
+    $src = $_.FullName
+    $summaryPath = Join-Path $_.DirectoryName ($_.BaseName + '.summary.md')
+
+    if (-not $Force -and (Test-Path $summaryPath) -and (Get-Item $summaryPath).LastWriteTime -gt $_.LastWriteTime) {
+      return
+    }
+
+    try {
+      $lines = Get-Content -Path $src -ErrorAction Stop
+    } catch {
+      Write-Warning "Skipping unreadable file: $src"
+      return
+    }
+
+    $lineCount = $lines.Count
+    if ($lineCount -le $PreviewLines) { $preview = $lines } else { $preview = $lines[0..($PreviewLines-1)] }
+
+    if ($lineCount -gt $MaxLines) {
+      $truncNote = "`n*...file exceeds $MaxLines lines; request full file on demand.*`n"
+    } elseif ($lineCount -gt $PreviewLines) {
+      $truncNote = "`n*...preview truncated; full content available on demand.*`n"
+    } else { $truncNote = '' }
+
+    $meta = @(
+      "<!-- summary: generated -->",
+      "<!-- source: $src -->",
+      "<!-- lines: $lineCount -->",
+      ""
+    )
+
+    $out = $meta + $preview + $truncNote
+
+    $tmp = [System.IO.Path]::GetTempFileName()
+    $out | Out-File -FilePath $tmp -Encoding UTF8
+    Move-Item -Force -Path $tmp -Destination $summaryPath
+    Write-Host "Wrote summary: $summaryPath (lines=$lineCount)"
+  }
+
+exit 0

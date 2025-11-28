@@ -12,6 +12,28 @@ This initial implementation uses heuristic checks only (no external LLM).
 It's designed to be safe (read-only) and opt-in via health_check.
 #>
 
+<#
+.SYNOPSIS
+  Analyze a single reasoning thread for structural problems and heuristics.
+
+.DESCRIPTION
+  Conservative, rule-based analysis that scores a reasoning thread on length,
+  presence of a summary, number of open questions, and simple contradiction heuristics.
+  This function is safe (read-only) and returns a PSCustomObject with Score, Issues,
+  Suggestions and Metadata.
+
+.PARAMETER Text
+  The thread text to analyze.
+
+.PARAMETER Name
+  Optional name for the thread (used in reports).
+
+.PARAMETER Config
+  Optional hashtable of tuning parameters (MaxLines, penalties, thresholds).
+
+.EXAMPLE
+  Analyze-ReasoningThread -Text (Get-Content thread.md -Raw) -Name 'thread-1'
+#>
 function Analyze-ReasoningThread {
   [CmdletBinding()]
   param(
@@ -104,6 +126,26 @@ function Analyze-ReasoningThread {
   return $result
 }
 
+<#
+.SYNOPSIS
+  Scan reasoning context files and analyze each thread using Analyze-ReasoningThread.
+
+.DESCRIPTION
+  Finds reasoning threads in the main `reasoning-context.md` and optional
+  archived reasoning files, then returns an array of analysis objects.
+
+.PARAMETER Root
+  Path to repository root (defaults to script parent).
+
+.PARAMETER IncludeArchives
+  Include files from `chat_context/archives` when scanning.
+
+.PARAMETER Config
+  Optional tuning hashtable passed through to Analyze-ReasoningThread.
+
+.EXAMPLE
+  Scan-ReasoningCorpus -Root '..\' -IncludeArchives
+#>
 function Scan-ReasoningCorpus {
   [CmdletBinding()]
   param(
@@ -150,6 +192,23 @@ function Scan-ReasoningCorpus {
   return $analyses
 }
 
+<#
+.SYNOPSIS
+  Write a reasoning critique report to JSON and Markdown.
+
+.DESCRIPTION
+  Serializes analysis objects produced by Scan-ReasoningCorpus or Analyze-ReasoningThread
+  into a timestamped JSON and a human-readable Markdown summary.
+
+.PARAMETER OutDir
+  Directory to write report files into.
+
+.PARAMETER Data
+  The analysis data (array of PSCustomObjects) to serialize.
+
+.EXAMPLE
+  Write-ReasoningCritiqueReport -OutDir scripts/audit-data -Data $analyses
+#>
 function Write-ReasoningCritiqueReport {
   [CmdletBinding()]
   param(

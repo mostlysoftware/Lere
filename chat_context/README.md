@@ -7,6 +7,7 @@ This folder holds the project's in-repo assistant memory and governance artifact
 - **`quickstart.md`** - LLM cheatsheet for fast onboarding
 - **`decisions.md`** - Distilled decision log (key choices at a glance)
 - **`attachments.md`** - File batching guide for LLMs with file count limits
+- **`knowledge-compartmentalization.md`** - Map of which knowledge stays in summaries vs. offload files so the LLM can request details selectively
 - **`onboarding.md`** - Contributor quick-start guide
 - **`privacy.md`** - Privacy & anonymization policy
 
@@ -71,3 +72,8 @@ On CI (GitHub Actions) the workflow `/.github/workflows/audit.yml` runs the same
 | `scripts/prune_questions.ps1` | Archive resolved questions |
 
 If you need a different convention or want the audit to ignore additional markers, update `scripts/audit.ps1` accordingly and document the change here.
+
+## Knowledge compartmentalization guidance
+
+- Consult `knowledge-compartmentalization.md` to see the high-level topics that stay in the active contexts and the dedicated offload files (like `offloads/pointer-guidelines.md`) that hold the detailed versions.
+- When responding, prioritize the summary in the main context files. If an LLM or contributor requires extra depth, reference the relevant offload file and ask for it explicitly instead of absorbing every detail by default.

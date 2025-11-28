@@ -127,16 +127,14 @@ foreach ($sec in $sections) {
   $archiveEntries += ""
 }
 
-## Write archive atomically via shared writer
-. (Join-Path $libDir 'ArchiveWriter.ps1')
-$maxRetries = 5
-$delayMs = 250
-$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join "`n") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8
+. (Join-Path $libDir 'ArchiveDocument.ps1')
+$archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $archiveEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
 
-if (-not $success) {
-  Write-Host "Error: Unable to create archive file after $maxRetries attempts: $archiveFile" -ForegroundColor Red
+if (-not $archiveResult.Success) {
+  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
   exit 2
 }
+$archiveFile = $archiveResult.Path
 
 # Rebuild open-questions-context.md: remove archived questions
 $archivedLineNums = $toArchive | ForEach-Object { $_.LineNum }

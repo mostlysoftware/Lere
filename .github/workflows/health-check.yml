@@ -1,11 +1,17 @@
 name: Scheduled Health Check
 
 on:
-  # Run weekly on Sundays at 6am UTC
+  # Run on pushes and pull requests so PRs can be gated by the health check
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+  # Existing scheduled run (weekly)
   schedule:
     - cron: '0 6 * * 0'
-  
-  # Also run on demand
+
+  # Also run on demand with an optional scope and a toggle to create an issue
   workflow_dispatch:
     inputs:
       scope:
@@ -23,6 +29,11 @@ on:
         description: 'Create issue for findings'
         required: false
         default: true
+        type: boolean
+      always_upload_artifacts:
+        description: 'When true, always upload scripts/audit-data artifacts for debugging (also uploads on failure)'
+        required: false
+        default: false
         type: boolean
 
 jobs:
@@ -68,6 +79,25 @@ jobs:
           path: health-report.md
           retention-days: 30
 
+      - name: List audit-data files (debug)
+        if: failure() || github.event.inputs.always_upload_artifacts == 'true'
+        shell: pwsh
+        run: |
+          if (Test-Path .\scripts\audit-data) {
+            Write-Host "Audit-data files:";
+            Get-ChildItem -Path .\scripts\audit-data -Recurse | Select-Object FullName, @{Name='KB';Expression={[math]::Round($_.Length/1Kb,2)}} | Format-Table -AutoSize
+          } else {
+            Write-Host "No scripts/audit-data folder present"
+          }
+
+      - name: Upload audit artifacts (debug)
+        if: failure() || github.event.inputs.always_upload_artifacts == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: health-check-audit-data
+          path: scripts/audit-data/**
+          retention-days: 7
+
       - name: Create issue for significant findings
         if: steps.health.outputs.has_issues == 'true' && (github.event.inputs.create_issue == 'true' || github.event_name == 'schedule')
         uses: actions/github-script@v7
@@ -109,9 +139,13 @@ jobs:
               console.log('Created new health check issue');
             }
 
-      - name: Fail on errors
-        if: steps.health.outputs.errors > 0
+      - name: Fail on findings (block PRs)
+        # For stability: only fail the job when there are errors. Warnings will be reported but won't block PRs.
+        # This follows the project's conservative philosophy: avoid false-positive CI failures and prefer issues for warnings.
+        if: steps.health.outputs.errors != '0'
         shell: pwsh
         run: |
-          Write-Host "::error::Health check found ${{ steps.health.outputs.errors }} errors"
+          $errs = ${'{'}{steps.health.outputs.errors}{'}'}
+          Write-Host "Health check summary: errors=$errs"
+          Write-Host "::error::Health check failed: errors=$errs"
           exit 1

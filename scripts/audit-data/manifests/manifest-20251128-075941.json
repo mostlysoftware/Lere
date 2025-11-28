@@ -1,0 +1,258 @@
+{
+    "generated":  "2025-11-28 07:59:41",
+    "root":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere",
+    "files":  [
+                  {
+                      "path":  "chat_context/ATTACHMENTS.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\ATTACHMENTS.md",
+                      "size":  319,
+                      "sha256":  "A9A8C222C77DB8AA602C043AC28F06DC3060A7706209B6BD4C5E9EAC7DE0D9F3",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T11:13:11.9222821Z"
+                  },
+                  {
+                      "path":  "chat_context/changelog-context.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\changelog-context.md",
+                      "size":  8836,
+                      "sha256":  "2B137A67B9C2BB569340D03B6E188335843915DE2A3B738DDD7CF8572F369AEB",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T13:47:55.8246698Z"
+                  },
+                  {
+                      "path":  "chat_context/gameplay-context.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\gameplay-context.md",
+                      "size":  876,
+                      "sha256":  "964FCF3E5EB341807181505E0BB5A521CD044509C8E313C0D1B9DB6A5E5E92B5",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T09:51:48.1342339Z"
+                  },
+                  {
+                      "path":  "chat_context/general-chat-context.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\general-chat-context.md",
+                      "size":  12593,
+                      "sha256":  "8BACAA3E30B417D67D4D1EAD9000D92371247481D139665F3A178258121FBDB2",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T13:43:04.1853430Z"
+                  },
+                  {
+                      "path":  "chat_context/knowledge-compartmentalization.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\knowledge-compartmentalization.md",
+                      "size":  3187,
+                      "sha256":  "6387D39BBE843219B852672CE218A48E9D4DA1F184B11FF6AA931372FF711026",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T13:13:48.1003377Z"
+                  },
+                  {
+                      "path":  "chat_context/open-questions-context.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\open-questions-context.md",
+                      "size":  2120,
+                      "sha256":  "144F5C566E6CB8E5B1F7248CCFA65276632B24F4DAC3BF47B2A9FF3F639A2159",
+                      "bom":  "UTF8-BOM",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T13:53:30.5950928Z"
+                  },
+                  {
+                      "path":  "chat_context/plugin-context.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\plugin-context.md",
+                      "size":  1671,
+                      "sha256":  "85EEBCBE2CFB452FB5076F5F7D974EC5475ED3B30E1D0A3A5502882D6AAF68B0",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T13:47:07.0695015Z"
+                  },
+                  {
+                      "path":  "chat_context/PRIVACY.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\PRIVACY.md",
+                      "size":  366,
+                      "sha256":  "9A9A18E74D19A1503D389204E4F58DB61B4CA2B5533AE66D80BD3146E5224882",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T11:13:18.8214142Z"
+                  },
+                  {
+                      "path":  "chat_context/README.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\README.md",
+                      "size":  3061,
+                      "sha256":  "F46A5DA251F4E92CC8822A3AF4B7D8FD4DED4BD2030AF5E7C35E0E3160D0C804",
+                      "bom":  "UTF8-BOM",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T12:41:34.9548407Z"
+                  },
+                  {
+                      "path":  "chat_context/reasoning-context.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\reasoning-context.md",
+                      "size":  3897,
+                      "sha256":  "89C63428FB87E9F84AE99C807819FF1A7AB802796E911B70FF33F215E512CA20",
+                      "bom":  "UTF8-BOM",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T10:59:24.2005643Z"
+                  },
+                  {
+                      "path":  "chat_context/session-context.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\session-context.md",
+                      "size":  12183,
+                      "sha256":  "A92C6202A6DA486F479B0098AE27ADE62280961629EE1242299EDD90800E1DF4",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T13:44:52.9007683Z"
+                  },
+                  {
+                      "path":  "chat_context/technical-context.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\technical-context.md",
+                      "size":  9356,
+                      "sha256":  "41E70E00FB88E4462B404435512F55725743600C90101252FFED965C577DA1AC",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T13:21:46.5168512Z"
+                  },
+                  {
+                      "path":  "chat_context/.obsidian/app.json",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\.obsidian\\app.json",
+                      "size":  2,
+                      "sha256":  "44136FA355B3678A1146AD16F7E8649E94FB4FC21FE77E8310C060F61CAAFF8A",
+                      "bom":  "None/Unknown",
+                      "newline":  "Unknown",
+                      "lastWrite":  "2025-11-28T07:42:04.3463753Z"
+                  },
+                  {
+                      "path":  "chat_context/.obsidian/appearance.json",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\.obsidian\\appearance.json",
+                      "size":  2,
+                      "sha256":  "44136FA355B3678A1146AD16F7E8649E94FB4FC21FE77E8310C060F61CAAFF8A",
+                      "bom":  "None/Unknown",
+                      "newline":  "Unknown",
+                      "lastWrite":  "2025-11-28T07:42:04.3512362Z"
+                  },
+                  {
+                      "path":  "chat_context/.obsidian/core-plugins.json",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\.obsidian\\core-plugins.json",
+                      "size":  696,
+                      "sha256":  "763CF20A921FD9955735B278006820B90B207B2FC04D9E79CA648279C7C14276",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T07:42:04.3592743Z"
+                  },
+                  {
+                      "path":  "chat_context/.obsidian/workspace.json",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\.obsidian\\workspace.json",
+                      "size":  6467,
+                      "sha256":  "961024F9BE0F74576A460F136A089BD9285528B909226C42683CAF2BB08E3E6C",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T13:52:07.0107670Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/backup-2025-11-27-2359.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\backup-2025-11-27-2359.md",
+                      "size":  2431,
+                      "sha256":  "978C6535D1A5829C3BCEFF8A4F266B6A73F944A5F02C748179CC1BB0B6059C20",
+                      "bom":  "None/Unknown",
+                      "newline":  "Unknown",
+                      "lastWrite":  "2025-11-28T07:42:04.3748708Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/changelog-entry-20251128-0025.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\changelog-entry-20251128-0025.md",
+                      "size":  406,
+                      "sha256":  "5566B5CA89E45A92080BABB0046513FD6AA4D2945E0F07EEA1211CF363B1E876",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T08:03:53.4097177Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/question-prioritization-2025-11.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\question-prioritization-2025-11.md",
+                      "size":  1967,
+                      "sha256":  "98433599848A8CE4F4A164E614D3B1E9C7ED6F9966526557769DD0623EE1C38C",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T13:14:57.1036863Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/questions-archive-20251128-024538.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\questions-archive-20251128-024538.md",
+                      "size":  2315,
+                      "sha256":  "2CBFF76C5757C53BF85C930EBB80090BA0B4D3E00E6E7B67F9CE194BAFE5DC6B",
+                      "bom":  "UTF8-BOM",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T08:46:18.3765536Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/questions-archive-20251128-034213.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\questions-archive-20251128-034213.md",
+                      "size":  615,
+                      "sha256":  "02283FAF5DEA920AEB9D0034CEE6E46693BA874D9CD0EA77AC53E1FDB7A3BD8D",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T09:42:14.0252540Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/reasoning-archive-20251128-021943.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\reasoning-archive-20251128-021943.md",
+                      "size":  4316,
+                      "sha256":  "4CFBB3C28D790D840533C0762CBB13EE6A8AC4D5040F3EB4D5B3F33D86E6B065",
+                      "bom":  "UTF8-BOM",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T08:19:43.2213557Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/reasoning-archive-20251128-034221.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\reasoning-archive-20251128-034221.md",
+                      "size":  2590,
+                      "sha256":  "728A5772D6C4EAF74519819DE994D11908CD83037ED1144DCECF28CFBF2F86A4",
+                      "bom":  "None/Unknown",
+                      "newline":  "LF",
+                      "lastWrite":  "2025-11-28T10:07:30.3275666Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/session-archive.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\session-archive.md",
+                      "size":  4234,
+                      "sha256":  "0312559193B0849362BAABBF137C416693651C12B201C3C73FBB14BA0B389FE9",
+                      "bom":  "None/Unknown",
+                      "newline":  "Unknown",
+                      "lastWrite":  "2025-11-28T07:42:04.4075644Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/session-cleanup-notes.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\session-cleanup-notes.md",
+                      "size":  1973,
+                      "sha256":  "5E8519069C6A76385EBEC5B80637C7F9C8BD089A663F61220B295FB760699F88",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T13:13:48.1822464Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/session-close-20251128-0025.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\session-close-20251128-0025.md",
+                      "size":  1510,
+                      "sha256":  "8D22AD6BBA4371ADA824E6FEBA85ED5BEB1824B4B93D03955638D3BBCA7C230E",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T08:03:53.3476818Z"
+                  },
+                  {
+                      "path":  "chat_context/archives/technical-deep-dive.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\archives\\technical-deep-dive.md",
+                      "size":  2706,
+                      "sha256":  "E4F42F5743A9D660432EFD8B3707E5D43A4602A881ED744DC16879CF2F13B788",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T13:14:57.0151294Z"
+                  },
+                  {
+                      "path":  "chat_context/offloads/pointer-guidelines.md",
+                      "fullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\offloads\\pointer-guidelines.md",
+                      "size":  4318,
+                      "sha256":  "E16C0737B9DE95678A6E531BBE0A8F4200C7C28F6AB318F4B17A885326EE20F3",
+                      "bom":  "None/Unknown",
+                      "newline":  "CRLF",
+                      "lastWrite":  "2025-11-28T12:40:55.6190650Z"
+                  }
+              ]
+}

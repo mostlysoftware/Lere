@@ -17,9 +17,15 @@ param(
     [string]$GradleVersion = '8.4.1'
 )
 
-function Test-CommandExists {
-    param([string]$Cmd)
-    return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null
+# Prefer shared helper if present; fall back to local definition for compatibility
+$shared = Join-Path $PSScriptRoot 'lib\Test-CommandExists.ps1'
+if (Test-Path $shared) {
+    . $shared
+} else {
+    function Test-CommandExists {
+        param([string]$Cmd)
+        return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null
+    }
 }
 
 Write-Host "Setting up Gradle wrapper (preferred Gradle version: $GradleVersion)" -ForegroundColor Cyan

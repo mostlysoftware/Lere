@@ -2,7 +2,7 @@
 Simple, robust session pruner with unified metadata support.
 
 === FLOW ===
-1. Load shared libraries (Parse-EntryMetadata, Write-Atomically)
+1. Load shared libraries (Parse-EntryMetadata, ArchiveDocument)
 2. Read session-context.md and find all (Session YYYY-MM-DD HH:MM) markers
 3. Parse each session block's metadata (unified HTML comments or legacy inference)
 4. Determine archive eligibility: closed status OR older than MaxAgeDays
@@ -32,7 +32,6 @@ param(
 # Load shared libraries
 $libDir = Join-Path $PSScriptRoot 'lib'
 . (Join-Path $libDir 'Parse-EntryMetadata.ps1')
-. (Join-Path $libDir 'Write-Atomically.ps1')
 
 $sessionFile = Join-Path $Root 'chat_context\session-context.md'
 $archiveDir = Join-Path $Root 'chat_context\archives'
@@ -115,10 +114,8 @@ if ($toArchive.Count -eq 0) {
   exit 0
 }
 
-# Ensure archives dir exists
-if (-not (Test-Path $archiveDir)) { New-Item -ItemType Directory -Path $archiveDir | Out-Null }
-
 # Build archive content in-memory for a new timestamped archive file
+. (Join-Path $libDir 'ArchiveDocument.ps1')
 $archiveHeader = "# Session archive`n`nArchived on " + (Get-Date -Format 'yyyy-MM-dd HH:mm') + "`n`n"
 $appendEntries = @()
 $appendEntries += $archiveHeader
@@ -132,14 +129,14 @@ foreach ($b in $toArchive) {
   $appendEntries += "`n`n"
 }
 
-# Write archive atomically using shared library
-try {
-  Write-Atomically -Path $archiveFile -Content ($appendEntries -join "`n")
-} catch {
-  Write-Host "Error: Unable to create archive file: $($_.Exception.Message)" -ForegroundColor Red
+$archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $appendEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
+
+if (-not $archiveResult.Success) {
+  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
   Write-Host "Aborting: session-context.md will not be modified to avoid data loss." -ForegroundColor Red
   exit 2
 }
+$archiveFile = $archiveResult.Path
 
 # Rebuild session-context.md content: keep prefix before first marker and keep last N blocks; replace archived blocks with pointers
 $newSections = @()

@@ -34,9 +34,34 @@ $ProjectConfig = @{
     OutDir = 'scripts/audit-data'
   KeepReports = 10
   }
+  Prune = @{
+    # Number of files above which a prune proposal requires review (default: 3)
+    Threshold = 3
+    # If true, proposals that are explicitly labeled with Risk='low' and Impact='high'
+    # will be auto-approved (manifest will be marked Approved=true) and may be applied
+    # without opening a PR when the operator chooses. Default is false for safety.
+    AutoApproveHighImpactLowRisk = $false
+  }
+  Backup = @{
+    # How many days to retain snapshots (0 = keep forever)
+    RetentionDays = 30
+  }
   Onboarding = @{
     QuickStart = 'Run .\scripts\health_check.ps1 -Scope all -Report console ; see scripts/audit-data for JSON reports and manifests'
     MemoryPath = 'chat_context (Memory File headers present)'
+  }
+  Health = @{
+    AssertScriptsUpToDate = $false
+    ScopeCreep = @{
+      # Context-level thresholds for open questions
+      MaxOpenQuestions = 10
+      MaxHighPriorityOpen = 0
+      MaxDeferredQuestions = 20
+
+      # Project-level thresholds for outstanding findings
+      MaxProjectWarnings = 5
+      MaxProjectErrors = 0
+    }
   }
   ReasoningCritique = @{
     Enabled = $true

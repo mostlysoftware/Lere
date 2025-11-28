@@ -1,0 +1,60 @@
+name: Auto-apply low-risk high-impact prunes
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # daily at 04:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  auto-apply-prunes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Run auto-apply prune script
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          Set-StrictMode -Version Latest
+          $ErrorActionPreference = 'Stop'
+          Write-Host 'Dot-sourcing ArchiveManager'
+          . ./scripts/lib/ArchiveManager.ps1
+
+          # Create a proposal for all audit-data JSON (tunable)
+          $manifestPath = New-ArchiveProposal -Paths 'scripts/audit-data/*.json' -ManifestOutDir 'scripts/audit-data/manifests' -RuleId 'autoapply-ci' -Risk low -Impact high
+          Write-Host "Proposal: $manifestPath"
+
+          if (-not (Test-Path $manifestPath)) { Write-Host 'No proposal manifest created; exiting'; exit 0 }
+
+          $manifest = Get-Content -Raw -Path $manifestPath | ConvertFrom-Json
+          $count = $manifest.Items.Count
+          Write-Host "Proposal items: $count"
+          # Create a pre-apply snapshot (recommended by policy)
+          if (Test-Path ./scripts/lib/ProjectConfig.ps1) { . ./scripts/lib/ProjectConfig.ps1 ; $d = $ProjectConfig.Backup.RetentionDays } else { $d = 0 }
+          Write-Host 'Creating pre-apply snapshot (compressing where possible)'
+          $snapshotPath = ./scripts/create_snapshot.ps1 -Root . -OutDir backups -Compress -RetentionDays $d
+          Write-Host "Pre-apply snapshot: $snapshotPath"
+
+          Write-Host 'Applying proposal now (auto-apply)'
+          $ciRunId = $env:GITHUB_RUN_ID
+          $ciSha = $env:GITHUB_SHA
+          $ciRunNumber = $env:GITHUB_RUN_NUMBER
+          Write-Host "CI run id: $ciRunId, sha: $ciSha, run number: $ciRunNumber"
+          $archiveManifestPath = Apply-ArchiveManifest -ManifestPath $manifestPath -SnapshotPath $snapshotPath -CiRunId $ciRunId -CiSha $ciSha -CiRunNumber $ciRunNumber
+          Write-Host "Archive manifest: $archiveManifestPath"
+
+          # Write a human-readable audit summary next to the archive manifest and commit it for reviewers
+          Write-Host 'Generating human-readable audit summary'
+          $summaryPath = . ./scripts/lib/Write-AuditSummary.ps1 -ArchiveManifestPath $archiveManifestPath
+          Write-Host "Audit summary: $summaryPath"
+
+          # Commit and push the changes (archive directory + manifests)
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "ci: auto-apply prune (autoapply-ci) -- archive: $archiveManifestPath; summary: $summaryPath" || Write-Host 'No changes to commit'
+          git push

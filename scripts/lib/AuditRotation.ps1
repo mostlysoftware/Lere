@@ -1,7 +1,28 @@
-<#[
-  AuditRotation.ps1
-  Safe audit-data rotation helper. Dry-run by default.
-]
+<#
+.SYNOPSIS
+    Rotate older audit-data files into an archive folder while keeping a recent set.
+
+.DESCRIPTION
+    Safe helper to archive older reports placed in `scripts/audit-data`. Dry-run by
+    default. When Run with -Apply, files older than the most recent KeepReports are
+    moved into `scripts/audit-data/archive`.
+
+.PARAMETER DryRun
+    When true (default) the script only reports what would be moved.
+
+.PARAMETER Apply
+    When provided the script performs the moves.
+
+.PARAMETER Pattern
+    Comma-separated patterns (e.g., "*.json,*.md") to match audit files.
+
+.EXAMPLE
+    # Dry-run: show what would be archived
+    .\AuditRotation.ps1 -DryRun
+
+.EXAMPLE
+    # Apply archival
+    .\AuditRotation.ps1 -Apply
 #>
 
 [CmdletBinding()]

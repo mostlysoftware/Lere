@@ -1,0 +1,1092 @@
+﻿{
+    "Timestamp":  "2025-11-28T05:48:36.5788301-06:00",
+    "Root":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere",
+    "SnapshotDir":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836",
+    "Items":  [
+                  {
+                      "Path":  ".\\scripts\\audit-data\\automation-opportunities-20251128-054317.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\automation-opportunities-20251128-054317.json",
+                      "Length":  79459,
+                      "Hash":  "6CDFB6C260EFA7109CD276BEFA15B311E6FB2B09DC8D533E922B56EE035CB47D",
+                      "LastWrite":  "2025-11-28T11:43:17.1345896Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\automation-opportunities-20251128-054549.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\automation-opportunities-20251128-054549.json",
+                      "Length":  85407,
+                      "Hash":  "332D15691F73E2477A54BD12C9057D3E4F087DC3755B62A593BBAB6C5C6514EA",
+                      "LastWrite":  "2025-11-28T11:45:49.6330807Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-045649.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-045649.json",
+                      "Length":  7516,
+                      "Hash":  "BF0A5B55F4A0D286662DA122B9538C7E3C7F3078329B24FDD8351D71202F44F4",
+                      "LastWrite":  "2025-11-28T10:56:49.8938315Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-045930.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-045930.json",
+                      "Length":  18856,
+                      "Hash":  "E48FFC0DEE771E784126EA17EA98F1E9548DAE2DD1642C78F513EB91503EF7AC",
+                      "LastWrite":  "2025-11-28T10:59:30.1305269Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-045932.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-045932.json",
+                      "Length":  7516,
+                      "Hash":  "BF0A5B55F4A0D286662DA122B9538C7E3C7F3078329B24FDD8351D71202F44F4",
+                      "LastWrite":  "2025-11-28T10:59:32.0471115Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-050007.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-050007.json",
+                      "Length":  18856,
+                      "Hash":  "E48FFC0DEE771E784126EA17EA98F1E9548DAE2DD1642C78F513EB91503EF7AC",
+                      "LastWrite":  "2025-11-28T11:00:07.8763439Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-050009.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-050009.json",
+                      "Length":  7516,
+                      "Hash":  "BF0A5B55F4A0D286662DA122B9538C7E3C7F3078329B24FDD8351D71202F44F4",
+                      "LastWrite":  "2025-11-28T11:00:09.9526370Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-050945.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-050945.json",
+                      "Length":  18856,
+                      "Hash":  "E48FFC0DEE771E784126EA17EA98F1E9548DAE2DD1642C78F513EB91503EF7AC",
+                      "LastWrite":  "2025-11-28T11:09:45.4723251Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-050947.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-050947.json",
+                      "Length":  7516,
+                      "Hash":  "BF0A5B55F4A0D286662DA122B9538C7E3C7F3078329B24FDD8351D71202F44F4",
+                      "LastWrite":  "2025-11-28T11:09:47.3314727Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051322.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051322.json",
+                      "Length":  18856,
+                      "Hash":  "0CC9DA67C802F889DC96452D6A39F0B168E18F8850C92DE9A64B748A3BAF76B6",
+                      "LastWrite":  "2025-11-28T11:13:22.9617005Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051324.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051324.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:13:24.7975879Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051420.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051420.json",
+                      "Length":  18856,
+                      "Hash":  "99F5B721772D528DB058D0342FAB51FBD936839D8279247CDAF0EDD2595708CF",
+                      "LastWrite":  "2025-11-28T11:14:20.3107208Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051422.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051422.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:14:22.2765067Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051738.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051738.json",
+                      "Length":  18856,
+                      "Hash":  "99F5B721772D528DB058D0342FAB51FBD936839D8279247CDAF0EDD2595708CF",
+                      "LastWrite":  "2025-11-28T11:17:38.6125217Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051740.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051740.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:17:40.5126506Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051821.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051821.json",
+                      "Length":  18856,
+                      "Hash":  "0F94289FC6047877125E1C16FEDDD37133F90C267CED5ADF62019ACDE402B23B",
+                      "LastWrite":  "2025-11-28T11:18:21.0956630Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051823.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051823.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:18:23.1030866Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051851.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051851.json",
+                      "Length":  18856,
+                      "Hash":  "0F94289FC6047877125E1C16FEDDD37133F90C267CED5ADF62019ACDE402B23B",
+                      "LastWrite":  "2025-11-28T11:18:51.4478561Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051853.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051853.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:18:53.4578564Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051916.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051916.json",
+                      "Length":  18856,
+                      "Hash":  "0F94289FC6047877125E1C16FEDDD37133F90C267CED5ADF62019ACDE402B23B",
+                      "LastWrite":  "2025-11-28T11:19:17.0092373Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-051918.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-051918.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:19:18.9204495Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-052211.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-052211.json",
+                      "Length":  18856,
+                      "Hash":  "0F94289FC6047877125E1C16FEDDD37133F90C267CED5ADF62019ACDE402B23B",
+                      "LastWrite":  "2025-11-28T11:22:11.1843798Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-052214.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-052214.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:22:14.0973362Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-052917.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-052917.json",
+                      "Length":  18856,
+                      "Hash":  "0F94289FC6047877125E1C16FEDDD37133F90C267CED5ADF62019ACDE402B23B",
+                      "LastWrite":  "2025-11-28T11:29:17.6973428Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-053052.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-053052.json",
+                      "Length":  18856,
+                      "Hash":  "0F94289FC6047877125E1C16FEDDD37133F90C267CED5ADF62019ACDE402B23B",
+                      "LastWrite":  "2025-11-28T11:30:52.6590971Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-053054.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-053054.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:30:54.7532042Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-053950.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-053950.json",
+                      "Length":  18856,
+                      "Hash":  "A469DF9FAE088EEA62882ADB805554DECBBAF4C04E1918E3B49587145504ADFA",
+                      "LastWrite":  "2025-11-28T11:39:50.1723696Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-053952.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-053952.json",
+                      "Length":  7516,
+                      "Hash":  "173A8C583C0573E4D25139BDEC40EE91FABFE43906A7E2E8420096408312E158",
+                      "LastWrite":  "2025-11-28T11:39:52.6004107Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-054300.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-054300.json",
+                      "Length":  18856,
+                      "Hash":  "F7F7565E479A1344A506DC00E43E899F0E01932FBEDB4CF087C08EAF0EFC9085",
+                      "LastWrite":  "2025-11-28T11:43:00.3581091Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-054316.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-054316.json",
+                      "Length":  18856,
+                      "Hash":  "F7F7565E479A1344A506DC00E43E899F0E01932FBEDB4CF087C08EAF0EFC9085",
+                      "LastWrite":  "2025-11-28T11:43:16.2643253Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\duplicates-20251128-054548.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\duplicates-20251128-054548.json",
+                      "Length":  24105,
+                      "Hash":  "84461CF9797EC6748F58B92D53EA5BC74AFF261E9655FA6F6D31F0CD5DE97700",
+                      "LastWrite":  "2025-11-28T11:45:48.7753650Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-045649.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-045649.md",
+                      "Length":  2499,
+                      "Hash":  "7E0A5038D3FA74E37C500E7EA3EFEAEC9E517DC1648BE9D584105D708F457E7E",
+                      "LastWrite":  "2025-11-28T10:56:49.3872391Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-045931.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-045931.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T10:59:31.5706914Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-045931.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-045931.md",
+                      "Length":  2499,
+                      "Hash":  "D5C95EDC84580E76A1D62CF168A10A6F54E93D634FBB20F7599F3EB1EE7C740B",
+                      "LastWrite":  "2025-11-28T10:59:31.5777367Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-050009.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-050009.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:00:09.4493530Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-050009.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-050009.md",
+                      "Length":  2499,
+                      "Hash":  "6C67AED537EF6CDE4414ABFB6CF616BE4A5A9BB6D6D82C05A60685C454101A79",
+                      "LastWrite":  "2025-11-28T11:00:09.4553534Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-050946.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-050946.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:09:46.9225339Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-050946.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-050946.md",
+                      "Length":  2499,
+                      "Hash":  "9CE3B647143580D264E4F524B5DC511D93D32E332A6A1F1E2BDAAC0D29C7F26D",
+                      "LastWrite":  "2025-11-28T11:09:46.9289430Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051324.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051324.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:13:24.3766268Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051324.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051324.md",
+                      "Length":  2499,
+                      "Hash":  "C28F0C3EEBD77DFED82EDC62A551DB3DD9269AD2319634D49808A96D2A758332",
+                      "LastWrite":  "2025-11-28T11:13:24.3830875Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051421.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051421.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:14:21.7758447Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051421.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051421.md",
+                      "Length":  2499,
+                      "Hash":  "EE5CC0BACB3674C515722681E0ABA05A498E922FAD98056844CA1CB1CE61F90D",
+                      "LastWrite":  "2025-11-28T11:14:21.7844252Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051740.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051740.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:17:40.0784337Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051740.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051740.md",
+                      "Length":  2499,
+                      "Hash":  "B3FA611D21537BCF55EB9554B8CDA5B15D8F6A605717DF42C68CA353C738CDA7",
+                      "LastWrite":  "2025-11-28T11:17:40.0845291Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051822.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051822.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:18:22.5698242Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051822.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051822.md",
+                      "Length":  2499,
+                      "Hash":  "0C5F75FD877D6AE0950596A42D0E50B21FA45F80B122B365043DE85D265F5508",
+                      "LastWrite":  "2025-11-28T11:18:22.5748107Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051852.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051852.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:18:53.0031102Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051852.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051852.md",
+                      "Length":  2499,
+                      "Hash":  "BC865EB59638BC33F8E748A25DC2786937F769D04F966AE0C246F7C28C384B3C",
+                      "LastWrite":  "2025-11-28T11:18:53.0115774Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051918.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051918.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:19:18.5103185Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-051918.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-051918.md",
+                      "Length":  2499,
+                      "Hash":  "6C6D45B98C9574D02A5EF42AE68E49703F534DB9CEF667098133E181DC0D85C4",
+                      "LastWrite":  "2025-11-28T11:19:18.5187542Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-052213.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-052213.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:22:13.3995664Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-052213.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-052213.md",
+                      "Length":  2499,
+                      "Hash":  "4FCB12E530BBEE7D01103EADC983F010330AD9C86E2932598294C4F745F72C33",
+                      "LastWrite":  "2025-11-28T11:22:13.4068713Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-053054.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-053054.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:30:54.3111124Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-053054.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-053054.md",
+                      "Length":  2499,
+                      "Hash":  "E5FE0C0D7DE8A1802E185975F917574ED62F78F45B3A0EB29710A1815A52E4E9",
+                      "LastWrite":  "2025-11-28T11:30:54.3179334Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-053952.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-053952.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T11:39:52.1157817Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\reasoning-critique-20251128-053952.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\reasoning-critique-20251128-053952.md",
+                      "Length":  2499,
+                      "Hash":  "98C95E1698520234A820185146A74BCADB49CC29279EF4D6B2E7736F2D775E56",
+                      "LastWrite":  "2025-11-28T11:39:52.1231043Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-041051.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-041051.json",
+                      "Length":  74179,
+                      "Hash":  "D9C9C8889D83ECD828C0DA90A82D54E0C1A4AA571DDE09A8EDA181D25637925D",
+                      "LastWrite":  "2025-11-28T10:10:51.7274605Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-041241.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-041241.json",
+                      "Length":  57143,
+                      "Hash":  "CA239DD7CF8598126BEB16ED86176EA7D4E8A0ED58F3EB9D59E0343163FEC9BA",
+                      "LastWrite":  "2025-11-28T10:12:41.5149376Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-041637.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-041637.json",
+                      "Length":  49195,
+                      "Hash":  "5DE8B71C45473DA4F3F720BEF8D82248E2750FE6890610CE160728635B26F353",
+                      "LastWrite":  "2025-11-28T10:16:37.4466921Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-041840.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-041840.json",
+                      "Length":  44287,
+                      "Hash":  "E5140E8C3AA3F3B675C184BCA69B4F24D42BB558256247CB9645348FB0BBCC2F",
+                      "LastWrite":  "2025-11-28T10:18:40.5872336Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-042101.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-042101.json",
+                      "Length":  44287,
+                      "Hash":  "E5140E8C3AA3F3B675C184BCA69B4F24D42BB558256247CB9645348FB0BBCC2F",
+                      "LastWrite":  "2025-11-28T10:21:01.7717217Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-042536.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-042536.json",
+                      "Length":  44287,
+                      "Hash":  "E5140E8C3AA3F3B675C184BCA69B4F24D42BB558256247CB9645348FB0BBCC2F",
+                      "LastWrite":  "2025-11-28T10:25:36.8819534Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-042946.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-042946.json",
+                      "Length":  18856,
+                      "Hash":  "87EA0E8AA27E4FCB79268293BFD1D75E423DFD21F9D6D7742B4CCEBD480531BB",
+                      "LastWrite":  "2025-11-28T10:29:46.5052485Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-043404.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-043404.json",
+                      "Length":  988,
+                      "Hash":  "4C572437817B3DB17D8FCA5F08FEC8791C10EF0B691726C1357F7DCA673D6B2C",
+                      "LastWrite":  "2025-11-28T10:34:04.9330312Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-043419.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-043419.json",
+                      "Length":  988,
+                      "Hash":  "4C572437817B3DB17D8FCA5F08FEC8791C10EF0B691726C1357F7DCA673D6B2C",
+                      "LastWrite":  "2025-11-28T10:34:19.0436253Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-043843.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-043843.json",
+                      "Length":  988,
+                      "Hash":  "4C572437817B3DB17D8FCA5F08FEC8791C10EF0B691726C1357F7DCA673D6B2C",
+                      "LastWrite":  "2025-11-28T10:38:43.3302612Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-044602.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-044602.json",
+                      "Length":  146792,
+                      "Hash":  "5EFDD0ADAABF7E5118048630F8E3229B2C68AD555F23F2F42EBD87EBAE9CD7DF",
+                      "LastWrite":  "2025-11-28T10:46:02.6146134Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-044604.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-044604.json",
+                      "Length":  467568,
+                      "Hash":  "5B46891B98B38D15557454680EC1622354CFED442552B95A0405B329FCD8BB55",
+                      "LastWrite":  "2025-11-28T10:46:04.2767444Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-045001.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-045001.json",
+                      "Length":  182788,
+                      "Hash":  "C9A9ABA13156406387F34B35DAB95953D62C8E69940E302B4EC0DFB55B95DA8E",
+                      "LastWrite":  "2025-11-28T10:50:01.2449504Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-045517.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-045517.json",
+                      "Length":  218784,
+                      "Hash":  "3BC3A50CAADDA326C9FFE8DE8C09ECC02A9F4A37AC867C543D3A95F8EED4FFFE",
+                      "LastWrite":  "2025-11-28T10:55:17.5382094Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-045639.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-045639.json",
+                      "Length":  7516,
+                      "Hash":  "BF0A5B55F4A0D286662DA122B9538C7E3C7F3078329B24FDD8351D71202F44F4",
+                      "LastWrite":  "2025-11-28T10:56:39.5852816Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\duplicates-20251128-045647.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\duplicates-20251128-045647.json",
+                      "Length":  254780,
+                      "Hash":  "62EF02102A92A053E67C1E302E752AAE7AB20814FB6165413C3FC4AD3D26E3BF",
+                      "LastWrite":  "2025-11-28T10:56:47.7448195Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043404.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043404.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T10:34:04.6105067Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043404.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043404.md",
+                      "Length":  2499,
+                      "Hash":  "8F2A2B3F1E7574EA13D5F02168F30989562C871750BF97A189BA7A41F06C63B8",
+                      "LastWrite":  "2025-11-28T10:34:04.6177062Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043418.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043418.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T10:34:18.7134808Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043418.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043418.md",
+                      "Length":  2499,
+                      "Hash":  "4B545B786E2ED0CE580CC85685625946F93137CD9C92222A28E9AF400D5CBFA7",
+                      "LastWrite":  "2025-11-28T10:34:18.7214286Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043842.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043842.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T10:38:42.9929366Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043842.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-043842.md",
+                      "Length":  2499,
+                      "Hash":  "11439E1ED0767E4F636245193CD6127D0A45DFB4A24EEA077E489532153DFAB3",
+                      "LastWrite":  "2025-11-28T10:38:43.0007423Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-044603.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-044603.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T10:46:03.8787747Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-044603.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-044603.md",
+                      "Length":  2499,
+                      "Hash":  "72CC1FA7503C516194EACBF8FD6DECC3769946BEDED0D8EECF1F2605402B3FD1",
+                      "LastWrite":  "2025-11-28T10:46:03.8870421Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045002.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045002.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T10:50:02.6245263Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045002.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045002.md",
+                      "Length":  2499,
+                      "Hash":  "AEF7B91DA3315B5AACB4495551766DACBAEFDBFD4C2DAAE1A990033DAC70C01D",
+                      "LastWrite":  "2025-11-28T10:50:02.6312152Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045518.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045518.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T10:55:18.9371437Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045518.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045518.md",
+                      "Length":  2499,
+                      "Hash":  "C8D0A47DA7DD36397E95E6C68D918B026CDBE0B43B547F4F41EF37319BC6920E",
+                      "LastWrite":  "2025-11-28T10:55:18.9471438Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045649.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\archive\\reasoning-critique-20251128-045649.json",
+                      "Length":  7351,
+                      "Hash":  "39BA50CE3C6F2719F4BAE313337E931E2B00C73407744F43F6AA3D6B8C5EA078",
+                      "LastWrite":  "2025-11-28T10:56:49.3789397Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\logs\\audit-2025-11-28-0000.log",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\logs\\audit-2025-11-28-0000.log",
+                      "Length":  3627,
+                      "Hash":  "EFC64E8DC397743326723D68C69B4778CC9CB7AB15EE6F1BB514DE372ACBD0CA",
+                      "LastWrite":  "2025-11-28T11:16:58.6817047Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-030619.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-030619.json",
+                      "Length":  11751,
+                      "Hash":  "A938253A24EE0EDC30FEBC37139FDA66D795930C8755163B4BB4CD7679E1534C",
+                      "LastWrite":  "2025-11-28T09:06:20.0973777Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-030641.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-030641.json",
+                      "Length":  11751,
+                      "Hash":  "F677605075C443BFBA256CF8BFE16E271CD2D7674B9BD232F7C022B76EAD2B47",
+                      "LastWrite":  "2025-11-28T09:06:41.6154709Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-030719.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-030719.json",
+                      "Length":  11751,
+                      "Hash":  "4E50A41F5B4ACC5A1989FB49B8034EAC4C81CB67B6C5673E2823FB5B08F47327",
+                      "LastWrite":  "2025-11-28T09:07:19.5325921Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-031246.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-031246.json",
+                      "Length":  11751,
+                      "Hash":  "733D723E3FAFBC00D1376DB8336069DB675D05C74EFD121E3FCCF29324DB9FC4",
+                      "LastWrite":  "2025-11-28T09:12:46.4549888Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-031302.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-031302.json",
+                      "Length":  11751,
+                      "Hash":  "E5542CA989CE302D73714C5D4FAC3EAA8A9B8376AF0DBF0EE0398DC2D00B83B2",
+                      "LastWrite":  "2025-11-28T09:13:02.9808271Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-031304.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-031304.json",
+                      "Length":  11751,
+                      "Hash":  "73E4BB93F361E2E8A7FD97817CB27485F5F3785BC4240CE7A6CCF47123A5540E",
+                      "LastWrite":  "2025-11-28T09:13:04.5793374Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-031306.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-031306.json",
+                      "Length":  11751,
+                      "Hash":  "1FA7D7A1E1FDE55AADA875A2EC7F251A75BAD1200252D4A40B54D47E47BE6857",
+                      "LastWrite":  "2025-11-28T09:13:06.1766557Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-031307.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-031307.json",
+                      "Length":  11751,
+                      "Hash":  "ECA69BD7D76805E2AA5104322BF243AF2253394D9B87B033B3C4A91D2CA2EA58",
+                      "LastWrite":  "2025-11-28T09:13:07.7772087Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-031309.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-031309.json",
+                      "Length":  11751,
+                      "Hash":  "615C88C0B4580318203F154CA720109FF92287774E71C005796D07B36AA6FFD3",
+                      "LastWrite":  "2025-11-28T09:13:09.3911634Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-031659.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-031659.json",
+                      "Length":  11746,
+                      "Hash":  "13A73BDD32A13014D4D7786BD5AB49DD0555F2C160DB2C3933A10912D0828ACB",
+                      "LastWrite":  "2025-11-28T09:16:59.5324027Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-031905.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-031905.json",
+                      "Length":  11746,
+                      "Hash":  "FED9AA884313FA85790B4179B43E2113F25CC889133A206459D663D1BD4D16A7",
+                      "LastWrite":  "2025-11-28T09:19:05.4667535Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-032226.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-032226.json",
+                      "Length":  11746,
+                      "Hash":  "4CBC1D87C6325B5B328A49354E20AA0FFD887A1E1792E0F5358CFBC638C61B74",
+                      "LastWrite":  "2025-11-28T09:22:26.3970052Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-033445.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-033445.json",
+                      "Length":  11746,
+                      "Hash":  "C227B76D8155EBC9B3DD9A2FA5BAFDF37ECA5EE262ABA773EDB98C9413A7E7EC",
+                      "LastWrite":  "2025-11-28T09:34:45.3866521Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-033639.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-033639.json",
+                      "Length":  11746,
+                      "Hash":  "7AA0F8A4F58BB64919CACB1AFF0F174D668E5D8001C98CBBB55527586D526E3E",
+                      "LastWrite":  "2025-11-28T09:36:39.2191783Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-033729.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-033729.json",
+                      "Length":  11746,
+                      "Hash":  "CDE351141E063C5FC8B166134DA39A944C18FD2220B3A37BF17D6D42A3507D2B",
+                      "LastWrite":  "2025-11-28T09:37:30.0679328Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-033901.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-033901.json",
+                      "Length":  11746,
+                      "Hash":  "909F949747D18A2618DEDCC856D3E7EAA2D9514CC7EDA6ADCC7818AC777BAC03",
+                      "LastWrite":  "2025-11-28T09:39:01.3547280Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-033915.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-033915.json",
+                      "Length":  11746,
+                      "Hash":  "D0C9977512A9C6CD07CC0578D8379F29F2EE7162FB4D30666B9FAA8D2949FD86",
+                      "LastWrite":  "2025-11-28T09:39:15.4569938Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-033931.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-033931.json",
+                      "Length":  11746,
+                      "Hash":  "36A0DF17145965C9CB440CAE6EAF6911F8A5F1D8440C8850D293AFD835DCC547",
+                      "LastWrite":  "2025-11-28T09:39:32.0021269Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-034008.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-034008.json",
+                      "Length":  11746,
+                      "Hash":  "03D792A89C4E34E62DB30E68CF555FCDEBAA3B983CD94774912E3DFBA079F5F1",
+                      "LastWrite":  "2025-11-28T09:40:08.4393798Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-034027.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-034027.json",
+                      "Length":  11746,
+                      "Hash":  "C460904BECDA764098BEC075295120155A9BD4C3352893A12BB4C76B84C00ECA",
+                      "LastWrite":  "2025-11-28T09:40:27.9695934Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-034229.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-034229.json",
+                      "Length":  12885,
+                      "Hash":  "89AEE4A03DF0A292BC241E9F5FACB987700D89C3A97716AB0F5508A564A44AB8",
+                      "LastWrite":  "2025-11-28T09:42:29.3173596Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-034908.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-034908.json",
+                      "Length":  12885,
+                      "Hash":  "C6B9CAB2ED2C7E1B6AC6A6D2ABA7E95049A21E12D373EC5CCE6520495C69A076",
+                      "LastWrite":  "2025-11-28T09:49:08.5979847Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-035244.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-035244.json",
+                      "Length":  13392,
+                      "Hash":  "6A3AFEC2FB2E9539CF200536CD17239192F8656E75F61520FB78F41EBFAE7153",
+                      "LastWrite":  "2025-11-28T09:52:44.6913504Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-040217.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-040217.json",
+                      "Length":  14450,
+                      "Hash":  "A05C770AB86F61503417B1A6C392E857492D402B8277EA6E7A7780F1DB30885D",
+                      "LastWrite":  "2025-11-28T10:02:17.8431626Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-040346.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-040346.json",
+                      "Length":  14449,
+                      "Hash":  "EA3640DEE38DB5DB8B827D035FD32738B06768D83E05AF572D048B8FCC17D3C4",
+                      "LastWrite":  "2025-11-28T10:03:46.5416336Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-040544.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-040544.json",
+                      "Length":  13896,
+                      "Hash":  "D7E8933BEDE78F0BAB1661F22FCD0DBAF72DAC48E147B8B324D98BD668654750",
+                      "LastWrite":  "2025-11-28T10:05:45.0208444Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-040735.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-040735.json",
+                      "Length":  13896,
+                      "Hash":  "6BB4D0363D82E5962E36EE32E04CB1317DB09BB2D172DDCF49D3DC66C23ACF24",
+                      "LastWrite":  "2025-11-28T10:07:35.9727146Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-043403.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-043403.json",
+                      "Length":  13896,
+                      "Hash":  "3F99CFA6FAB159A005D2CEF984CF896EE1B25A8A153E6B6FD2BBB9B17156F229",
+                      "LastWrite":  "2025-11-28T10:34:03.8901629Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-043417.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-043417.json",
+                      "Length":  13896,
+                      "Hash":  "BC58CC1DA630D8D7933BA2B6A8F10A1D6C765C3713E6EE90BF7BDBE6A56023D6",
+                      "LastWrite":  "2025-11-28T10:34:18.0174378Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-043842.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-043842.json",
+                      "Length":  13896,
+                      "Hash":  "B7F1B3A82B89377D97D7B119C52F06A834C9290FBE733093F9157F9F1B384A8D",
+                      "LastWrite":  "2025-11-28T10:38:42.2690104Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-044602.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-044602.json",
+                      "Length":  13897,
+                      "Hash":  "1D14ABE319E75382EDFB0D55CB754C172F4F35D230E5E7A5978F021E768A0868",
+                      "LastWrite":  "2025-11-28T10:46:03.0903543Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-045001.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-045001.json",
+                      "Length":  11371,
+                      "Hash":  "ED9B7896AD86CE8A39CF62F161BBB5DD53766526421C907CB7C3DD6C0A27D0B8",
+                      "LastWrite":  "2025-11-28T10:50:01.7651197Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-045517.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-045517.json",
+                      "Length":  11371,
+                      "Hash":  "FE219AC04679376F640AB08026C128917A99A490A254A3773A0A5CCAB5B3CAFF",
+                      "LastWrite":  "2025-11-28T10:55:18.0412179Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-045648.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-045648.json",
+                      "Length":  11371,
+                      "Hash":  "21391E2E5C1848A83BDE64B747C75F2F66E1E4F9935FBB51209EBB3E6CA51EF2",
+                      "LastWrite":  "2025-11-28T10:56:48.2671501Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-045930.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-045930.json",
+                      "Length":  11373,
+                      "Hash":  "AC7B0286CD7AF5C738015A408A77B2078252BB977BD156B8A0F3DC58CBE909ED",
+                      "LastWrite":  "2025-11-28T10:59:30.5596513Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-050008.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-050008.json",
+                      "Length":  11373,
+                      "Hash":  "29505FB28BC1AC647063654601606FA2F02C9B4A8699C46BFDB1AF6E0E903591",
+                      "LastWrite":  "2025-11-28T11:00:08.3680076Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-050945.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-050945.json",
+                      "Length":  11373,
+                      "Hash":  "4D34CD7B6A585BA58B47FCB260DE9F5BCA00C48AAC11E2BAADC064D37663B08E",
+                      "LastWrite":  "2025-11-28T11:09:45.9165378Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-051323.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-051323.json",
+                      "Length":  12381,
+                      "Hash":  "CD11DF72CA75788315296BB0D3B46A8C5CF2CC661CEF79E8FB98CB7D8ED3D13A",
+                      "LastWrite":  "2025-11-28T11:13:23.3574038Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-051420.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-051420.json",
+                      "Length":  12381,
+                      "Hash":  "FD7F4256CF554B43B4C9DAB186849FBC4E2A1AB38EF8B0B205B6F593EB74E95B",
+                      "LastWrite":  "2025-11-28T11:14:20.7187279Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-051738.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-051738.json",
+                      "Length":  12381,
+                      "Hash":  "4606E78B5F4BE5924D29D2ABADC98974034114D020514C1A5B955847B90AFE0D",
+                      "LastWrite":  "2025-11-28T11:17:39.0210563Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-051821.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-051821.json",
+                      "Length":  12381,
+                      "Hash":  "BD3DC06234A7999AE3692E12CE2F8BAC2A911C12E6C0E84C5581874A91B48672",
+                      "LastWrite":  "2025-11-28T11:18:21.5057973Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-051851.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-051851.json",
+                      "Length":  12381,
+                      "Hash":  "CEF7BFC99CAAF5FAE17BC5851B94DCB2324888BDD72CDEBCFB2686C189190825",
+                      "LastWrite":  "2025-11-28T11:18:51.8681237Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-051917.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-051917.json",
+                      "Length":  12381,
+                      "Hash":  "E549FC03C085DBA4290FEFB824AE60CB8FCB2BEA1FE526FAFC0A0BE907794A0A",
+                      "LastWrite":  "2025-11-28T11:19:17.4224145Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-052211.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-052211.json",
+                      "Length":  12381,
+                      "Hash":  "A001F2DC366FDBC64D1F375BDA82EA7E2518F154FC4F9EB6E88489C9BBC5F115",
+                      "LastWrite":  "2025-11-28T11:22:11.6858080Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-053052.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-053052.json",
+                      "Length":  12381,
+                      "Hash":  "A10FE36FF20691D9849CD81A1C7523BA2F8F844A7503C33CE19BB91FC4BC650D",
+                      "LastWrite":  "2025-11-28T11:30:53.1026132Z"
+                  },
+                  {
+                      "Path":  ".\\scripts\\audit-data\\manifests\\manifest-20251128-053950.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\scripts\\audit-data\\manifests\\manifest-20251128-053950.json",
+                      "Length":  12381,
+                      "Hash":  "D0F8703FFA201E19901994C3C6E813318E7F513B84F44C8246A74B20E317CD5C",
+                      "LastWrite":  "2025-11-28T11:39:50.8311950Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\ATTACHMENTS.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\ATTACHMENTS.md",
+                      "Length":  319,
+                      "Hash":  "A9A8C222C77DB8AA602C043AC28F06DC3060A7706209B6BD4C5E9EAC7DE0D9F3",
+                      "LastWrite":  "2025-11-28T11:13:11.9222821Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\changelog-context.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\changelog-context.md",
+                      "Length":  8950,
+                      "Hash":  "C6DC46BAFCD4BDF72B4DCCE69F6F6826E4E18811CFE2EFED323CCC858BC13FB4",
+                      "LastWrite":  "2025-11-28T10:45:26.4948744Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\gameplay-context.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\gameplay-context.md",
+                      "Length":  876,
+                      "Hash":  "964FCF3E5EB341807181505E0BB5A521CD044509C8E313C0D1B9DB6A5E5E92B5",
+                      "LastWrite":  "2025-11-28T09:51:48.1342339Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\general-chat-context.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\general-chat-context.md",
+                      "Length":  16057,
+                      "Hash":  "2A464D3781C204A3B9223A513E062649DF2B38E4A79C4FB6BA0B14557CF3FB7A",
+                      "LastWrite":  "2025-11-28T10:45:26.5643409Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\open-questions-context.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\open-questions-context.md",
+                      "Length":  1995,
+                      "Hash":  "E72EABC94ACAA9DF9DFC6F4DAAEE4DC91DA7BD08651BDA236F535564029A9235",
+                      "LastWrite":  "2025-11-28T09:51:48.0224979Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\plugin-context.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\plugin-context.md",
+                      "Length":  1410,
+                      "Hash":  "534D8CC45A7F5DF347627020B91AC8C8C55BE9E301009F979FF4FED79C6FD8D7",
+                      "LastWrite":  "2025-11-28T09:51:47.9482242Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\PRIVACY.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\PRIVACY.md",
+                      "Length":  366,
+                      "Hash":  "9A9A18E74D19A1503D389204E4F58DB61B4CA2B5533AE66D80BD3146E5224882",
+                      "LastWrite":  "2025-11-28T11:13:18.8214142Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\README.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\README.md",
+                      "Length":  2432,
+                      "Hash":  "99C44B9FAB39D092154938F0FBC2775D3FDDD449DCFCC1E4E6E5AA7B736F5AEE",
+                      "LastWrite":  "2025-11-28T10:45:26.7263108Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\reasoning-context.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\reasoning-context.md",
+                      "Length":  3897,
+                      "Hash":  "89C63428FB87E9F84AE99C807819FF1A7AB802796E911B70FF33F215E512CA20",
+                      "LastWrite":  "2025-11-28T10:59:24.2005643Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\session-context.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\session-context.md",
+                      "Length":  13103,
+                      "Hash":  "79926AD89A5C7FEE650C5ACD28BF526B8C6514DB0586E82CD52AAFD73238825C",
+                      "LastWrite":  "2025-11-28T10:45:26.3790987Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\technical-context.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\technical-context.md",
+                      "Length":  7649,
+                      "Hash":  "306D386F97AAE76DDFA7584767547AD98319C7C6830998D2346CDA7B9AA78B12",
+                      "LastWrite":  "2025-11-28T09:51:47.8593028Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\.obsidian\\app.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\.obsidian\\app.json",
+                      "Length":  2,
+                      "Hash":  "44136FA355B3678A1146AD16F7E8649E94FB4FC21FE77E8310C060F61CAAFF8A",
+                      "LastWrite":  "2025-11-28T07:42:04.3463753Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\.obsidian\\appearance.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\.obsidian\\appearance.json",
+                      "Length":  2,
+                      "Hash":  "44136FA355B3678A1146AD16F7E8649E94FB4FC21FE77E8310C060F61CAAFF8A",
+                      "LastWrite":  "2025-11-28T07:42:04.3512362Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\.obsidian\\core-plugins.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\.obsidian\\core-plugins.json",
+                      "Length":  696,
+                      "Hash":  "763CF20A921FD9955735B278006820B90B207B2FC04D9E79CA648279C7C14276",
+                      "LastWrite":  "2025-11-28T07:42:04.3592743Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\.obsidian\\workspace.json",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\.obsidian\\workspace.json",
+                      "Length":  6367,
+                      "Hash":  "D37C59431D4C92212D39874A6F04AE88CF3E17E610F08F5B1F17E13515998E54",
+                      "LastWrite":  "2025-11-28T11:13:16.2418892Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\archives\\backup-2025-11-27-2359.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\archives\\backup-2025-11-27-2359.md",
+                      "Length":  2431,
+                      "Hash":  "978C6535D1A5829C3BCEFF8A4F266B6A73F944A5F02C748179CC1BB0B6059C20",
+                      "LastWrite":  "2025-11-28T07:42:04.3748708Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\archives\\changelog-entry-20251128-0025.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\archives\\changelog-entry-20251128-0025.md",
+                      "Length":  406,
+                      "Hash":  "5566B5CA89E45A92080BABB0046513FD6AA4D2945E0F07EEA1211CF363B1E876",
+                      "LastWrite":  "2025-11-28T08:03:53.4097177Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\archives\\questions-archive-20251128-024538.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\archives\\questions-archive-20251128-024538.md",
+                      "Length":  2315,
+                      "Hash":  "2CBFF76C5757C53BF85C930EBB80090BA0B4D3E00E6E7B67F9CE194BAFE5DC6B",
+                      "LastWrite":  "2025-11-28T08:46:18.3765536Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\archives\\questions-archive-20251128-034213.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\archives\\questions-archive-20251128-034213.md",
+                      "Length":  615,
+                      "Hash":  "02283FAF5DEA920AEB9D0034CEE6E46693BA874D9CD0EA77AC53E1FDB7A3BD8D",
+                      "LastWrite":  "2025-11-28T09:42:14.0252540Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\archives\\reasoning-archive-20251128-021943.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\archives\\reasoning-archive-20251128-021943.md",
+                      "Length":  4316,
+                      "Hash":  "4CFBB3C28D790D840533C0762CBB13EE6A8AC4D5040F3EB4D5B3F33D86E6B065",
+                      "LastWrite":  "2025-11-28T08:19:43.2213557Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\archives\\reasoning-archive-20251128-034221.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\archives\\reasoning-archive-20251128-034221.md",
+                      "Length":  2590,
+                      "Hash":  "728A5772D6C4EAF74519819DE994D11908CD83037ED1144DCECF28CFBF2F86A4",
+                      "LastWrite":  "2025-11-28T10:07:30.3275666Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\archives\\session-archive.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\archives\\session-archive.md",
+                      "Length":  4234,
+                      "Hash":  "0312559193B0849362BAABBF137C416693651C12B201C3C73FBB14BA0B389FE9",
+                      "LastWrite":  "2025-11-28T07:42:04.4075644Z"
+                  },
+                  {
+                      "Path":  ".\\chat_context\\archives\\session-close-20251128-0025.md",
+                      "FullPath":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\backups\\snapshot-20251128-054836\\chat_context\\archives\\session-close-20251128-0025.md",
+                      "Length":  1510,
+                      "Hash":  "8D22AD6BBA4371ADA824E6FEBA85ED5BEB1824B4B93D03955638D3BBCA7C230E",
+                      "LastWrite":  "2025-11-28T08:03:53.3476818Z"
+                  }
+              ]
+}

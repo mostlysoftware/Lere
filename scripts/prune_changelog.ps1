@@ -136,9 +136,6 @@ if ($toArchive.Count -eq 0) {
 
 Write-Host "Archiving $($toArchive.Count) entries..." -ForegroundColor Cyan
 
-# Ensure archives dir exists
-if (-not (Test-Path $archiveDir)) { New-Item -ItemType Directory -Path $archiveDir | Out-Null }
-
 # Build archive content
 $archiveHeader = @"
 # Changelog Archive
@@ -160,16 +157,14 @@ foreach ($e in ($toArchive | Sort-Object Date -Descending)) {
   $archiveEntries += $e.Text
 }
 
-## Write archive atomically via shared writer
-. (Join-Path $libDir 'ArchiveWriter.ps1')
-$maxRetries = 5
-$delayMs = 250
-$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join "`n") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8
+. (Join-Path $libDir 'ArchiveDocument.ps1')
+$archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $archiveEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
 
-if (-not $success) {
-  Write-Host "Error: Unable to create archive file after $maxRetries attempts: $archiveFile" -ForegroundColor Red
+if (-not $archiveResult.Success) {
+  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
   exit 2
 }
+$archiveFile = $archiveResult.Path
 
 # Rebuild changelog-context.md: keep header + kept entries + archive pointer
 $archivedLineNums = $toArchive | ForEach-Object { $_.LineNum }

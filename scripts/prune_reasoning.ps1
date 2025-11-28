@@ -168,10 +168,7 @@ if ($toArchive.Count -eq 0) {
 
 Write-Host "Archiving $($toArchive.Count) threads..." -ForegroundColor Cyan
 
-# Ensure archives dir exists
-if (-not (Test-Path $archiveDir)) { New-Item -ItemType Directory -Path $archiveDir | Out-Null }
-
-# Build archive content
+. (Join-Path $libDir 'ArchiveDocument.ps1')
 $archiveHeader = "# Reasoning Archive`n`nArchived on " + (Get-Date -Format 'yyyy-MM-dd HH:mm') + "`n`n"
 $archiveEntries = @()
 $archiveEntries += $archiveHeader
@@ -182,16 +179,13 @@ foreach ($t in $toArchive) {
   $archiveEntries += "`n`n"
 }
 
-## Write archive atomically via shared writer
-. (Join-Path $libDir 'ArchiveWriter.ps1')
-$maxRetries = 5
-$delayMs = 250
-$success = Write-AtomicArchive -Path $archiveFile -Content ($archiveEntries -join "`n") -MaxRetries $maxRetries -DelayMs $delayMs -Encoding UTF8
+$archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $archiveEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
 
-if (-not $success) {
-  Write-Host "Error: Unable to create archive file after $maxRetries attempts: $archiveFile" -ForegroundColor Red
+if (-not $archiveResult.Success) {
+  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
   exit 2
 }
+$archiveFile = $archiveResult.Path
 
 # Rebuild reasoning-context.md: keep template + kept threads + pointers for archived
 $archivedNames = $toArchive | ForEach-Object { $_.Name }

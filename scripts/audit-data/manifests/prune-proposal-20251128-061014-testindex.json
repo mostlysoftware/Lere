@@ -1,0 +1,13 @@
+﻿{
+    "Operator":  "Eris",
+    "Timestamp":  "2025-11-28T12:10:14.7616543Z",
+    "RuleId":  "testindex",
+    "Items":  [
+                  {
+                      "Path":  "C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\audit-data\\manifests\\dummy.txt",
+                      "Length":  10,
+                      "LastWriteTimeUtc":  "2025-11-28T12:10:14.7616543Z",
+                      "SHA256":  "deadbeef"
+                  }
+              ]
+}

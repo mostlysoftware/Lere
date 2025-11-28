@@ -17,6 +17,10 @@ Example:
 - How to handle X? <!-- status: open -->
 ```
 
+**Archived questions:**
+ - Canonical reference (latest pruning batch): `archives/questions-archive-20251128-034213.md` (3 resolved questions).
+ - Previous bundle retained for historical context: `archives/questions-archive-20251128-024538.md` (17 resolved questions).
+
 ---
 
 
@@ -60,20 +64,9 @@ Example:
 
 ## technical-context.md
 
-- What's the minimum viable hosting setup for testing? <!-- status: open; priority: high --> Blocking Phase 1 validation.
+- What's the minimum viable hosting setup for testing? <!-- status: resolved; priority: high --> Documented under `technical-context.md` “Minimum Viable Hosting Setup”; Phase 1 baseline complete.
 - How to scale from dev to SMP without downtime? <!-- status: deferred --> Phase 2 - need working dev first.
 - How to balance exploration with narrative pacing? <!-- status: deferred --> Phase 2 - design question, not blocking.
 - How to integrate awe-inspiring terrain without breaking performance? <!-- status: deferred --> Phase 2 - worldgen iteration.
 - Should custom textures be mandatory for immersion? <!-- status: deferred --> Phase 2.
 
-
-
-
----
-
-**Archived questions:** See `archives/questions-archive-20251128-024538.md` (17 resolved questions).
-
-
----
-
-**Archived questions:** See `archives/questions-archive-20251128-034213.md` (3 resolved questions).

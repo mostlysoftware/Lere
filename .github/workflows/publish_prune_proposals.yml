@@ -1,0 +1,28 @@
+name: Publish prune proposals
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # daily at 03:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  prune-dryrun:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run prune dry-run
+        shell: pwsh
+        run: |
+          Set-StrictMode -Version Latest
+          pwsh -NoProfile -NonInteractive -Command \
+            "Import-Module ./scripts/lib/ProjectConfig.ps1 -ErrorAction SilentlyContinue; . ./tools/run_prune.ps1 -Paths 'scripts/audit-data/*.json' -RuleId 'ci-scan' -CreatePR:$false -Apply:$false"
+
+      - name: Upload manifests
+        uses: actions/upload-artifact@v4
+        with:
+          name: prune-proposals
+          path: |
+            scripts/audit-data/manifests/**
+            scripts/audit-data/manifests/*.md

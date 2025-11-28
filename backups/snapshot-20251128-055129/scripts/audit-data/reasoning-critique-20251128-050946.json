@@ -1,0 +1,200 @@
+﻿[
+    {
+        "Name":  "thread-name",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  18,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "multiplayer-shared-zone-mvp",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  23,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "phase-1-resource-scaffolding",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  14,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "quest-plugin-architecture",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  14,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "multiplayer-isolation-mechanics",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  14,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "plugin-architecture-tradeoff",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  22,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "edit-cycle-convention",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  59,
+                         "Questions":  2,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "governance-framework",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  52,
+                         "Questions":  2,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "pointer-syntax-standard",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  30,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "context-consolidation",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  30,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    },
+    {
+        "Name":  "context-restoration-test",
+        "Score":  80,
+        "Issues":  [
+                       {
+                           "detail":  "No explicit Summary/Conclusion section found",
+                           "type":  "no-summary"
+                       }
+                   ],
+        "Suggestions":  [
+                            "Add a short (2-4 line) Summary or Conclusion header that captures the final findings."
+                        ],
+        "Metadata":  {
+                         "Lines":  32,
+                         "Questions":  1,
+                         "HasSummary":  false
+                     }
+    }
+]

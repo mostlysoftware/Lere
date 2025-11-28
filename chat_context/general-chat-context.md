@@ -21,13 +21,13 @@
 
 ## Core Design Principles
 
-- Modularity ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Design systems as composable modules with clearly defined interfaces. Modules should be independently testable, optionally loadable, and swappable. This reduces coupling, enables community-contributed modules, and keeps the core lean.
+- Modularity — Design systems as composable modules with clearly defined interfaces. Modules should be independently testable, optionally loadable, and swappable. This reduces coupling, enables community-contributed modules, and keeps the core lean.
 
-- Replayability & Discovery ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Prioritize systems that encourage varied player experiences each run: procedural hooks, branching quest seeds, and emergent interactions. Make exploration rewarding and unpredictable within clear constraints to maximize replay value.
+- Replayability & Discovery — Prioritize systems that encourage varied player experiences each run: procedural hooks, branching quest seeds, and emergent interactions. Make exploration rewarding and unpredictable within clear constraints to maximize replay value.
 
-- Narrative Integrity ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Preserve the player's sense of story even in multiplayer and procedural contexts. Use isolation/instancing, narrative anchors (biomes/seeded events), and fail-safe mechanics so story beats remain coherent despite player joins/leaves.
+- Narrative Integrity — Preserve the player's sense of story even in multiplayer and procedural contexts. Use isolation/instancing, narrative anchors (biomes/seeded events), and fail-safe mechanics so story beats remain coherent despite player joins/leaves.
 
-- Performance & Stability ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Favor predictable, efficient implementations. Prioritize low-latency behavior, sane defaults for resource usage, and clear failure modes. When in doubt, prefer a simpler, stable approach over an unproven optimization.
+- Performance & Stability — Favor predictable, efficient implementations. Prioritize low-latency behavior, sane defaults for resource usage, and clear failure modes. When in doubt, prefer a simpler, stable approach over an unproven optimization.
 
 ## Privacy & anonymization rule
 
@@ -56,95 +56,16 @@ These principles form the lightweight contract we use when making trade-offs: if
 
 - [1] Implement multiplayer (ghosts, interactions)
 - [2] Make Lere plugin (ai wolf follower, interactions)
-- [3] Implement multiplayer
-- [4] Learn worldgen (biomes, structures)
-- [5] Build narrative/quest plugin
+- [3] Learn worldgen (biomes, structures)
+- [4] Build narrative/quest plugin
 
 ## Design Constraints
 
 - Must align with Minecraft's identity (block-based, chunk logic, multiplayer scaffolding).
 - Performance and stability prioritized over experimental features.
-- Modular systems for future reuse.
+## Pointer & Audit reference (lean summary)
 
-## Key Mechanics
-
-- Player isolation (visibility filtering or instancing).
-- Procedural landscapes with narrative hooks.
-- Quest framework
-- Magic system
-
-## Workflow Notes
-
-- chat_context folder = living design document + project management memory
-- Use session-context.md for current work, blockers, and decisions
-- Copilot acts as rubber duck and reasoning partner, keeping work on-task
-
-## Edit Cycle Convention
-
-Every change follows this 3-step rhythm to maintain traceability and crash-resilience:
-
-**1. Reasoning** (if multi-step or trade-off decision)
-   - Instantiate reasoning-context.md with problem, options, and constraints
-   - Work through Clarify ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Constraints ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Options ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Synthesize
-   - Reach explicit decision checkpoint
-
-**2. Decision Log** (capture decision in session-context.md)
-   - Note the decision in Current Focus or add a decision marker
-   - Link to reasoning-context.md if applicable
-   - Keep it terse: who decided what and why in one line
-
-**3. Changelog Entry** (durable ledger)
-   - Add entry to changelog-context.md in pointer style
-   - Format: `(YYYY-MM-DD, HH:MM) [What changed]. See [reasoning-context.md or session-context.md] for context.`
-   - Link back to reasoning thread or session decision, don't duplicate
-
-**Session Hygiene:**
-- Prune scratchpad notes after each session close marker so they don't bloat
-- Keep session-context.md focused on *current* work, not historical archive
-
-**Reasoning Instantiation:**
-- Spin up reasoning thread only for complex chains or trade-off decisions
-- Use simple decisions directly without a full reasoning thread
-- Archive reasoning threads if they become long; reference via changelog
-
-## Pointer Syntax Standard
-
-**Purpose:** Keep references between files uniform, scannable, and resilient to crashes or context loss.
-
-**Pointer Types:**
-
-1. **Reasoning Thread Hash:** `[#reasoning-thread-title]` <!-- example -->
-   - Example: `[#plugin-architecture-tradeoff]`
-   - Use when linking to a specific reasoning-context.md thread
-   - Makes grep/search easy; survives file renames
-
-2. **Session Marker:** `(Session YYYY-MM-DD HH:MM)`
-   - Example: `(Session 2025-11-27 21:45)`
-   - Use when referencing a decision or work block in session-context.md
-   - Timestamp lets you locate the exact decision point
-
-3. **Changelog Anchor:** `[changelog-entry:YYYY-MM-DD HH:MM]`
-   - Example: `[changelog-entry:2025-11-27 22:00]`
-   - Use when linking to a specific changelog entry
-   - Makes traceability auditable
-
-**Linking Rules:**
-
-- **Session ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Reasoning:** Include hash-tag when a session decision references a reasoning thread.
-  - Example: "Decision: Adopt modular plugin split. See [#plugin-architecture-tradeoff]." <!-- example -->
-
-- **Reasoning ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Changelog:** At the end of a reasoning thread, log the corresponding changelog entry.
-  - Example: "Logged in [changelog-entry:2025-11-27 22:00]." <!-- example -->
-
-- **Changelog ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Session/Reasoning:** Each durable entry should point back to its origin.
-  - Example: "(2025-11-27, 22:00) Codified edit cycle convention. See (Session 2025-11-27 21:45) and [#edit-cycle-convention]." <!-- example -->
-
-**Benefits:**
-
-- Scannability: Uniform tags make references grep-able and human-readable.
-- Resilience: Even mid-crash, manual checkpointing with tags keeps threads traceable.
-- Archiving: Tags allow pruning or consolidating reasoning threads without losing linkage.
-
+The full pointer syntax guide, audit checklist, regex snippets, and ownership notes live in `chat_context/offloads/pointer-guidelines.md` (see `[knowledge-compartmentalization:offload-pointer-guide]` for the reference pointer). This file keeps the overview here, while the offload document stores the detailed conventions and commands.
 ## Governance Framework for Changes
 
 **Changelog as ledger:**

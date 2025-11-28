@@ -94,7 +94,7 @@ Archived: false
 ## Current Focus (This Session)
 - [x] Goal: Establish chat_context as living design doc + project management hub; finalize folder structure
 - [x] Establish governance framework for managing changes
-- [x] Codify edit cycle convention (Reasoning ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Decision ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Changelog)
+- [x] Codify edit cycle convention (Reasoning — Decision — Changelog)
 - [x] Establish pointer syntax standard for uniform, resilient traceability
 - [x] Expand Guiding Philosophy with 4 core design principles
 - [x] Classify dependencies (essential vs optional) in technical-context.md
@@ -119,17 +119,17 @@ Archived: false
 - [#phase-1-resource-scaffolding]
 
 
-## (Session Close ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 2025-11-27, 23:30)
+## (Session Close — 2025-11-27, 23:30)
 
 **Summary:** Completed full governance scaffold + design pivoting. Vault is now auditable, traceable, and ready for Phase 1 plugin development.
 
 **Decisions made:**
-- [#edit-cycle-convention] ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Reasoning ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Decision ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Changelog rhythm established.
-- [#governance-framework] ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Changelog as ledger, session as scratchpad, reasoning as scaffold.
-- [#pointer-syntax-standard] ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Uniform pointer syntax for grep-ability and resilience.
-- [#multiplayer-isolation-mechanics] ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Hybrid isolation (private story + shared adventure zones).
-- [#quest-plugin-architecture] ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Biome-suggested quests with free-form pursuit.
-- [#phase-1-resource-scaffolding] ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Minimal datapack, < 50MB total distribution.
+- [#edit-cycle-convention] — Reasoning — Decision — Changelog rhythm established.
+- [#governance-framework] — Changelog as ledger, session as scratchpad, reasoning as scaffold.
+- [#pointer-syntax-standard] — Uniform pointer syntax for grep-ability and resilience.
+- [#multiplayer-isolation-mechanics] — Hybrid isolation (private story + shared adventure zones).
+- [#quest-plugin-architecture] — Biome-suggested quests with free-form pursuit.
+- [#phase-1-resource-scaffolding] — Minimal datapack, < 50MB total distribution.
 
 **Changelog entries added:**
 - [changelog-entry:2025-11-27 23:15] (design threads)
@@ -142,11 +142,11 @@ Archived: false
 - [changelog-entry:2025-11-27 21:30] (context consolidation)
 
 **Files updated:**
-- `general-chat-context.md` ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Guiding Philosophy, Audit Checklist, example tags marked
-- `session-context.md` ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Session template added, current focus completed
-- `technical-context.md` ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Dependency Policy, Phase 1 resource inventory, library allowlist
-- `reasoning-context.md` ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Eight reasoning threads (five governance + three design)
-- `changelog-context.md` ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Eight new entries with two-way pointer anchors
+- `general-chat-context.md` — Guiding Philosophy, Audit Checklist, example tags marked
+- `session-context.md` — Session template added, current focus completed
+- `technical-context.md` — Dependency Policy, Phase 1 resource inventory, library allowlist
+- `reasoning-context.md` — Eight reasoning threads (five governance + three design)
+- `changelog-context.md` — Eight new entries with two-way pointer anchors
 
 **Audit results:**
 - Pointer audit completed: all governance hashes have matching stubs in reasoning-context.md.
@@ -168,7 +168,7 @@ Archived: false
 
 ---
 
-## (Session Open ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 2025-11-27, 21:00)
+## (Session Open — 2025-11-27, 21:00)
 
 * Attendees: user, Copilot
 * Goal(s): Establish persistent chat context as vault + living design doc; finalize governance; pivot to design scaffolding
@@ -176,7 +176,7 @@ Archived: false
 * Expected outputs: Governance framework, pointer syntax, audit checklist, design reasoning threads, Phase 1 resource inventory
 
 
-## (Session Close ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 2025-11-27, 19:52)
+## (Session Close — 2025-11-27, 19:52)
 
 * Context restoration test successful. All modular files reloaded with alignment intact.
 * Resource-context.md remains minimal, awaiting expansion.
@@ -187,9 +187,9 @@ Archived: false
 
 
 
-## (Session Kickoff ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Next Session)
+## (Session Kickoff — Next Session)
 
-* Reload successful ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â contexts aligned.
+* Reload successful — contexts aligned.
 * Begin by expanding guiding philosophy in general-chat-context.md.
 * Prioritize resource-context.md expansion (datapacks, resource packs, essential vs optional).
 * Review open-questions-context.md backlog for next actionable item.
@@ -203,10 +203,10 @@ Archived: false
  
 ---
 
-## (Session Kickoff ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 2025-11-27, 23:50)
+## (Session Kickoff — 2025-11-27, 23:50)
 
 * Attendees: user, Copilot
-* Goal(s): Phase 1 kickoff ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â implement Multiplayer Shared Zone MVP and Datapack scaffolding
+* Goal(s): Phase 1 kickoff — implement Multiplayer Shared Zone MVP and Datapack scaffolding
 * Files in scope: `session-context.md`, `reasoning-context.md`, `changelog-context.md`, `technical-context.md`
 * Quick context: Hybrid isolation chosen; begin practical implementation with minimal footprint.
 * Expected outputs:
@@ -249,7 +249,7 @@ Priority: low
 **Notes / assumptions:**
 - Timestamped this session as `2025-11-28 00:00` to mark the audit run; adjust if you prefer an exact local time.
 
-## (Session Progress ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 2025-11-27, 23:56)
+## (Session Progress — 2025-11-27, 23:56)
 
 * Datapack scaffolding created at `datapacks/lere_guardian`:
   - `pack.mcmeta`
@@ -258,7 +258,7 @@ Priority: low
   - `README.md`
 * See `[changelog-entry:2025-11-27 23:56]`.
 
-## (Session Progress ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 2025-11-27, 23:58)
+## (Session Progress — 2025-11-27, 23:58)
 
 * Plugin prototype scaffolded at `plugins/lere_core`:
   - Gradle build (`build.gradle`, `settings.gradle`)
@@ -272,7 +272,7 @@ Priority: low
 - Build the plugin JAR locally and test on a dev server.
 - Implement visibility/ghost prototype or access control (pick next).
 
-## (Session ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 2025-11-27, 23:59)
+## (Session — 2025-11-27, 23:59)
 
 **Summary:** Saved a backup snapshot of the repository memory and recent scaffolding to `chat_context/archives/backup-2025-11-27-2359.md`.
 
