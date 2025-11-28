@@ -59,6 +59,7 @@ $config = @{
   MaxDuplicateThreshold = 5    # Min lines to consider as duplicate block
   StaleArchiveDays = 90        # Warn about very old archives
   StaleTodoDays = 30           # Reserved for TODO freshness check
+  MaxTopLevelContextItems = 20 # Hard limit for top-level items in chat_context
 }
 
 # Load centralized project config if present and override relevant keys
@@ -92,6 +93,19 @@ if ($null -ne $ProjectConfig) {
     }
   }
 }
+
+# Context organization helpers (offload candidates can be tuned in ProjectConfig)
+$ContextOffloadCandidates = @(
+  'ATTACHMENTS.md',
+  'PRIVACY.md',
+  'knowledge-compartmentalization.md',
+  'ATTACHMENTS.summary.md',
+  'README.summary.md'
+)
+if ($null -ne $ProjectConfig -and $null -ne $ProjectConfig.Health -and $null -ne $ProjectConfig.Health.OffloadCandidates) {
+  $ContextOffloadCandidates = $ProjectConfig.Health.OffloadCandidates
+}
+
 
 # All findings are stored here, then rendered at the end based on -Report format
 # Severity levels: error (blocking), warning (should fix), info (optional)
@@ -310,6 +324,69 @@ function Test-ContextSize {
     }
   }
 }
+
+function Test-ContextTopLevelCount {
+  param(
+    [string]$Root = "${PSScriptRoot}\..\chat_context",
+    [int]$MaxItems = 20,
+    [switch]$AutoFix
+  )
+
+  $rootPath = Resolve-Path -LiteralPath $Root -ErrorAction SilentlyContinue
+  if (-not $rootPath) { return }
+
+  # Exclude administrative folders from the top-level count
+  $exclusions = @('.summaries','archives','.obsidian')
+
+  $entries = Get-ChildItem -Path $rootPath -Force | Where-Object { $exclusions -notcontains $_.Name }
+  $count = $entries.Count
+
+  if ($count -gt $MaxItems) {
+    Add-Finding -Category 'context' -Severity 'warning' -File $rootPath.Path `
+      -Message "Top-level entries in chat_context: $count (threshold: $MaxItems)" `
+      -Suggestion "Centralize summaries, archive old content, or offload low-priority docs to chat_context/offloads/"
+
+    if ($AutoFix) {
+      # Create offloads folder and attempt conservative moves for known candidates
+      $offDir = Join-Path $rootPath.Path 'offloads'
+      New-Item -ItemType Directory -Path $offDir -Force | Out-Null
+
+      foreach ($candidate in $ContextOffloadCandidates) {
+        $src = Join-Path $rootPath.Path $candidate
+        if (Test-Path $src) {
+          try {
+            git mv -f -- "$src" "$(Join-Path $offDir $candidate)" 2>&1 | Out-Null
+            Add-Finding -Category 'context' -Severity 'info' -File $src `
+              -Message "Moved to offloads: $candidate" -Fixed $true
+          } catch {
+            try {
+              Move-Item -LiteralPath $src -Destination $offDir -Force
+              Add-Finding -Category 'context' -Severity 'info' -File $src `
+                -Message "Moved to offloads (fallback): $candidate" -Fixed $true
+            } catch {
+              Add-Finding -Category 'context' -Severity 'warning' -File $src `
+                -Message "Failed to move candidate $candidate to offloads; manual intervention required"
+            }
+          }
+        }
+      }
+
+      # Recompute count and report
+      $entries = Get-ChildItem -Path $rootPath -Force | Where-Object { $exclusions -notcontains $_.Name }
+      $newCount = $entries.Count
+      Add-Finding -Category 'context' -Severity 'info' -File $rootPath.Path -Message "Top-level count after offload attempt: $newCount"
+
+      if ($newCount -gt $MaxItems) {
+        Add-Finding -Category 'context' -Severity 'warning' -File $rootPath.Path `
+          -Message "Top-level count remains $newCount (threshold: $MaxItems)" `
+          -Suggestion "Review chat_context and move low-priority files to offloads or archives"
+      }
+    }
+  } else {
+    Add-Finding -Category 'context' -Severity 'info' -File $rootPath.Path -Message "Top-level entries in chat_context: $count (within threshold: $MaxItems)"
+  }
+}
+
 
 function Test-PowerShellQuality {
   param([string]$Path)
@@ -1121,7 +1198,9 @@ switch ($Scope) {
     Write-Host "Checking context files..." -ForegroundColor Yellow
     Test-ContextHealth -Path $contextDir
     Test-UnicodeEncoding -Path $contextDir -Category 'context'
-    Test-ContextSize -Root $contextDir -WarnLines 800 -ErrorLines 2000 -AutoFix:$false
+  Test-ContextSize -Root $contextDir -WarnLines 800 -ErrorLines 2000 -AutoFix:$false
+  # Enforce top-level chat_context item limit to avoid exceeding LLM top-level file limits
+  Test-ContextTopLevelCount -Root $contextDir -MaxItems $config.MaxTopLevelContextItems -AutoFix:$Fix
     # Run reasoning critique (conservative heuristics)
     if (Get-Command -Name Test-ReasoningQuality -ErrorAction SilentlyContinue) {
       Test-ReasoningQuality -Path $contextDir -IncludeArchives
@@ -1155,7 +1234,9 @@ switch ($Scope) {
     Write-Host "Checking context files..." -ForegroundColor Yellow
     Test-ContextHealth -Path $contextDir
     Test-UnicodeEncoding -Path $contextDir -Category 'context'
-    Test-ContextSize -Root $contextDir -WarnLines 800 -ErrorLines 2000 -AutoFix:$false
+  Test-ContextSize -Root $contextDir -WarnLines 800 -ErrorLines 2000 -AutoFix:$false
+  # Enforce top-level chat_context item limit to avoid exceeding LLM top-level file limits
+  Test-ContextTopLevelCount -Root $contextDir -MaxItems $config.MaxTopLevelContextItems -AutoFix:$Fix
     # Run reasoning critique when checking context
     if (Get-Command -Name Test-ReasoningQuality -ErrorAction SilentlyContinue) {
       Test-ReasoningQuality -Path $contextDir -IncludeArchives

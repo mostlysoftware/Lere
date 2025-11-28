@@ -155,6 +155,20 @@ Add priority hints for open questions:
 - Archive lengthy sessions after 7 days
 - Keep session-context.md focused on *current* work
 
+### Top-level context item limit
+
+To keep LLM inputs predictable and avoid exceeding assistant top-level file limits, we enforce a hard limit on the number of top-level items in `chat_context/` (default: 20). This is checked automatically by `scripts/health_check.ps1` on every run. When the limit is exceeded the health check will:
+
+- Emit a warning with the current count and suggested candidates to offload or archive.
+- If run with `-Fix`, attempt conservative offloads (move low-priority files into `chat_context/offloads/` using version-control moves) for configured candidate files.
+
+Design guidance:
+
+- Prefer centralizing ephemeral or verbose summaries under `chat_context/.summaries/`.
+- Offload low-priority reference docs (attachments lists, long background notes) to `chat_context/offloads/` or `chat_context/archives/` rather than keeping them at the top level.
+- Treat the top-level item limit as a hard operational constraint when refactoring: aim to keep top-level files focused, and group related materials in subfolders.
+
+
 ### Health Check Prompts
 
 The `health_check.ps1` script flags hygiene issues. Additionally, at each run it should prompt:

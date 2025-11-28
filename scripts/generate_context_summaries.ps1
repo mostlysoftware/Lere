@@ -37,7 +37,10 @@ Get-ChildItem -Path $Root -Recurse -File -Include *.md -ErrorAction SilentlyCont
   Where-Object { $_.FullName -notmatch '\\archives\\' } |
   ForEach-Object {
     $src = $_.FullName
-    $summaryPath = Join-Path $_.DirectoryName ($_.BaseName + '.summary.md')
+    # centralized summary directory to reduce top-level clutter
+    $summaryDir = Join-Path $Root '.summaries'
+    if (-not (Test-Path $summaryDir)) { New-Item -ItemType Directory -Path $summaryDir | Out-Null }
+    $summaryPath = Join-Path $summaryDir ($_.BaseName + '.summary.md')
 
     if (-not $Force -and (Test-Path $summaryPath) -and (Get-Item $summaryPath).LastWriteTime -gt $_.LastWriteTime) {
       return

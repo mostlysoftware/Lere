@@ -1,0 +1,10 @@
+#!/bin/sh
+# Post-commit hook to automatically push commits to origin via PowerShell helper.
+# This hook delegates to scripts/git_autopush.ps1 so behavior is centralized.
+
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+if [ -z "$REPO_ROOT" ]; then
+  exit 0
+fi
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "${REPO_ROOT}\\scripts\\git_autopush.ps1"
