@@ -9,14 +9,19 @@ import dev.lere.multiplayer.listeners.JoinListener;
 public class LereMultiplayerPlugin extends JavaPlugin {
 
     private AccessManager accessManager;
+    private dev.lere.multiplayer.zone.ZoneManager zoneManager;
 
     @Override
     public void onEnable() {
         getLogger().info("LereMultiplayer enabled");
         saveDefaultConfig();
 
-        this.accessManager = new AccessManager(this);
-        this.accessManager.load();
+    this.accessManager = new AccessManager(this);
+    this.accessManager.load();
+
+    // Zone manager handles zone definitions and teleports
+    this.zoneManager = new dev.lere.multiplayer.zone.ZoneManager(this);
+    this.zoneManager.loadFromConfig();
 
         // Register commands
         this.getCommand("zone").setExecutor(new ZoneCommand(this));
@@ -33,4 +38,5 @@ public class LereMultiplayerPlugin extends JavaPlugin {
     }
 
     public AccessManager getAccessManager() { return this.accessManager; }
+    public dev.lere.multiplayer.zone.ZoneManager getZoneManager() { return this.zoneManager; }
 }

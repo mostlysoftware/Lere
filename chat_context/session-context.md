@@ -286,3 +286,23 @@ The full session index has been archived to `chat_context/archives/session-archi
 See `chat_context/archives/session-archive.md` for the full index and preserved session text.
 
 
+
+## (Session Close — 2025-11-28, 09:50)
+
+**Summary:** Closed the context clean-up and tooling session. Summaries centralized to `.summaries/`, top-level summaries purged, optional files offloaded to `archives/`, and guardrails added. Shell integration for PowerShell was installed and fixed. Package workflow updated to build and collect artifacts robustly. Final context health check: PASS; top-level files within target (10 ≤ 12).
+
+**Decisions / Changes:**
+- Centralized all `.summary.md` under `chat_context/.summaries/`; removed stray top-level copies.
+- Offloaded `ATTACHMENTS.md` and `knowledge-compartmentalization.md` to `chat_context/archives/`.
+- Strengthened health checks: exclude `offloads/` from top-level count; accept uppercase `PRIVACY.md`/`ATTACHMENTS.md`; allow `MaxTopLevelContextItems` override via `ProjectConfig.ps1` (set to 12).
+- Added shell integration: `scripts/shell/LereTools.psm1` + installer; fixed module export and alias naming; commands: `hc`, `offload`, `purgesummaries`, `ctxsum`.
+- Fixed CI packaging workflow: replaced unsupported `exists()` with `hashFiles()` and copied Gradle jars from `*/build/libs/*.jar`.
+
+**Changelog:** [changelog-entry:2025-11-28 09:50]
+
+**Follow-ups / TODOs:**
+1. Add quick links in `chat_context/README.md` to consolidated summaries and key archives.
+2. Review duplicate-block report (informational only) and optionally reduce boilerplate.
+3. If multi-plugin builds expand, loop plugin subprojects explicitly in the packaging workflow.
+
+

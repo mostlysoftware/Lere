@@ -13,6 +13,8 @@ $ProjectConfig = @{
     ExcludePaths = @(
       'scripts/lib',
       'chat_context/archives',
+      'chat_context/.summaries',
+      'chat_context/.obsidian',
       'scripts/audit-data',
       'scripts/audit-data/archive'
     )
@@ -52,6 +54,8 @@ $ProjectConfig = @{
   }
   Health = @{
     AssertScriptsUpToDate = $false
+    # Enforce a tighter top-level cap for chat_context (health_check honors this)
+    MaxTopLevelContextItems = 12
     ScopeCreep = @{
       # Context-level thresholds for open questions
       MaxOpenQuestions = 10

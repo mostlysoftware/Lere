@@ -2,14 +2,42 @@
 
 This folder holds the project's in-repo assistant memory and governance artifacts.
 
+What is this "prosthetic memory"?
+---------------------------------
+
+This repository contains a small, curated "prosthetic memory" for the project: an on-disk, human-readable set of summaries, decisions, and operational notes that help both contributors and LLM-based tools act consistently. Its goals are:
+
+- Make important context explicit and easy to find (design decisions, open questions, governance). 
+- Reduce noisy or duplicative content passed into LLM prompts by centralizing summaries in `./.summaries/` and offloading deep documents to `./archives/` or `./offloads/`.
+- Provide reproducible heuristics and scripts (health checks, generators, offloads) so the memory stays small, fresh, and reviewable.
+- Preserve privacy and auditability: sensitive material can be offloaded/archived and is not required for routine assistant reasoning.
+
+Use this memory when you want the assistant or a collaborator to make decisions aligned with past reasoning. When editing, prefer updating summaries and the canonical `*-context.md` files rather than scattering ad-hoc notes across the repo.
+
 ## Quick Links
 
-- **`quickstart.md`** - LLM cheatsheet for fast onboarding
-- **`decisions.md`** - Distilled decision log (key choices at a glance)
-- **`attachments.md`** - File batching guide for LLMs with file count limits
-- **`knowledge-compartmentalization.md`** - Map of which knowledge stays in summaries vs. offload files so the LLM can request details selectively
-- **`onboarding.md`** - Contributor quick-start guide
-- **`privacy.md`** - Privacy & anonymization policy
+- Centralized summaries: `./.summaries/`  
+	- One-shot consolidated: `./.summaries/CONSOLIDATED_SUMMARIES-20251128.md`
+- Offloads (detailed guidance): `./offloads/pointer-guidelines.md`
+- Archives (supporting docs):  
+	- `./archives/ATTACHMENTS.md` (file batching guide)  
+	- `./archives/knowledge-compartmentalization.md` (map of summaries vs. offloads)  
+	- `./archives/technical-deep-dive.md`  
+	- Latest session snapshot: `./archives/session-close-20251128-0950.md`
+- Privacy policy: `./PRIVACY.md`
+
+PowerShell shell integration (optional):
+
+```powershell
+# Install once
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_shell_integration.ps1
+
+# Handy commands
+hc -Scope context -Report console        # health check
+offload -Push                            # offload optional files and push
+purgesummaries                           # purge stray top-level *.summary.md
+ctxsum -Force                            # regenerate centralized summaries
+```
 
 ## Context File Format
 
@@ -75,6 +103,6 @@ If you need a different convention or want the audit to ignore additional marker
 
 ## Knowledge compartmentalization guidance
 
-- Consult `knowledge-compartmentalization.md` to see the high-level topics that stay in the active contexts and the dedicated offload files (like `offloads/pointer-guidelines.md`) that hold the detailed versions.
+- Consult `./archives/knowledge-compartmentalization.md` to see the high-level topics that stay in the active contexts and the dedicated offload files (like `offloads/pointer-guidelines.md`) that hold the detailed versions.
 - When responding, prioritize the summary in the main context files. If an LLM or contributor requires extra depth, reference the relevant offload file and ask for it explicitly instead of absorbing every detail by default.
 

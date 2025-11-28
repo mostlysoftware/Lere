@@ -6,6 +6,56 @@
 
 ---
 
+## Multiplayer framework: architecture notes
+
+Decision scope: choose an approach for multiplayer isolation (shards vs in-plugin zones), compatibility constraints, and a lightweight API to let future plugins (worldgen, quests, etc.) cooperate without tight coupling.
+
+Summary recommendation
+- Start with an in-plugin, single-server zone system implemented in `plugins/lere_multiplayer` that provides lightweight primitives (zone definitions, teleport, entry/exit events, access checks, ghost/visibility toggle). This avoids the complexity and operational overhead of a sharding system while meeting the project's stated goals for a small, stable Phase 1 deliverable.
+
+Why not shards (yet)
+- Sharding (multiple server instances with proxy/routing) adds operational complexity: cross-server player routing, persistent player state, proxy coordination (Bungee/Velocity), additional infra for synchronization, and harder local testing. For this project phase the extra failure modes and maintenance burden are disproportionate to the benefits.
+
+When shards become appropriate
+- If the project later requires horizontal scaling (many concurrent players, geographically distributed instances, or hard isolation across worlds that cannot coexist on one server), design an adapter layer in the plugin that can be extended to use a proxy-based shard coordinator or a publish-subscribe backend (Redis, Kafka) for cross-instance events.
+
+Design constraints & compatibility
+- Must run standalone on a single PaperMC server without external services. Avoid optional dependencies that prevent vanilla Paper usage.
+- Must cooperate with other plugins: expose a small, stable API (Java events and plugin messaging) so `plugins/lere_worldgen`, `plugins/lere_quests`, and future plugins can listen for zone entry/exit, request teleports, or query zone metadata.
+- Respect custom worlds: zone definitions must include world names (config-driven) and avoid assuming the 'overworld' only. When world is not loaded, provide graceful failure or auto-load behavior if possible (documented behavior).
+- Keep the core minimal and robust: minimal background threads, non-blocking IO for persistence, atomic config writes via existing `Write-Atomically` helper.
+
+API and event contract (tiny surface area)
+- ZoneEnteredEvent(zoneId, player, previousZone)
+- ZoneLeftEvent(zoneId, player, newZone)
+- ZoneManager API (getZone(id), listZones(), createZone(...), removeZone(...), teleportToZone(player, id))
+- AccessManager API (isAllowed(UUID), add/remove/list)
+- Teleport API should provide a callback or boolean result indicating success/failure and reason (unsafe, world-missing, cooldown)
+
+Operational & testing priorities
+- Make default config simple: a hub zone that always exists; document how to add custom worlds.
+- Teleport safety: prefer in-server safe-spot heuristics over remote checks; provide a configurable safety fallback.
+- Start with per-player in-memory state for current zone membership; persist authoritative definitions (zones + whitelist) to plugin config.
+- Provide a manual migration path if sharding is adopted later: an adapter layer that maps local zone operations to remote calls.
+
+Principle: graceful optional dependencies
+- Plugins must not hard-fail when other Lere plugins are missing. Each plugin should check for the presence of cooperating plugins at runtime and only enable optional integration code when the counterpart is available. Missing peers should result in disabled integration paths and clear log messages, not crashes. This keeps each plugin runnable standalone on a vanilla PaperMC server while enabling richer cooperation when multiple Lere plugins are installed.
+
+Acceptance criteria for Phase 1
+- Plugin runs on a vanilla PaperMC server with no extra services and exposes `/zone join|leave|list`.
+- Zone entry/exit events fire and other plugins can register listeners.
+- Ghost mode toggle works as prototype (visibility to non-zone players suppressed).
+- Config persists dynamic changes to `config.yml` using atomic writes.
+
+Next steps
+1. Implement `ZoneManager` core + `/zone list/join/leave` (this is in the todo list as the first development item).  
+2. Implement config validation and hub default zone.  
+3. Prototype ghost mode and the AccessManager integration.  
+4. Document the API contract in `chat_context/technical-context.md` and add a short developer guide to `plugins/lere_multiplayer/README.md`.
+
+
+---
+
 ## Hosting Strategy
 
 - Likely digital ocean for affordability, with possibility of transition to AWS or similar if needs evolve.

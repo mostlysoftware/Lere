@@ -1,0 +1,32 @@
+<#!
+Installs shell integration for the Lere repo by adding the LereTools module to the user's PowerShell profile.
+- Adds Import-Module line for scripts/shell/LereTools.psm1
+- Creates the profile if it doesn't exist
+- Imports the module immediately for current session
+#>
+
+$ErrorActionPreference = 'Stop'
+
+$repoRoot = (Resolve-Path -Path "$PSScriptRoot\.." -ErrorAction SilentlyContinue).Path
+$modulePath = Join-Path $repoRoot 'scripts\shell\LereTools.psm1'
+if (-not (Test-Path $modulePath)) { throw "Module not found: $modulePath" }
+
+# Prefer CurrentUserCurrentHost profile; fall back to $PROFILE if path is valid
+$profilePath = $PROFILE
+$profileDir = Split-Path -Parent $profilePath
+if (-not (Test-Path $profileDir)) { New-Item -ItemType Directory -Path $profileDir -Force | Out-Null }
+if (-not (Test-Path $profilePath)) { New-Item -ItemType File -Path $profilePath -Force | Out-Null }
+
+# Idempotent append
+$importLine = "Import-Module '" + $modulePath.Replace("'","''") + "' -Force"
+$current = Get-Content -LiteralPath $profilePath -Raw -ErrorAction SilentlyContinue
+if ($null -eq $current -or $current -notmatch [regex]::Escape($modulePath)) {
+  Add-Content -LiteralPath $profilePath -Value "`n# Lere shell integration`n$importLine`n"
+  Write-Host "Updated profile: $profilePath" -ForegroundColor Green
+} else {
+  Write-Host "Profile already imports LereTools module." -ForegroundColor Yellow
+}
+
+# Import now for current session
+Import-Module $modulePath -Force
+Write-Host "Lere shell integration installed. Try: 'hc -Scope context' or 'offload -Push'" -ForegroundColor Cyan

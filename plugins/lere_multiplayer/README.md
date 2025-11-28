@@ -37,3 +37,10 @@ whitelist:
   players:
     - "00000000-0000-0000-0000-000000000000" # replace with test UUID
 ```
+
+Config validation
+-----------------
+
+On plugin enable the configured zones are validated. Zones that reference a non-existent world or contain invalid coordinates will be skipped and a warning logged to the server console. If no valid zones are present a default `hub` zone will be created and persisted to the plugin config. Y coordinates outside the world's bounds are clamped to a safe value to avoid unsafe teleports.
+
+This makes it safer to edit `config.yml` by hand and prevents the plugin from throwing errors on startup when a bad zone entry exists.

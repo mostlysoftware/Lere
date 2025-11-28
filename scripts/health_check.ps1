@@ -86,6 +86,7 @@ if ($null -ne $ProjectConfig) {
   if ($null -ne $ProjectConfig.FileHygiene.MaxFileSizeKB) { $config.MaxFileSizeKB = $ProjectConfig.FileHygiene.MaxFileSizeKB }
   if ($null -ne $ProjectConfig.FileHygiene.MaxFileLines) { $config.MaxFileLines = $ProjectConfig.FileHygiene.MaxFileLines }
   if ($null -ne $ProjectConfig.PowerShell.MaxFunctionLines) { $config.MaxFunctionLines = $ProjectConfig.PowerShell.MaxFunctionLines }
+  if ($null -ne $ProjectConfig.Health -and $null -ne $ProjectConfig.Health.MaxTopLevelContextItems) { $config.MaxTopLevelContextItems = $ProjectConfig.Health.MaxTopLevelContextItems }
 
   if ($null -ne $ProjectConfig.Health -and $null -ne $ProjectConfig.Health.ScopeCreep) {
     foreach ($key in $ProjectConfig.Health.ScopeCreep.Keys) {
@@ -336,7 +337,7 @@ function Test-ContextTopLevelCount {
   if (-not $rootPath) { return }
 
   # Exclude administrative folders from the top-level count
-  $exclusions = @('.summaries','archives','.obsidian')
+  $exclusions = @('.summaries','archives','.obsidian','offloads')
 
   $entries = Get-ChildItem -Path $rootPath -Force | Where-Object { $exclusions -notcontains $_.Name }
   $count = $entries.Count
@@ -411,8 +412,8 @@ function Test-PowerShellQuality {
     
     # Function length check
     $functionPattern = [regex]'(?ms)^function\s+([A-Za-z0-9_-]+)\s*\{(.+?)^\}'
-    $matches = $functionPattern.Matches($content)
-    foreach ($m in $matches) {
+    $functionMatches = $functionPattern.Matches($content)
+    foreach ($m in $functionMatches) {
       $funcName = $m.Groups[1].Value
       $funcBody = $m.Groups[2].Value
       $funcLines = ($funcBody -split '\r?\n').Count
@@ -1138,13 +1139,19 @@ function Test-ProjectStructure {
     @{ Path = 'LICENSE'; Required = $true },
     @{ Path = '.gitignore'; Required = $true },
     @{ Path = '.gitattributes'; Required = $false },
-  @{ Path = 'chat_context/privacy.md'; Required = $false },
-  @{ Path = 'chat_context/attachments.md'; Required = $false }
+    @{ Path = 'chat_context/privacy.md'; Required = $false },
+    @{ Path = 'chat_context/attachments.md'; Required = $false }
   )
   
   foreach ($e in $essentials) {
     $fullPath = Join-Path $root $e.Path
-    if (-not (Test-Path $fullPath)) {
+    $exists = Test-Path $fullPath
+    # Accept common uppercase variants for context files on Windows
+    if (-not $exists) {
+      if ($e.Path -ieq 'chat_context/privacy.md') { $exists = Test-Path (Join-Path $root 'chat_context/PRIVACY.md') }
+      elseif ($e.Path -ieq 'chat_context/attachments.md') { $exists = Test-Path (Join-Path $root 'chat_context/ATTACHMENTS.md') }
+    }
+    if (-not $exists) {
       $sev = if ($e.Required) { 'warning' } else { 'info' }
       Add-Finding -Category 'project' -Severity $sev -File $fullPath `
         -Message "Missing $($e.Path)" `
