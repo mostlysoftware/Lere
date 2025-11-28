@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # Session Cleanup Notes
 
@@ -29,3 +29,4 @@
 
 - See `chat_context/session-context.md` for the templates mentioned above.
 - Session archives live under `chat_context/archives/` (look for `session-archive*.md`).
+

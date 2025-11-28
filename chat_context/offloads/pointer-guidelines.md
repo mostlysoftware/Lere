@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # Pointer & Audit Guidelines (Offload Details)
 
@@ -87,3 +87,4 @@ Get-ChildItem -Path "c:\Users\user\Dropbox\Dev\Lere\chat_context" -Recurse -Incl
 
 - Cadence: monthly and before major releases.
 - Owner: designated reviewer (project maintainer or release runner); Copilot can run the audit on request and produce an orphan-report.
+

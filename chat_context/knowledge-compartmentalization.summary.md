@@ -39,3 +39,4 @@
 - Use pointer tags (!) when referencing offloaded sections to keep future audits traceable (e.g., `[#pointer-guidelines] <!-- example -->`).
 - Update this map whenever a new offload file is created or summaries shift shape.
 
+

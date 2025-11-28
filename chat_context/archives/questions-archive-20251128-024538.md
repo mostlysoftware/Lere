@@ -47,3 +47,4 @@ These questions have been resolved and moved from open-questions-context.md.
 - Should biomes reflect story arcs or gameplay zones? <!-- status: resolved --> See [#quest-plugin-architecture].
 - How to balance lightweight installs vs full conversion? <!-- status: resolved --> See [#phase-1-resource-scaffolding].
 
+

@@ -1,4 +1,4 @@
-# Reasoning Archive
+﻿# Reasoning Archive
 
 Archived on 2025-11-28 03:42
 
@@ -105,5 +105,6 @@ Archived: false
 The following threads have been archived to `reasoning-archive-20251128-021943.md`:
 - [#edit-cycle-convention] -- resolved
 - [#governance-framework] -- resolved
+
 
 

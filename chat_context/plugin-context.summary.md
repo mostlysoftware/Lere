@@ -36,3 +36,4 @@
 * `lere_multiplayer` wires `lere_core` metadata into multiplayer visibility, ghosting, and whitelist enforcement (access + zone commands share the same config)
 * quest plugin relates to world gen (story arcs tied to biomes)
 
+

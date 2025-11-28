@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # Changelog Context
 
@@ -44,3 +44,4 @@
  - (2025-11-28, 02:35) Unified metadata format for session and reasoning entries. Added `scripts/lib/Parse-EntryMetadata.ps1` shared library with `Parse-EntryMetadata`, `Format-EntryMetadata`, `Test-EntryEligibleForArchive`, and `Infer-LegacyMetadata` functions. Updated templates in `session-context.md` and `reasoning-context.md` to use HTML comment metadata blocks (`<!-- metadata ... -->`). Updated `prune_sessions.ps1` and `prune_reasoning.ps1` to use shared parsing with legacy fallback. See (Session 2025-11-28 02:35). [changelog-entry:2025-11-28 02:35]
  - (2025-11-28, 02:45) Added pruning infrastructure for changelog and open-questions. Created `scripts/prune_changelog.ps1` (archives entries older than 30 days, high-priority entries get 60-day retention). Created `scripts/prune_questions.ps1` (archives resolved questions). Updated `open-questions-context.md` with inline status metadata (`<!-- status: open|resolved|deferred -->`). Pruned 17 resolved questions to archive. See (Session 2025-11-28 02:45). [changelog-entry:2025-11-28 02:45]
  - (2025-11-28, 02:50) Added `attachments.md` file batching guide for LLMs with file count limitations. Defines 5 batches: Core Governance (7 files), Design Scaffolds (3-5 files), Onboarding & Scripts (7 files), Implementation Scaffolds (variable), Archives (as needed). Updated `README.md` with quick links and pruning scripts table. See (Session 2025-11-28 02:50). [changelog-entry:2025-11-28 02:50]
+

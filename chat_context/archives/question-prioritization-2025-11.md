@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # Question Prioritization (2025-11)
 
@@ -29,3 +29,4 @@
 - Refer to `open-questions-context.md` for the live backlog.
 - Check the archives under `chat_context/archives/` to see resolved questions sorted by date.
 - Update this playbook as new triage heuristics emerge.
+

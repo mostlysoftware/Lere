@@ -77,3 +77,4 @@ If you need a different convention or want the audit to ignore additional marker
 
 - Consult `knowledge-compartmentalization.md` to see the high-level topics that stay in the active contexts and the dedicated offload files (like `offloads/pointer-guidelines.md`) that hold the detailed versions.
 - When responding, prioritize the summary in the main context files. If an LLM or contributor requires extra depth, reference the relevant offload file and ask for it explicitly instead of absorbing every detail by default.
+

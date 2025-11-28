@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # Technical Context
 
@@ -167,4 +167,5 @@ Checklist:
 Notes:
 - Keep JSON small and syntactically valid; prefer vanilla references for Phase 1.
 - Link any substantive additions to `[changelog-entry:YYYY-MM-DD HH:MM]` and a short reasoning stub if needed.
+
 

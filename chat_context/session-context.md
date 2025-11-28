@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # Session Context
 
@@ -284,4 +284,5 @@ Priority: low
 The full session index has been archived to `chat_context/archives/session-archive.md` to keep this file concise. We keep the last 5 most-recent sessions (and any sessions explicitly marked Priority: high) in this file for quick access. Use the archive for older session history.
 
 See `chat_context/archives/session-archive.md` for the full index and preserved session text.
+
 

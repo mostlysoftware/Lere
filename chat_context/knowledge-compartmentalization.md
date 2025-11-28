@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # Knowledge Compartmentalization Map
 
@@ -34,3 +34,4 @@
 - Before overloading responses with deep detail, check this map and ask whether the user wants the offload file referenced.
 - Use pointer tags (!) when referencing offloaded sections to keep future audits traceable (e.g., `[#pointer-guidelines] <!-- example -->`).
 - Update this map whenever a new offload file is created or summaries shift shape.
+

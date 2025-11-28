@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # General Chat Context
 
@@ -250,4 +250,5 @@ Cadence & ownership:
 
 - Cadence: monthly and before major releases.  
 - Owner: designated reviewer (project maintainer or person running the release); Copilot can run the audit on request and produce an orphan-report.
+
 

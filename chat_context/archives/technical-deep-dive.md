@@ -1,4 +1,4 @@
-(Memory File)
+﻿(Memory File)
 
 # Technical Deep Dive
 
@@ -37,3 +37,4 @@
 
 - Document each major change in `technical-context.md` and link to the relevant reasoning thread/changelog entry to keep the audit trail complete.
 - Refer back to this file whenever new infrastructure assumptions are proposed so the team sees the historical context.
+
