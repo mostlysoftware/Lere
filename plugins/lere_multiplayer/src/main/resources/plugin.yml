@@ -1,0 +1,17 @@
+name: LereMultiplayer
+main: dev.lere.multiplayer.LereMultiplayerPlugin
+version: 0.1.0
+api-version: 1.20
+author: user
+description: "Multiplayer core mechanics for Lere's Guardian (scaffold)."
+commands:
+  zone:
+    description: "Zone management (join/leave)"
+    usage: /zone join <name>
+  access:
+    description: "Manage whitelist (admin)"
+    usage: /access add|remove|list
+permissions:
+  lere.multiplayer.admin:
+    description: Full access to multiplayer admin commands
+    default: op

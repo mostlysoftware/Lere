@@ -1,0 +1,81 @@
+name: "Chat context pointer audit"
+
+permissions:
+  contents: write
+
+on:
+  push:
+    paths:
+      - 'chat_context/**'
+      - 'scripts/audit.ps1'
+  pull_request:
+    paths:
+      - 'chat_context/**'
+      - 'scripts/audit.ps1'
+
+jobs:
+  audit:
+    name: Run pointer audit
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run audit script (with AutoFix)
+        id: run_audit
+        shell: pwsh
+        run: |
+          # Run the audit in AutoFix mode and capture output to a log in the repo backups folder so failures are easy to inspect
+          $logPath = "${{ github.workspace }}\chat_context\backups\audit-action.log"
+          pwsh -NoProfile -ExecutionPolicy Bypass -File "${{ github.workspace }}\scripts\audit.ps1" -AutoFix 2>&1 | Tee-Object -FilePath $logPath
+          exit $LASTEXITCODE
+
+      - name: Run prune script (auto-prune, keep 5)
+        id: run_prune
+        shell: pwsh
+        run: |
+          # Run the pruning script to keep the last 5 sessions and archive older ones
+          $logPath = "${{ github.workspace }}\chat_context\backups\prune-action.log"
+          pwsh -NoProfile -ExecutionPolicy Bypass -File "${{ github.workspace }}\scripts\prune_sessions.ps1" -Keep 5 2>&1 | Tee-Object -FilePath $logPath
+          exit $LASTEXITCODE
+
+      - name: Commit & push auto-fix changes (push to dedicated non-protected branch)
+        if: always()
+        shell: pwsh
+        run: |
+          # Configure git author
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Stage and detect changes
+          git add -A
+          $changed = git diff --staged --name-only
+          if (-not $changed) {
+            Write-Host "No auto-fix changes to commit"
+            exit 0
+          }
+
+          # Commit changes and push to a dedicated non-protected branch so CI won't fail due to branch protection
+          $targetBranch = 'ci/auto-fixes'
+          git commit -m "chore(audit): apply auto-fix changes from audit (auto-generated)"
+          # Create or update the target branch remotely (safe default)
+          git push origin HEAD:refs/heads/$targetBranch
+
+
+      - name: Upload audit log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-log
+          path: chat_context/backups/audit-action.log
+
+      - name: Upload prune logs & archives
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prune-artifacts
+          path: |
+            chat_context/backups/prune-action.log
+            chat_context/backups/session-archive-*.md

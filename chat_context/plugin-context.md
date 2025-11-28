@@ -1,11 +1,10 @@
-Plugin Context
+(Memory File)
 
-- Compatibility notes (versions, dependencies, conflicts)
-- Performance benchmarks and optimization strategies
-- Plugin modularity and release strategy
-- Integration with worldgen and narrative systems
+# Plugin Context
 
+**Purpose:** Plugin architecture, compatibility notes, dependencies, and integration patterns.
 
+---
 
 ## Plugin List
 
@@ -21,6 +20,10 @@ Plugin Context
 - tools plugin:		replace vanilla tools/weapons with custom ones
 - magic plugin:		handles magic system and mechanics
 - sound plugin:		potential long term goal, implement game ambience and music
+
+-- Notes: Prototype scaffolds created for Phase 1:
+	- `plugins/lere_core` ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â initial Paper plugin prototype (zone commands, example config)
+	- `plugins/lere_multiplayer` ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â multiplayer scaffold with `AccessManager`, admin `/access` command, `/zone` command, and a `PlayerJoin` listener enforcing the manual whitelist MVP
 
 
 

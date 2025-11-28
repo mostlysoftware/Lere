@@ -1,0 +1,22 @@
+name: "Validate dev flow (build + audit)"
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'plugins/**'
+      - 'datapacks/**'
+      - '.github/**'
+
+jobs:
+  validate-dev:
+    name: Run dev-run helper (skip datapack)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run dev-run helper (audit + build)
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -ExecutionPolicy Bypass -File "${{ github.workspace }}\scripts\dev-run.ps1" -SkipDatapack

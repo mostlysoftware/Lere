@@ -1,14 +1,19 @@
+(Memory File)
+
 # Gameplay Context
+
+**Purpose:** Narrative design, player mechanics, progression systems, and gameplay loops.
+
+---
 
 ## Narrative Context
 
-- Story arcs and thematic progression
-- Player agency vs. authored experience
-- Quest structure and branching logic
-- Dialogue systems and delivery mechanisms
-- Integration with biomes, structures, and plugins
-
-
+| Aspect | Notes |
+|--------|-------|
+| Story arcs | Thematic progression, main arc vs sidequests |
+| Player agency | Authored experience vs emergent choices |
+| Quest structure | Branching logic, biome-triggered quests |
+| Dialogue systems | Delivery mechanisms, NPC interactions |
 
 ## Narrative Layers
 

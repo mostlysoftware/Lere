@@ -1,9 +1,10 @@
-# Technical context
+(Memory File)
 
-- For environment setup, hosting strategies, migration notes, and performance benchmarks. Keeps infrastructure separate from design.
-- Please expand this document in the future when it becomes relevant.
+# Technical Context
 
+**Purpose:** Environment setup, hosting strategies, migration notes, and performance benchmarks. Keeps infrastructure separate from design.
 
+---
 
 ## Hosting Strategy
 
@@ -23,7 +24,7 @@
 
 ## Resource Context
 
-- For datapacks, resource packs, and external assets. Tracks what’s essential vs. optional polish.
+- For datapacks, resource packs, and external assets. Tracks whatÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s essential vs. optional polish.
 - Right now the focus is core functionality in an isolated environment, so we are going to aim for an ideal goal of no outside dependencies that aren't strictly necessary. Each plugin I distribute should "just work" out of the box
 
 ## Resource Inventory
@@ -45,20 +46,21 @@ A dependency is "essential" if it is required to build or run the mod in a way t
 - A matching Java JDK/runtime for the targeted Minecraft version (document exact vendor and version numbers in the changelog).
 - Build tooling and pipelines that are required to produce artifacts: Gradle/Maven (with Loom/Shadow as needed), CI scripts used to build release artifacts.
 - Version control tooling (Git) and local test server jars needed to reproduce a development environment.
-- Small, widely-adopted libraries that remove impractical duplication and have stable maintenance and permissive licenses (e.g., logging utilities, commons libraries) — justify in a reasoning thread.
+- Small, widely-adopted libraries that remove impractical duplication and have stable maintenance and permissive licenses (e.g., logging utilities, commons libraries) ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â justify in a reasoning thread.
 
 ### Criteria for "Optional / Polish"
 
 These are allowed but should be opt-in and avoid adding runtime weight or external availability requirements:
 
 - Resource packs, texture packs, or large multimedia assets (should be optional downloads, not mandatory at startup).
-- Cloud services (analytics, remote configuration, telemetry) — require explicit opt-in and privacy considerations.
-- Large third-party plugins or mods that are only convenience features (PlaceholderAPI, Citizens-style NPC libraries) — keep as optional integrations.
-- Native binaries, external databases, or services that introduce operational complexity (e.g., Redis, external AI APIs) — prefer local or server-side alternatives where possible.
+- Cloud services (analytics, remote configuration, telemetry) ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â require explicit opt-in and privacy considerations.
+- Large third-party plugins or mods that are only convenience features (PlaceholderAPI, Citizens-style NPC libraries) ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â keep as optional integrations.
+- Native binaries, external databases, or services that introduce operational complexity (e.g., Redis, external AI APIs) ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â prefer local or server-side alternatives where possible.
 
 ### Process for Adding a Dependency
 
-1. Open a short reasoning thread in `reasoning-context.md` describing why the dependency is needed, trade-offs, and failure modes. Link to it with `[#reasoning-thread-title]`.
+1. Open a short reasoning thread in `reasoning-context.md` describing why the dependency is needed, trade-offs, and failure modes. Link to it with `[#reasoning-thread-title]`. <!-- example -->
+  (example: `[#reasoning-thread-title]` <!-- example -->)
 2. Create a changelog entry that references the reasoning thread with `[changelog-entry:YYYY-MM-DD HH:MM]`.
 3. Document the exact version, license, and minimal configuration in `technical-context.md` under Resource Inventory.
 4. Prefer alternatives that keep the codebase self-contained; if no alternative exists, add the dependency as essential.
@@ -114,7 +116,7 @@ These are allowed but should be opt-in and avoid adding runtime weight or extern
 - Java stdlib (java.lang, java.util, java.io, etc.)
 - Bukkit/Paper API (for Paper plugins)
 - Fabric API (for Fabric mods)
-- [if justified] Small, stable, license-compliant libraries: SLF4J (logging), GSON (JSON parsing), Commons Lang (utilities) — require reasoning thread with justification
+- [if justified] Small, stable, license-compliant libraries: SLF4J (logging), GSON (JSON parsing), Commons Lang (utilities) ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â require reasoning thread with justification
 
 
 # Worldgen Context

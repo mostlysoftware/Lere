@@ -13,7 +13,7 @@ This document explains recommended steps to mirror this project to GitHub and ma
    git push -u origin main
 
 3. Configure branch protection for `main` and require status checks (audit + build) before merging.
-4. Add repository secrets if using webhook automation for Patreon or private build steps.
+4. Add repository secrets if using webhook automation for private build steps or future monetization integrations (deferred).
 
 Notes about Dropbox
 

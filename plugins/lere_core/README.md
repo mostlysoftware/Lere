@@ -11,12 +11,26 @@ Contents:
 
 Build:
 - Use Gradle to build the plugin JAR. Example (from plugin directory):
+```powershell
+.\gradlew.bat build
+```
 
-  gradlew build
+Copy the generated JAR to your server `plugins/` folder and restart the server.
 
-- Copy the generated JAR to your server `plugins/` folder and restart the server.
+Example `config.yml` snippet (zones)
+
+```yaml
+zones:
+  sample_zone:
+    world: world
+    x: 200
+    y: 70
+    z: 200
+    yaw: 0
+    pitch: 0
+```
 
 Notes & next steps:
 - Visibility toggles, ghost spawning, and summon/invade flows are stubbed as TODOs.
-- Add persistence and access control (whitelist/Patreon integration) next.
+- Add persistence and access control (whitelist; Patreon integration deferred) next.
 - Adjust `paper-api` version in `build.gradle` to match target server Minecraft version.
