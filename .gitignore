@@ -1,0 +1,50 @@
+# Java / Gradle
+/.gradle
+/build
+**/build
+/.idea
+/.vscode
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Eclipse
+.settings/
+.metadata/
+
+# IntelliJ
+out/
+
+# Maven
+/target/
+
+# Gradle Wrapper
+gradle/wrapper/gradle-wrapper.jar
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# Dropbox temporary
+~$*
+
+# Node (if any)
+node_modules/
+
+# Packaging
+*.zip
+*.tar.gz
+
+# Secret files
+secrets.yml
+*.pem
+
+# Datapack generated files
+datapacks/**/pack.mcmeta
+
+# Ignore plugin jars in plugins folder
+plugins/*.jar

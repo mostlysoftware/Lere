@@ -1,0 +1,12 @@
+name: LereCore
+main: dev.lere.core.LereCorePlugin
+version: 0.1.0
+api-version: 1.20
+commands:
+  zone:
+    description: Join or leave named zones
+    usage: /zone <join|leave> [name]
+    permission: lerecore.zone
+permissions:
+  lerecore.zone:
+    default: true

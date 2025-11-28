@@ -1,0 +1,33 @@
+name: Build LereCore Plugin
+
+on:
+  push:
+    paths:
+      - 'plugins/lere_core/**'
+  pull_request:
+    paths:
+      - 'plugins/lere_core/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build plugin
+        working-directory: plugins/lere_core
+        run: |
+          ./gradlew build --no-daemon
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lere-core-jar
+          path: plugins/lere_core/build/libs/*.jar

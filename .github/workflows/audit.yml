@@ -1,0 +1,19 @@
+name: Chat Context Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  audit:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run audit script
+        shell: pwsh
+        run: |
+          pwsh ./scripts/audit.ps1

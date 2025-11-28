@@ -1,0 +1,37 @@
+name: Package Release (datapack + plugins)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build plugin (if present)
+        if: exists('plugins/lere_core')
+        run: |
+          cd plugins/lere_core
+          ./gradlew build --no-daemon
+
+      - name: Collect artifacts
+        run: |
+          mkdir release
+          if [ -d "plugins" ]; then cp plugins/*.jar release/ || true; fi
+          if [ -d "datapacks/lere_guardian" ]; then cp -r datapacks/lere_guardian release/lere_guardian; fi
+          ls -la release
+
+      - name: Create zip
+        run: |
+          zip -r lere-guardian-release.zip release
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lere-guardian-release
+          path: lere-guardian-release.zip

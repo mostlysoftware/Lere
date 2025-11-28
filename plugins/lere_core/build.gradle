@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.lere'
+version = '0.1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+}
+
+dependencies {
+    // Adjust the paper-api version to match your target Minecraft version
+    compileOnly 'io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+jar {
+    archiveBaseName.set('lere-core')
+    archiveVersion.set(project.version)
+}

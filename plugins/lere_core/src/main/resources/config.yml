@@ -1,0 +1,17 @@
+# LereCore plugin configuration
+# Define zones here. Example zone 'hub' is provided.
+
+zones:
+  hub:
+    world: world
+    x: 0.5
+    y: 64.0
+    z: 0.5
+    yaw: 0.0
+    pitch: 0.0
+
+# Whitelist file path (relative to plugin data folder)
+whitelist-file: whitelist.json
+
+# Access control - simple toggle
+access-enabled: false
