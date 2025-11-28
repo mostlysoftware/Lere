@@ -1,0 +1,27 @@
+name: Health check (upload audit artifacts)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 6 * * *' # daily at 06:00 UTC
+
+jobs:
+  health_check:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run health_check (context scope)
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\health_check.ps1 -Scope context
+
+      - name: Upload audit artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: audit-data-${{ github.run_id }}
+          path: scripts/audit-data/**
+          if-no-files-found: warn
