@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Generates a stable repository script summary (SCRIPTS.md) from inline comments and comment-based help.
 
@@ -31,6 +31,9 @@ param(
 )
 
 Set-StrictMode -Version Latest
+
+# Use shared logging helpers
+. "$PSScriptRoot\lib\logging.ps1"
 
 function Get-SummaryFromPs1 {
     param($File)
@@ -74,6 +77,8 @@ try {
     Write-Error "Cannot resolve root path: $Root"
     exit 2
 }
+
+Start-RunLog -Root $rootPath.Path -ScriptName 'generate_scripts_summary' -Note 'Generate SCRIPTS.md'
 
 $excludes = @('\.git\\','node_modules\\','\\.vs\\','\\dist\\','\\bin\\','\\obj\\')
 
@@ -119,11 +124,14 @@ try {
         exit 3
     }
     Move-Item -Path $temp -Destination $OutFile -Force
-    Write-Output "Wrote: $OutFile (items: $($rows.Count))"
+    Write-Info "Wrote: $OutFile (items: $($rows.Count))"
 } catch {
     if (Test-Path $temp) { Remove-Item -Force $temp -ErrorAction SilentlyContinue }
     Write-Error "Failed to write $OutFile : $_"
     exit 4
 }
 
-exit 0
+    try { Save-RunLogToSummaries -Root $rootPath.Path } catch { }
+
+    exit 0
+

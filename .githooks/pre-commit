@@ -1,0 +1,18 @@
+#!/bin/sh
+# Pre-commit hook (POSIX shell)
+# Runs the repository health check (scripts/health_check.ps1) for scripts scope and fails the commit on errors.
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+if command -v pwsh >/dev/null 2>&1; then
+  pwsh -NoProfile -ExecutionPolicy Bypass -File "$ROOT/scripts/health_check.ps1" -Scope scripts -Report console
+  STATUS=$?
+  exit $STATUS
+elif command -v powershell >/dev/null 2>&1; then
+  powershell -NoProfile -ExecutionPolicy Bypass -File "$ROOT/scripts/health_check.ps1" -Scope scripts -Report console
+  STATUS=$?
+  exit $STATUS
+else
+  echo "Warning: No PowerShell found; skipping health check." >&2
+  exit 0
+fi

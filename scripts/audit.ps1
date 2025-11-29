@@ -1,4 +1,4 @@
-# Audit script: finds reasoning-thread hashes, changelog anchors, and session markers
+﻿# Audit script: finds reasoning-thread hashes, changelog anchors, and session markers
 # Performs an orphan check and exits with non-zero if missing targets are found.
 #
 # === FLOW ===
@@ -43,6 +43,11 @@ $targetDir = Join-Path $root 'chat_context'
 $manifestOutDir = Join-Path $root 'scripts\audit-data\manifests'
 $archivesDir = Join-Path $root 'chat_context\archives'
 
+# Use shared logging helpers and start per-run log
+. "$PSScriptRoot\lib\logging.ps1"
+Start-RunLog -Root $root -ScriptName 'audit' -Note 'Repository audit'
+try {
+
 # Sensitive pattern definitions (for privacy scans)
 $script:SensitivePatterns = @{
   'Email' = [regex]'([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})'
@@ -59,13 +64,13 @@ if (-not $userProfile) { $userProfile = '<USER_HOME>' }
 # Use a symbolic placeholder rather than a literal '<USER_HOME>' string to avoid hardcoded-path pattern matches
 $script:AllowedPaths = @($userProfile, '<USER_HOME>')
 
-Write-Host "Running chat_context audit in $root (AutoFix=$AutoFix)" -ForegroundColor Cyan
+Write-Info "Running chat_context audit in $root (AutoFix=$AutoFix)" -ForegroundColor Cyan
 
 # === Initialize file cache ===
 $cache = New-FileCache
 
 # === Generate manifest ===
-Write-Host "Generating local manifest..." -ForegroundColor Cyan
+Write-Info "Generating local manifest..." -ForegroundColor Cyan
 if (-not (Test-Path $manifestOutDir)) {
   New-Item -ItemType Directory -Path $manifestOutDir -Force | Out-Null
 }
@@ -75,14 +80,14 @@ $manifestFile = Join-Path $manifestOutDir "manifest-$ts.json"
 if (Test-Path $targetDir) {
   try {
     $manifest = New-Manifest -TargetDir $targetDir -OutFile $manifestFile -RootPath $root
-    Write-Host "Manifest generated: $manifestFile ($($manifest.files.Count) files)" -ForegroundColor Green
+    Write-Info "Manifest generated: $manifestFile ($($manifest.files.Count) files)" -ForegroundColor Green
   } catch {
-    Write-Host "Warning: manifest generation failed: $($_.Exception.Message)" -ForegroundColor Yellow
+    Write-Info "Warning: manifest generation failed: $($_.Exception.Message)" -ForegroundColor Yellow
   }
 
   # === Normalize mode ===
   if ($Normalize) {
-    Write-Host "Normalize enabled: normalizing encodings and line endings..." -ForegroundColor Cyan
+    Write-Info "Normalize enabled: normalizing encodings and line endings..." -ForegroundColor Cyan
     $textFiles = Get-ChildItem -LiteralPath $targetDir -Recurse -File -Include *.md,*.txt,*.json,*.yml,*.yaml -ErrorAction SilentlyContinue |
       Where-Object { $_.FullName -notmatch '\\archives\\' -and $_.FullName -notmatch '\\.obsidian\\' -and $_.Name -notmatch '^manifest-' }
 
@@ -96,9 +101,9 @@ if (Test-Path $targetDir) {
         $normalized = $orig -replace "`r`n", "`n" -replace "`r", "`n"
 
         Write-Atomically -Path $tf.FullName -Content $normalized -Encoding $enc
-        Write-Host "Normalized: $($tf.FullName)" -ForegroundColor Green
+        Write-Info "Normalized: $($tf.FullName)" -ForegroundColor Green
       } catch {
-        Write-Host "Warning: failed to normalize $($tf.FullName): $($_.Exception.Message)" -ForegroundColor Yellow
+        Write-Info "Warning: failed to normalize $($tf.FullName): $($_.Exception.Message)" -ForegroundColor Yellow
       }
     }
 
@@ -107,10 +112,10 @@ if (Test-Path $targetDir) {
     $ts = (Get-Date).ToString('yyyyMMdd-HHmmss')
     $manifestFile = Join-Path $manifestOutDir "manifest-$ts.json"
     $manifest = New-Manifest -TargetDir $targetDir -OutFile $manifestFile -RootPath $root
-    Write-Host "Post-normalize manifest generated: $manifestFile" -ForegroundColor Green
+    Write-Info "Post-normalize manifest generated: $manifestFile" -ForegroundColor Green
   }
 } else {
-  Write-Host "Manifest skipped: chat_context not found at $targetDir" -ForegroundColor Yellow
+  Write-Info "Manifest skipped: chat_context not found at $targetDir" -ForegroundColor Yellow
 }
 
 # === Gather markdown files ===
@@ -124,8 +129,8 @@ $refPattern = [regex]'\[#([^\]]+)\]'
 $rawRefsObjs = Find-PatternMatches -Cache $cache -Files $mdFiles -Pattern $refPattern -ValidateTag
 $refs = $rawRefsObjs | Select-Object -ExpandProperty Match -Unique
 
-Write-Host "`nRaw reasoning refs found (file:line:tag):" -ForegroundColor Cyan
-$rawRefsObjs | ForEach-Object { Write-Host " - $($_.Path):$($_.Line): $($_.Match)" }
+Write-Info "`nRaw reasoning refs found (file:line:tag):" -ForegroundColor Cyan
+$rawRefsObjs | ForEach-Object { Write-Info " - $($_.Path):$($_.Line): $($_.Match)" }
 
 # Collect definitions from reasoning-context.md and archives
 $reasoningFile = Join-Path $root 'chat_context\reasoning-context.md'
@@ -277,51 +282,51 @@ foreach ($f in $sessionFiles) {
 }
 
 # === Output Summary ===
-Write-Host "Audit summary:" -ForegroundColor Cyan
-Write-Host "- Reasoning references found: $($refs.Count)" -ForegroundColor Yellow
-Write-Host "- Reasoning definitions found: $($defs.Count)" -ForegroundColor Yellow
-Write-Host "- Changelog anchors referenced: $($changelogRefs.Count)" -ForegroundColor Yellow
-Write-Host "- Changelog anchors defined: $($changelogDefs.Count)" -ForegroundColor Yellow
-Write-Host "- Session markers referenced: $($sessionRefs.Count)" -ForegroundColor Yellow
-Write-Host "- Session markers defined: $($sessionDefs.Count)" -ForegroundColor Yellow
+Write-Info "Audit summary:" -ForegroundColor Cyan
+Write-Info "- Reasoning references found: $($refs.Count)" -ForegroundColor Yellow
+Write-Info "- Reasoning definitions found: $($defs.Count)" -ForegroundColor Yellow
+Write-Info "- Changelog anchors referenced: $($changelogRefs.Count)" -ForegroundColor Yellow
+Write-Info "- Changelog anchors defined: $($changelogDefs.Count)" -ForegroundColor Yellow
+Write-Info "- Session markers referenced: $($sessionRefs.Count)" -ForegroundColor Yellow
+Write-Info "- Session markers defined: $($sessionDefs.Count)" -ForegroundColor Yellow
 
 $hasProblems = $false
 
 if ($missingReasoning.Count -gt 0) {
-  Write-Host "`nMissing reasoning thread definitions:" -ForegroundColor Red
-  $missingReasoning | ForEach-Object { Write-Host " - $_" }
+  Write-Info "`nMissing reasoning thread definitions:" -ForegroundColor Red
+  $missingReasoning | ForEach-Object { Write-Info " - $_" }
   $hasProblems = $true
 }
 
 if ($missingChangelog.Count -gt 0) {
-  Write-Host "`nMissing changelog anchors:" -ForegroundColor Red
-  $missingChangelog | ForEach-Object { Write-Host " - $_" }
+  Write-Info "`nMissing changelog anchors:" -ForegroundColor Red
+  $missingChangelog | ForEach-Object { Write-Info " - $_" }
   $hasProblems = $true
 }
 
 if ($missingSessions.Count -gt 0) {
-  Write-Host "`nMissing session markers:" -ForegroundColor Red
-  $missingSessions | ForEach-Object { Write-Host " - $_" }
+  Write-Info "`nMissing session markers:" -ForegroundColor Red
+  $missingSessions | ForEach-Object { Write-Info " - $_" }
   $hasProblems = $true
 }
 
 if ($missingLinks.Count -gt 0) {
-  Write-Host "`nBroken links or pointers:" -ForegroundColor Red
-  $missingLinks | ForEach-Object { Write-Host " - $_" }
+  Write-Info "`nBroken links or pointers:" -ForegroundColor Red
+  $missingLinks | ForEach-Object { Write-Info " - $_" }
   $hasProblems = $true
 }
 
 if ($hasProblems) {
-  Write-Host "`nAudit failed: found missing pointers." -ForegroundColor Red
+  Write-Info "`nAudit failed: found missing pointers." -ForegroundColor Red
   exit 1
 }
 
-Write-Host "`nAudit complete: no missing pointers found." -ForegroundColor Green
+Write-Info "`nAudit complete: no missing pointers found." -ForegroundColor Green
 
 # === Session Priority AutoFix ===
 if ($missingPriority.Count -gt 0) {
   if ($AutoFix) {
-    Write-Host "`nAutoFix: inserting 'Priority: low' into session blocks..." -ForegroundColor Cyan
+    Write-Info "`nAutoFix: inserting 'Priority: low' into session blocks..." -ForegroundColor Cyan
     $groups = $missingPriority | Group-Object -Property File
 
     foreach ($g in $groups) {
@@ -347,18 +352,18 @@ if ($missingPriority.Count -gt 0) {
       }
 
       Write-Atomically -Path $file -Content ($lines -join "`n")
-      Write-Host "Patched $file" -ForegroundColor Green
+      Write-Info "Patched $file" -ForegroundColor Green
     }
   } else {
-    Write-Host "`nSession blocks missing 'Priority:' (use -AutoFix to insert defaults):" -ForegroundColor Yellow
-    $missingPriority | ForEach-Object { Write-Host " - $($_.File): $($_.Session)" }
+    Write-Info "`nSession blocks missing 'Priority:' (use -AutoFix to insert defaults):" -ForegroundColor Yellow
+    $missingPriority | ForEach-Object { Write-Info " - $($_.File): $($_.Session)" }
     exit 3
   }
 }
 
 # === Build Checks ===
 if ($CheckBuild) {
-  Write-Host "`nCheckBuild: running local plugin builds..." -ForegroundColor Cyan
+  Write-Info "`nCheckBuild: running local plugin builds..." -ForegroundColor Cyan
   $cwd = Get-Location
   Set-Location -LiteralPath $root
 
@@ -367,24 +372,24 @@ if ($CheckBuild) {
   $hasGradle = (Get-Command gradle -ErrorAction SilentlyContinue) -ne $null
 
   if (-not $useWrapper -and -not $hasGradle) {
-    Write-Host "No Gradle found; skipping build checks." -ForegroundColor Yellow
+    Write-Info "No Gradle found; skipping build checks." -ForegroundColor Yellow
   } else {
     $projects = @('plugins\lere_core', 'plugins\lere_multiplayer')
     foreach ($p in $projects) {
       $pPath = Join-Path $root $p
       if (-not (Test-Path $pPath)) { continue }
 
-      Write-Host "Building $p ..." -ForegroundColor Cyan
+      Write-Info "Building $p ..." -ForegroundColor Cyan
       $cmd = if ($useWrapper) { $wrapperPath } else { 'gradle' }
       $args = @('-p', $p, 'build', '--no-daemon')
 
       try {
         & $cmd @args
         $rc = $LASTEXITCODE
-        if ($rc -eq 0) { Write-Host "Build succeeded: $p" -ForegroundColor Green }
-        else { Write-Host "Build failed (non-blocking): $p" -ForegroundColor Yellow }
+        if ($rc -eq 0) { Write-Info "Build succeeded: $p" -ForegroundColor Green }
+        else { Write-Info "Build failed (non-blocking): $p" -ForegroundColor Yellow }
       } catch {
-        Write-Host "Build error for $p : $($_.Exception.Message)" -ForegroundColor Yellow
+        Write-Info "Build error for $p : $($_.Exception.Message)" -ForegroundColor Yellow
       }
     }
   }
@@ -393,7 +398,7 @@ if ($CheckBuild) {
 
 # === Bloat Analysis ===
 if ($CheckBloat) {
-  Write-Host "`nCheckBloat: analyzing file sizes..." -ForegroundColor Cyan
+  Write-Info "`nCheckBloat: analyzing file sizes..." -ForegroundColor Cyan
   $bloatWarnings = @()
 
   $contextFiles = Get-ChildItem -Path $targetDir -File -Recurse |
@@ -439,23 +444,23 @@ if ($CheckBloat) {
         }
       }
     } catch {
-      Write-Host "Warning: could not parse previous manifest" -ForegroundColor Yellow
+      Write-Info "Warning: could not parse previous manifest" -ForegroundColor Yellow
     }
   }
 
   if ($bloatWarnings.Count -gt 0) {
-    Write-Host "`nBloat warnings:" -ForegroundColor Yellow
+    Write-Info "`nBloat warnings:" -ForegroundColor Yellow
     foreach ($bw in $bloatWarnings) {
-      Write-Host " - $($bw.File): $($bw.Reasons)" -ForegroundColor Yellow
+      Write-Info " - $($bw.File): $($bw.Reasons)" -ForegroundColor Yellow
     }
   } else {
-    Write-Host "No bloat warnings." -ForegroundColor Green
+    Write-Info "No bloat warnings." -ForegroundColor Green
   }
 
   if ($growthWarnings.Count -gt 0) {
-    Write-Host "`nGrowth warnings (20%+ since last manifest):" -ForegroundColor Yellow
+    Write-Info "`nGrowth warnings (20%+ since last manifest):" -ForegroundColor Yellow
     foreach ($gw in $growthWarnings) {
-      Write-Host " - $($gw.File): $($gw.Growth)" -ForegroundColor Yellow
+      Write-Info " - $($gw.File): $($gw.Growth)" -ForegroundColor Yellow
     }
   }
 }
@@ -494,10 +499,15 @@ $sensitiveFound = $sensitiveFound | Where-Object {
 $sensitiveFound = $sensitiveFound | Where-Object { $_.File -notmatch '\\scripts\\audit-data\\' }
 
 if ($sensitiveFound.Count -gt 0) {
-  Write-Host "`nPotential sensitive data found:" -ForegroundColor Red
-  $sensitiveFound | ForEach-Object { Write-Host " - $($_.File): [$($_.Pattern)] $($_.Match)" }
-  Write-Host "`nReview and sanitize before publishing." -ForegroundColor Red
+  Write-Info "`nPotential sensitive data found:" -ForegroundColor Red
+  $sensitiveFound | ForEach-Object { Write-Info " - $($_.File): [$($_.Pattern)] $($_.Match)" }
+  Write-Info "`nReview and sanitize before publishing." -ForegroundColor Red
   exit 2
 }
 
+} finally {
+  try { Save-RunLogToSummaries -Root $root } catch { }
+}
+
 exit 0
+

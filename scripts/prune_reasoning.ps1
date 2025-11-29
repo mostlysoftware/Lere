@@ -1,3 +1,5 @@
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "prune_reasoning" -Note "auto-applied" } catch { }
+. $PSScriptRoot\\lib\\logging.ps1
 <#
 Prune resolved reasoning threads from reasoning-context.md to reasoning-archive.md.
 
@@ -38,7 +40,7 @@ if (Test-Path $metadataLibPath) {
   . $metadataLibPath
   $hasMetadataLib = $true
 } else {
-  Write-Host "Warning: Metadata library not found at $metadataLibPath; using legacy parsing." -ForegroundColor Yellow
+  Write-Info "Warning: Metadata library not found at $metadataLibPath; using legacy parsing." -ForegroundColor Yellow
   $hasMetadataLib = $false
 }
 
@@ -113,11 +115,11 @@ if ($currentStart -ge 0) {
 }
 
 if ($threads.Count -eq 0) {
-  Write-Host "No reasoning threads found to prune." -ForegroundColor Green
+  Write-Info "No reasoning threads found to prune." -ForegroundColor Green
   exit 0
 }
 
-Write-Host "Found $($threads.Count) reasoning threads." -ForegroundColor Cyan
+Write-Info "Found $($threads.Count) reasoning threads." -ForegroundColor Cyan
 
 # Determine which threads to archive based on metadata
 $now = Get-Date
@@ -162,11 +164,11 @@ $candidates = $sorted | Select-Object -Skip $Keep
 $toArchive = $candidates | Where-Object { $_.IsResolved -or $_.IsOld }
 
 if ($toArchive.Count -eq 0) {
-  Write-Host "No threads eligible for archiving (keeping $Keep most recent; others are not resolved or old enough)." -ForegroundColor Green
+  Write-Info "No threads eligible for archiving (keeping $Keep most recent; others are not resolved or old enough)." -ForegroundColor Green
   exit 0
 }
 
-Write-Host "Archiving $($toArchive.Count) threads..." -ForegroundColor Cyan
+Write-Info "Archiving $($toArchive.Count) threads..." -ForegroundColor Cyan
 
 . (Join-Path $libDir 'ArchiveDocument.ps1')
 $archiveHeader = "# Reasoning Archive`n`nArchived on " + (Get-Date -Format 'yyyy-MM-dd HH:mm') + "`n`n"
@@ -182,7 +184,7 @@ foreach ($t in $toArchive) {
 $archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $archiveEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
 
 if (-not $archiveResult.Success) {
-  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
+  Write-Info "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
   exit 2
 }
 $archiveFile = $archiveResult.Path
@@ -221,10 +223,11 @@ $final = ($newContent -join '').Trim() + "`n"
 # Write updated reasoning file
 Set-Content -LiteralPath $reasoningFile -Value $final -Encoding UTF8
 
-Write-Host "Pruned $($toArchive.Count) reasoning threads; kept $($toKeep.Count) most recent. Archived to $archiveFile" -ForegroundColor Green
+Write-Info "Pruned $($toArchive.Count) reasoning threads; kept $($toKeep.Count) most recent. Archived to $archiveFile" -ForegroundColor Green
 
 ## Compact old reasoning archives via shared helper
 . (Join-Path $PSScriptRoot 'lib\ArchiveHelpers.ps1')
 Compact-Archives -ArchiveDir $archiveDir -Pattern 'reasoning-archive-*.md' -Keep 10 -Description 'reasoning archives'
 
 exit 0
+

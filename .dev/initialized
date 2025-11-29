@@ -1,0 +1,7 @@
+﻿{
+    "initializedAt":  "2025-11-28 20:46:53Z",
+    "actions":  [
+                    "health_check",
+                    "install_git_hooks"
+                ]
+}

@@ -1,3 +1,4 @@
+﻿. $PSScriptRoot\\lib\\logging.ps1
 param(
   [string]$Root = "$PSScriptRoot\..",
   [string]$OutDir = "$PSScriptRoot\audit-data\manifests"
@@ -18,7 +19,7 @@ if (-not (Test-Path $targetDir)) { Write-Error "chat_context directory not found
 try {
   $files = Get-ChildItem -LiteralPath $targetDir -Recurse -File -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch '\.git\\' }
 } catch {
-  Write-Host "Warning: file enumeration failed: $($_.Exception.Message)" -ForegroundColor Yellow
+  Write-Info "Warning: file enumeration failed: $($_.Exception.Message)" -ForegroundColor Yellow
   $files = @()
 }
 
@@ -64,10 +65,11 @@ foreach ($f in $files) {
     }
     $manifest.files += $entry
   } catch {
-    Write-Host "Warning: failed to inspect file $($f.FullName): $($_.Exception.Message)" -ForegroundColor Yellow
+    Write-Info "Warning: failed to inspect file $($f.FullName): $($_.Exception.Message)" -ForegroundColor Yellow
   }
 }
 
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifestFile -Encoding UTF8
-Write-Host $manifestFile
+Write-Info $manifestFile
 exit 0
+

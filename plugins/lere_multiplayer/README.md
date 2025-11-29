@@ -20,6 +20,19 @@ Build
 
 Copy the generated JAR into your server `plugins/` folder and restart the server.
 
+Local developer helper
+----------------------
+
+If you prefer to run builds without installing Gradle globally, use the repo helper script from the repository root. It will detect a Gradle wrapper or download a local Gradle distribution into `./.dev/gradle` and invoke it (requires a JDK to be available).
+
+From the repo root (PowerShell):
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\dev_setup.ps1 -RunBuild
+```
+
+If you do not have a JDK installed, the script will show recommended install commands and will not proceed until a JDK is available.
+
 Example `config.yml` snippet (zones + whitelist)
 
 ```yaml

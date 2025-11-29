@@ -1,0 +1,397 @@
+<#
+.SYNOPSIS
+  Developer bootstrap: detect JDK/Gradle/Docker and run local plugin builds.
+
+.DESCRIPTION
+  This script helps you run builds locally without needing to install Gradle globally.
+  It can download a standalone Gradle distribution into ./.dev and invoke it.
+  It does not install a system JDK for you, but it detects if one is present and
+  provides instructions to install if missing.
+
+#.PARAMETER RunBuild
+#  If specified, attempts to build all plugin subprojects under plugins/.
+#
+#.PARAMETER GradleVersion
+#  Version of Gradle to download when a wrapper is not present. Default: 8.4.1
+#
+#.PARAMETER Force
+#  Force downloading Gradle even if a local copy already exists.
+
+.PARAMETER AutoInstallJdk
+# If specified, and no JDK is found on PATH, the script will attempt to download
+# a user-local (no-admin) Temurin (Adoptium) JDK into ./.dev/jdk, extract it,
+# and update JAVA_HOME and PATH for the duration of the script. This is intended
+# for quick local bootstraps on developer machines without admin rights. The
+# download size is large (~100MB+). Use only if you consent to that download.
+
+.PARAMETER JdkVersion
+# The major JDK version to download when -AutoInstallJdk is used. Default: 17
+#>
+param(
+  [switch]$RunBuild,
+  [string]$GradleVersion = '8.4.1',
+  [switch]$Force,
+  [switch]$ForceJdk,
+  [switch]$AutoInstallJdk,
+  [switch]$SkipChecksum,
+  [string]$JdkVersion = '17'
+)
+ 
+# Use shared logging helpers
+. "$PSScriptRoot\lib\logging.ps1"
+
+# Checksum helper
+. "$PSScriptRoot\lib\Verify-FileChecksum.ps1"
+
+$root = Resolve-Path -Path "$PSScriptRoot\.." | Select-Object -ExpandProperty Path
+Set-Location -Path $root
+
+# initialize per-run log
+Start-RunLog -Root $root -ScriptName 'dev_setup' -Note 'Developer bootstrap'
+
+Write-Info "Developer bootstrap starting in: $root"
+
+function Install-TemurinJdk {
+  param(
+    [string]$Version = '17'
+  )
+  # Cross-platform auto-install: detect OS/arch, pick Adoptium binary, download and extract.
+  $devJdkDir = Join-Path $root '.dev\jdk'
+  if (-not (Test-Path $devJdkDir)) { New-Item -ItemType Directory -Path $devJdkDir -Force | Out-Null }
+
+  function Invoke-WithRetry {
+    param(
+      [scriptblock]$Action,
+      [int]$Retries = 3,
+      [int]$DelaySeconds = 2
+    )
+    for ($i = 1; $i -le $Retries; $i++) {
+      try {
+        return & $Action
+      } catch {
+        if ($i -lt $Retries) {
+          Write-Warn "Attempt $i failed: $($_.Exception.Message). Retrying in $DelaySeconds seconds..."
+          Start-Sleep -Seconds $DelaySeconds
+          $DelaySeconds = [int]($DelaySeconds * 2)
+          continue
+        } else {
+          throw
+        }
+      }
+    }
+  }
+
+  # If a usable JDK already exists in ./.dev/jdk, reuse it unless ForceJdk is true
+  if (-not $ForceJdk) {
+    $existing = Get-ChildItem -Path $devJdkDir -Directory -ErrorAction SilentlyContinue | Where-Object {
+      (Test-Path (Join-Path $_.FullName 'bin\javac.exe')) -or (Test-Path (Join-Path $_.FullName 'bin/javac'))
+    } | Select-Object -First 1
+    if ($null -ne $existing) {
+      Write-Info "Found existing local JDK at $($existing.FullName); skipping download (use -ForceJdk to re-download)."
+      $env:JAVA_HOME = $existing.FullName
+      $env:Path = (Join-Path $existing.FullName 'bin') + [System.IO.Path]::PathSeparator + $env:Path
+      return $true
+    }
+  }
+
+  # Determine OS name and architecture for Adoptium endpoint
+  $osCandidates = @()
+  try {
+    if ($env:OS -eq 'Windows_NT') { $osCandidates += 'windows' }
+    # PowerShell Core exposes helpers $IsLinux/$IsMacOS on newer PS; check them
+    if (Get-Variable -Name IsLinux -Scope Script -ErrorAction SilentlyContinue) { if ($IsLinux) { $osCandidates += 'linux' } }
+    if (Get-Variable -Name IsMacOS -Scope Script -ErrorAction SilentlyContinue) { if ($IsMacOS) { $osCandidates += 'mac' } }
+    # Fallback to RuntimeInformation if available
+    try {
+      if ([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::Windows)) { $osCandidates += 'windows' }
+      if ([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::Linux)) { $osCandidates += 'linux' }
+      if ([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::OSX)) { $osCandidates += 'mac' }
+    } catch { }
+  } catch { }
+  # Ensure unique
+  $osCandidates = $osCandidates | Select-Object -Unique
+  if ($osCandidates.Count -eq 0) { $osCandidates = @('linux','mac','windows') }
+
+  $archRaw = 'x64'
+  try { $archRaw = ([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture).ToString() } catch { }
+  switch ($archRaw.ToLower()) {
+    'x64' { $arch = 'x64' }
+    'arm64' { $arch = 'aarch64' }
+    'arm' { $arch = 'aarch64' }
+    'x86' { $arch = 'x86' }
+    default { $arch = 'x64' }
+  }
+
+  $jvmImpl = 'hotspot'
+  $imageType = 'jdk'
+
+  $downloadOk = $false
+  $tmpFile = $null
+  foreach ($osName in $osCandidates) {
+    # Try common variants for mac ('mac' and 'macos') if needed
+    $trialOsNames = @($osName)
+    if ($osName -eq 'mac') { $trialOsNames += 'macos' }
+
+    foreach ($trial in $trialOsNames) {
+      $apiUrl = "https://api.adoptium.net/v3/binary/latest/$Version/ga/$trial/$arch/$imageType/$jvmImpl/$imageType"
+      Write-Info "Checking availability: $apiUrl"
+      try {
+        Invoke-WebRequest -Uri $apiUrl -Method Head -UseBasicParsing -ErrorAction Stop | Out-Null
+        # If we get here, endpoint exists and should redirect to a binary
+        $downloadUrl = $apiUrl
+        $downloadOk = $true
+        break
+      } catch {
+        # try next
+        continue
+      }
+    }
+    if ($downloadOk) { break }
+  }
+
+  if (-not $downloadOk) {
+    Write-Err "Could not find a suitable Temurin binary for OS/arch (candidates: $($osCandidates -join ', '); arch=$arch)."
+    return $false
+  }
+
+  # Download the binary
+  $tmpFile = Join-Path $env:TEMP "temurin-jdk-$Version-$(Get-Random).bin"
+  Write-Info "Preparing checksum lookup for Adoptium asset"
+  $expectedChecksum = $null
+  try {
+    # Query asset metadata to find a package checksum (sha256)
+    $assetApi = "https://api.adoptium.net/v3/assets/latest/$Version/ga?architecture=$arch&image_type=$imageType&jvm_impl=$jvmImpl&os=$trial"
+    Write-Info "Fetching asset metadata: $assetApi"
+    $meta = Invoke-RestMethod -Uri $assetApi -UseBasicParsing -ErrorAction Stop
+    foreach ($entry in $meta) {
+      if ($null -ne $entry.binaries) {
+        foreach ($b in $entry.binaries) {
+          if ($null -ne $b.package -and $b.package.checksum) { $expectedChecksum = $b.package.checksum; break }
+        }
+      }
+      if ($expectedChecksum) { break }
+    }
+  } catch {
+    Write-Warn "Could not fetch asset metadata for checksum: $($_.Exception.Message)"
+  }
+
+  Write-Info "Downloading JDK from $downloadUrl (this may be large)"
+  try {
+    Invoke-WithRetry -Action { Invoke-WebRequest -Uri $downloadUrl -OutFile $tmpFile -UseBasicParsing -ErrorAction Stop } -Retries 3 -DelaySeconds 2 | Out-Null
+  } catch {
+    Write-Err "Failed to download JDK after retries: $($_.Exception.Message)"
+    if ($tmpFile -and (Test-Path $tmpFile)) { Remove-Item -Path $tmpFile -Force -ErrorAction SilentlyContinue }
+    return $false
+  }
+
+  # If we have an expected checksum and checksum validation not skipped, verify
+  $verificationResult = $null
+  if (-not $SkipChecksum -and $expectedChecksum) {
+    try {
+      $verificationResult = Verify-FileChecksum -FilePath $tmpFile -ExpectedChecksum $expectedChecksum
+      if (-not $verificationResult.Verified) {
+        Write-Err "Downloaded JDK checksum mismatch. Expected $($verificationResult.Expected) but got $($verificationResult.Computed)."
+        if ($tmpFile -and (Test-Path $tmpFile)) { Remove-Item -Path $tmpFile -Force -ErrorAction SilentlyContinue }
+        # write verification artifact for upstream callers
+        try { $vpath = Join-Path $root '.dev\jdk_verification.json'; $verificationResult | ConvertTo-Json | Out-File -FilePath $vpath -Encoding UTF8 -Force } catch { }
+        return $false
+      } else {
+        Write-Info "Checksum verified (sha256)."
+        try { $vpath = Join-Path $root '.dev\jdk_verification.json'; $verificationResult | ConvertTo-Json | Out-File -FilePath $vpath -Encoding UTF8 -Force } catch { }
+      }
+    } catch {
+      Write-Warn "Checksum verification failed: $($_.Exception.Message)"
+    }
+  }
+
+  # Try to determine archive type by peeking at the first bytes or filename header
+  $fileType = 'unknown'
+  try {
+    $fs = [System.IO.File]::OpenRead($tmpFile)
+    $buffer = New-Object byte[] 4
+    $fs.Read($buffer,0,4) | Out-Null
+    $fs.Close()
+    # PK.. => zip
+    if ($buffer[0] -eq 0x50 -and $buffer[1] -eq 0x4B) { $fileType = 'zip' }
+    # .tgz / gzip magic: 1F 8B
+    if ($buffer[0] -eq 0x1F -and $buffer[1] -eq 0x8B) { $fileType = 'tgz' }
+  } catch { }
+
+  Write-Info "Extracting JDK to $devJdkDir (detected type: $fileType)"
+  try {
+    if ($fileType -eq 'zip') {
+      Add-Type -AssemblyName System.IO.Compression.FileSystem
+      [System.IO.Compression.ZipFile]::ExtractToDirectory($tmpFile, $devJdkDir)
+    } elseif ($fileType -eq 'tgz') {
+      # Use system tar if available
+      $tar = 'tar'
+      try {
+        & $tar -xzf $tmpFile -C $devJdkDir
+      } catch {
+        Write-Err "Failed to extract tarball with 'tar'. Ensure 'tar' is available on PATH."
+        if ($tmpFile -and (Test-Path $tmpFile)) { Remove-Item -Path $tmpFile -Force -ErrorAction SilentlyContinue }
+        return $false
+      }
+    } else {
+      Write-Warn "Unknown archive format; attempting to extract as zip first."
+      try {
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($tmpFile, $devJdkDir)
+      } catch {
+        Write-Err "Extraction failed for unknown archive format: $($_.Exception.Message)"
+        if ($tmpFile -and (Test-Path $tmpFile)) { Remove-Item -Path $tmpFile -Force -ErrorAction SilentlyContinue }
+        return $false
+      }
+    }
+  } catch {
+    Write-Err "Extraction failed: $($_.Exception.Message)"
+    return $false
+  }
+
+  # find extracted folder containing bin/javac or bin/javac.exe
+  $extracted = Get-ChildItem -Path $devJdkDir | Where-Object { $_.PSIsContainer } | Where-Object {
+    (Test-Path (Join-Path $_.FullName 'bin\javac.exe')) -or (Test-Path (Join-Path $_.FullName 'bin/javac'))
+  } | Select-Object -First 1
+
+  if ($null -eq $extracted) {
+    Write-Err "Could not find a valid JDK layout inside the extracted archive."
+    return $false
+  }
+
+  $jdkHome = $extracted.FullName
+  Write-Info "Using extracted JDK at: $jdkHome"
+  $env:JAVA_HOME = $jdkHome
+  # Prepend to PATH for current process only
+  if ($IsWindows -or ($env:OS -eq 'Windows_NT')) { $binPath = Join-Path $jdkHome 'bin' } else { $binPath = Join-Path $jdkHome 'bin' }
+  $env:Path = $binPath + [System.IO.Path]::PathSeparator + $env:Path
+
+  # quick verification
+  $javacCheck = Get-Command javac -ErrorAction SilentlyContinue
+  if ($null -ne $javacCheck) {
+    Write-Info "javac found: $($javacCheck.Path)"
+    # cleanup temp file
+    try { Remove-Item -Path $tmpFile -Force -ErrorAction SilentlyContinue } catch { }
+    return $true
+  } else {
+    Write-Err "javac still not available after extraction."
+    return $false
+  }
+}
+
+# Begin main run block so we always save run logs on exit
+try {
+# Check JDK
+$javac = Get-Command javac -ErrorAction SilentlyContinue
+if ($null -eq $javac) {
+  if ($AutoInstallJdk) {
+    Write-Info "JDK not found. -AutoInstallJdk provided; attempting user-local download/install (no admin)."
+    $ok = Install-TemurinJdk -Version $JdkVersion
+    if (-not $ok) {
+      Write-Err "Automatic JDK install failed. Please install a JDK manually or rerun with network access."
+      Write-Host "Recommended manual installation options (pick one):"
+      Write-Host "  - Install via winget: winget install -e --id EclipseAdoptium.Temurin.17.JDK"
+      Write-Host "  - Install via Chocolatey: choco install temurin17 -y"
+      Write-Host "  - Or download a JDK from https://adoptium.net/ and set JAVA_HOME and update PATH"
+      Write-Host "After installing, re-run this script."
+    } else {
+      Write-Info "Automatic JDK install successful."
+    }
+    # re-check
+    $javac = Get-Command javac -ErrorAction SilentlyContinue
+    if ($null -ne $javac) { Write-Info "Found JDK: $($javac.Path)" }
+  } else {
+    Write-Warn "JDK not found in PATH (javac). You need a JDK (Java 17+) to build the plugins."
+    Write-Host "Recommended installation options (pick one):"
+    Write-Host "  - Install via winget: winget install -e --id EclipseAdoptium.Temurin.17.JDK"
+    Write-Host "  - Install via Chocolatey: choco install temurin17 -y"
+    Write-Host "  - Or download a JDK from https://adoptium.net/ and set JAVA_HOME and update PATH"
+    Write-Host "After installing, re-run this script."
+  }
+} else {
+  Write-Info "Found JDK: $($javac.Path)"
+}
+
+} finally {
+  try { Save-RunLogToSummaries -Root $root } catch { }
+}
+
+# Check for gradle wrapper
+$hasWrapper = Test-Path "$root\gradlew.bat" -or Test-Path "$root\gradlew"
+if ($hasWrapper) { Write-Info "Gradle wrapper present; we'll prefer using it for builds." }
+
+# Local gradle fallback location
+$devGradleDir = Join-Path $root '.dev\gradle'
+$gradleBin = $null
+
+if (-not $hasWrapper) {
+  if (-not (Test-Path $devGradleDir) -or $Force) {
+    Write-Info "No gradle wrapper detected. Preparing local Gradle distribution in $devGradleDir"
+    New-Item -ItemType Directory -Path $devGradleDir -Force | Out-Null
+    $zipName = "gradle-$GradleVersion-bin.zip"
+    $downloadUrl = "https://services.gradle.org/distributions/$zipName"
+    $tmpZip = Join-Path $env:TEMP $zipName
+    Write-Info "Downloading Gradle $GradleVersion from $downloadUrl"
+    try {
+      Invoke-WebRequest -Uri $downloadUrl -OutFile $tmpZip -UseBasicParsing -ErrorAction Stop
+    } catch {
+      Write-Err "Failed to download Gradle: $($_.Exception.Message)"
+      exit 1
+    }
+    Write-Info "Extracting to $devGradleDir"
+    try {
+      Add-Type -AssemblyName System.IO.Compression.FileSystem
+      [System.IO.Compression.ZipFile]::ExtractToDirectory($tmpZip, $devGradleDir)
+    } catch {
+      Write-Err "Extraction failed: $($_.Exception.Message)"
+      exit 1
+    }
+    # The distribution extracts to a folder like gradle-8.4.1
+    $extracted = Get-ChildItem -Path $devGradleDir | Where-Object { $_.PSIsContainer } | Select-Object -First 1
+    if ($null -eq $extracted) { Write-Err "Unexpected extraction layout"; exit 1 }
+    $gradleBin = Join-Path $extracted.FullName 'bin\gradle.bat'
+    if (-not (Test-Path $gradleBin)) { Write-Err "gradle.bat not found in distribution"; exit 1 }
+    Write-Info "Downloaded gradle to: $($extracted.FullName)"
+  } else {
+    $extracted = Get-ChildItem -Path $devGradleDir | Where-Object { $_.PSIsContainer } | Select-Object -First 1
+    if ($null -ne $extracted) { $gradleBin = Join-Path $extracted.FullName 'bin\gradle.bat' }
+    if ($null -eq $gradleBin -or -not (Test-Path $gradleBin)) {
+      Write-Warn "Local gradle distribution seems missing or malformed in $devGradleDir. Use -Force to re-download."
+    } else {
+      Write-Info "Local gradle available at $gradleBin"
+    }
+  }
+}
+
+function Invoke-LocalBuild {
+  param([string[]]$PluginDirs)
+  foreach ($d in $PluginDirs) {
+    if (-not (Test-Path $d)) { Write-Warn "Plugin dir not found: $d"; continue }
+    Write-Info "Building plugin: $d"
+    if (Test-Path "$root\gradlew.bat") {
+      Push-Location $root
+      & .\gradlew.bat -p $d clean build
+      if ($LASTEXITCODE -ne 0) { Write-Err "Build failed for $d"; Pop-Location; return 1 }
+      Pop-Location
+    } elseif ($gradleBin -and (Test-Path $gradleBin)) {
+      & "$gradleBin" -p $d clean build
+      if ($LASTEXITCODE -ne 0) { Write-Err "Build failed for $d"; return 1 }
+    } else {
+      Write-Err "No gradle wrapper or local gradle available to run the build."
+      return 1
+    }
+  }
+  return 0
+}
+
+if ($RunBuild) {
+  # Discover plugin dirs
+  $pluginsRoot = Join-Path $root 'plugins'
+  if (-not (Test-Path $pluginsRoot)) { Write-Err "plugins/ directory not found"; exit 1 }
+  $dirs = Get-ChildItem -Path $pluginsRoot -Directory | ForEach-Object { $_.FullName }
+  $status = Invoke-LocalBuild -PluginDirs $dirs
+  if ($status -eq 0) { Write-Info "Build(s) completed successfully. Artifacts under */build/libs/" } else { Write-Err "One or more builds failed."; exit 1 }
+} else {
+  Write-Host "To attempt a local build, re-run this script with -RunBuild. Example:"
+  Write-Host "  powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\dev_setup.ps1 -RunBuild"
+  Write-Host "If you don't have a JDK, install one first using winget or choco (see messages above)."
+}

@@ -1,4 +1,4 @@
-Param(
+﻿Param(
     [string]$Root = 'chat_context'
 )
 
@@ -12,5 +12,6 @@ foreach ($f in $files) {
     $destDir = Split-Path $dest -Parent
     if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir -Force | Out-Null }
     git mv -f -- "$($f.FullName)" "$dest" | Out-Null
-    Write-Output "Moved: $($f.FullName) -> $dest"
+    Write-Info "Moved: $($f.FullName) -> $dest"
 }
+

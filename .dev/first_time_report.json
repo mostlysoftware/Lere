@@ -1,0 +1,17 @@
+﻿{
+    "initializedAt":  "2025-11-28 20:46:53Z",
+    "host":  "DESKTOP-9QVADGQ",
+    "os":  "unknown",
+    "actions":  [
+                    {
+                        "name":  "health_check",
+                        "success":  false,
+                        "output":  "powershell.exe : C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\health_check.ps1 : Cannot validate \r\nargument on \r\nAt C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\first_time_setup.ps1:72 char:10\r\n+   $out = \u0026 powershell @argsList 2\u003e\u00261 | Out-String\r\n+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (C:\\Users\\Eris\\D...te argument on :String) [],  \r\n   RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\nparameter \u0027Scope\u0027. The argument \"repo\" does not belong to the set \r\n\"all,project,scripts,plugins,context\" specified by the ValidateSet attribute. Supply an \r\nargument that is in the set and then try the command again.\r\n    + CategoryInfo          : InvalidData: (:) [health_check.ps1], ParentContainsErrorRecor \r\n   dException\r\n    + FullyQualifiedErrorId : ParameterArgumentValidationError,health_check.ps1\r\n \r\n"
+                    },
+                    {
+                        "name":  "install_git_hooks",
+                        "success":  false,
+                        "output":  "Setting git core.hooksPath to .githooks\r\nRunning hook installer: scripts/install_git_hooks.ps1\r\nInstalled hook: pre-commit\r\nInstalled hook: pre-push\r\nInstalled Windows wrapper: pre-commit.bat\r\nInstalled Windows PowerShell wrapper: pre-commit.ps1\r\nInstalled Windows wrapper: pre-push.bat\r\nInstalled Windows PowerShell wrapper: pre-push.ps1\r\nInstalled 2 hooks into .git/hooks\r\n0\r\nCopied run log into chat_context summaries: C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\chat_context\\.summaries\\install_git_hooks-20251128-204654.log\r\ninstall_git_hooks.ps1 exited with code 128\r\nCopied run log into chat_context summaries: C:\\Users\\Eris\\Dropbox\\Dev\\Lere\\scripts\\chat_context\\.summaries\\install_git_hooks-20251128-204653.log\r\n"
+                    }
+                ]
+}

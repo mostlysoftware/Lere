@@ -1,3 +1,5 @@
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "fix_session_priorities" -Note "auto-applied" } catch { }
+. $PSScriptRoot\\lib\\logging.ps1
 <#
 Fix session blocks missing a Priority line by inserting a default 'Priority: low'.
 
@@ -54,19 +56,19 @@ foreach ($f in $mdFiles) {
 }
 
 if ($toFix.Count -eq 0) {
-  Write-Host "No session blocks missing Priority were found." -ForegroundColor Green
+  Write-Info "No session blocks missing Priority were found." -ForegroundColor Green
   exit 0
 }
 
-Write-Host "Found $($toFix.Count) session(s) missing Priority:" -ForegroundColor Yellow
-$toFix | ForEach-Object { Write-Host " - $($_.File): session $($_.Session) (lines $($_.Start + 1)-$($_.End + 1))" }
+Write-Info "Found $($toFix.Count) session(s) missing Priority:" -ForegroundColor Yellow
+$toFix | ForEach-Object { Write-Info " - $($_.File): session $($_.Session) (lines $($_.Start + 1)-$($_.End + 1))" }
 
 if (-not $Apply) {
-  Write-Host "Run with -Apply to insert 'Priority: low' for these sessions." -ForegroundColor Cyan
+  Write-Info "Run with -Apply to insert 'Priority: low' for these sessions." -ForegroundColor Cyan
   exit 0
 }
 
-Write-Host "Applying changes..." -ForegroundColor Cyan
+Write-Info "Applying changes..." -ForegroundColor Cyan
 
 # Group by file for efficient edits
 $groups = $toFix | Group-Object -Property File
@@ -90,10 +92,11 @@ foreach ($g in $groups) {
   # Write file back preserving encoding
   $enc = (Get-Item -LiteralPath $file).OpenText().CurrentEncoding
   Set-Content -LiteralPath $file -Value $lines -Encoding $enc
-  Write-Host "Patched $file" -ForegroundColor Green
+  Write-Info "Patched $file" -ForegroundColor Green
 }
 
-Write-Host "Re-running audit..." -ForegroundColor Cyan
+Write-Info "Re-running audit..." -ForegroundColor Cyan
 powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'scripts\audit.ps1')
 
 exit 0
+

@@ -1,3 +1,5 @@
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "prune_sessions" -Note "auto-applied" } catch { }
+. $PSScriptRoot\\lib\\logging.ps1
 <#
 Simple, robust session pruner with unified metadata support.
 
@@ -58,7 +60,7 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
 }
 
 if ($markerIdx.Count -le $Keep) {
-  Write-Host "Found $($markerIdx.Count) sessions; <= $Keep -- nothing to prune." -ForegroundColor Green
+  Write-Info "Found $($markerIdx.Count) sessions; <= $Keep -- nothing to prune." -ForegroundColor Green
   exit 0
 }
 
@@ -110,7 +112,7 @@ $candidates = $sorted | Select-Object -Skip $Keep
 $toArchive = $candidates | Where-Object { $_.IsClosed -or $_.IsOld }
 
 if ($toArchive.Count -eq 0) {
-  Write-Host "Found $($blocks.Count) sessions; $Keep most recent kept; no others eligible for archiving." -ForegroundColor Green
+  Write-Info "Found $($blocks.Count) sessions; $Keep most recent kept; no others eligible for archiving." -ForegroundColor Green
   exit 0
 }
 
@@ -132,8 +134,8 @@ foreach ($b in $toArchive) {
 $archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $appendEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
 
 if (-not $archiveResult.Success) {
-  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
-  Write-Host "Aborting: session-context.md will not be modified to avoid data loss." -ForegroundColor Red
+  Write-Info "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
+  Write-Info "Aborting: session-context.md will not be modified to avoid data loss." -ForegroundColor Red
   exit 2
 }
 $archiveFile = $archiveResult.Path
@@ -157,13 +159,14 @@ if ($firstStart -gt 0) { $prefix = $lines[0..($firstStart - 1)] -join "`n" } els
 $final = ($prefix + "`n`n" + ($newSections -join "`n`n")).Trim()
 Set-Content -LiteralPath $sessionFile -Value $final
 
-Write-Host "Pruned $($toArchive.Count) sessions; kept $Keep most recent sessions. Archived to $archiveFile" -ForegroundColor Green
+Write-Info "Pruned $($toArchive.Count) sessions; kept $Keep most recent sessions. Archived to $archiveFile" -ForegroundColor Green
 
 ## Compact old archives via shared helper
 . (Join-Path $PSScriptRoot 'lib\ArchiveHelpers.ps1')
 Compact-Archives -ArchiveDir $archiveDir -Pattern 'session-archive-*.md' -Keep 10 -Description 'session archives'
 
-Write-Host "Running pointer audit..." -ForegroundColor Cyan
+Write-Info "Running pointer audit..." -ForegroundColor Cyan
 powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'scripts\audit.ps1')
 
 exit 0
+

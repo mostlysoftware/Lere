@@ -1,0 +1,169 @@
+<#
+Simple, robust session pruner with unified metadata support.
+
+=== FLOW ===
+1. Load shared libraries (Parse-EntryMetadata, ArchiveDocument)
+2. Read session-context.md and find all (Session YYYY-MM-DD HH:MM) markers
+3. Parse each session block's metadata (unified HTML comments or legacy inference)
+4. Determine archive eligibility: closed status OR older than MaxAgeDays
+5. Keep the most recent N sessions (controlled by -Keep)
+6. Archive eligible sessions to timestamped file in archives/
+7. Rewrite session-context.md with remaining content
+
+=== METADATA ===
+Sessions can use unified metadata blocks:
+  <!-- metadata
+  Status: closed
+  Last-updated: YYYY-MM-DD HH:MM
+  -->
+Or legacy format (inferred from session marker timestamp).
+
+Usage: 
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\prune_sessions.ps1 -Keep 5
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\prune_sessions.ps1 -Keep 5 -MaxAgeDays 14
+#>
+
+param(
+  [int]$Keep = 5,
+  [int]$MaxAgeDays = 30,
+  [string]$Root = "$PSScriptRoot\.."
+)
+
+# Load shared libraries
+$libDir = Join-Path $PSScriptRoot 'lib'
+. (Join-Path $libDir 'Parse-EntryMetadata.ps1')
+
+$sessionFile = Join-Path $Root 'chat_context\session-context.md'
+$archiveDir = Join-Path $Root 'chat_context\archives'
+# We'll create a new timestamped archive file per run to avoid append locks
+$timestamp = (Get-Date).ToString('yyyyMMdd-HHmmss')
+$archiveFileName = "session-archive-$timestamp.md"
+$archiveFile = Join-Path $archiveDir $archiveFileName
+
+if (-not (Test-Path $sessionFile)) {
+  Write-Error 'session-context.md not found'
+  exit 1
+}
+
+$lines = Get-Content -LiteralPath $sessionFile -ErrorAction Stop
+
+$markerPattern = '^\s*\(Session \d{4}-\d{2}-\d{2} \d{2}:\d{2}\)'
+$markerIdx = @()
+
+for ($i = 0; $i -lt $lines.Count; $i++) {
+  $line = $lines[$i]
+  if ($line -match $markerPattern) {
+    $markerIdx += $i
+  }
+}
+
+if ($markerIdx.Count -le $Keep) {
+  Write-Host "Found $($markerIdx.Count) sessions; <= $Keep -- nothing to prune." -ForegroundColor Green
+  exit 0
+}
+
+# Build blocks of session text with metadata
+$blocks = @()
+$now = Get-Date
+$cutoffDate = $now.AddDays(-$MaxAgeDays)
+
+for ($k = 0; $k -lt $markerIdx.Count; $k++) {
+  $start = $markerIdx[$k]
+  if ($k -lt ($markerIdx.Count - 1)) {
+    $end = $markerIdx[$k+1] - 1
+  } else {
+    $end = $lines.Count - 1
+  }
+  $slice = $lines[$start..$end]
+  $text = $slice -join "`n"
+  $header = $lines[$start]
+  
+  # Parse metadata (unified with fallback to legacy)
+  $meta = Parse-EntryMetadata -Text $text
+  if (-not $meta.HasMetadata) {
+    $meta = Infer-LegacyMetadata -Text $text -EntryType 'session'
+  }
+  
+  # Determine archive eligibility
+  $isOld = $meta.LastUpdated -and ($meta.LastUpdated -lt $cutoffDate)
+  $isClosed = $meta.Status -eq 'closed'
+  
+  $blocks += [PSCustomObject]@{
+    Start = $start
+    End = $end
+    Text = $text
+    Header = $header
+    Metadata = $meta
+    IsOld = $isOld
+    IsClosed = $isClosed
+  }
+}
+
+# Sort by date descending (newest first)
+$sorted = $blocks | Sort-Object { if ($_.Metadata.LastUpdated) { $_.Metadata.LastUpdated } else { [datetime]::MinValue } } -Descending
+
+# Keep the most recent $Keep sessions regardless of status
+$toKeep = $sorted | Select-Object -First $Keep
+$candidates = $sorted | Select-Object -Skip $Keep
+
+# Archive candidates that are closed OR old
+$toArchive = $candidates | Where-Object { $_.IsClosed -or $_.IsOld }
+
+if ($toArchive.Count -eq 0) {
+  Write-Host "Found $($blocks.Count) sessions; $Keep most recent kept; no others eligible for archiving." -ForegroundColor Green
+  exit 0
+}
+
+# Build archive content in-memory for a new timestamped archive file
+. (Join-Path $libDir 'ArchiveDocument.ps1')
+$archiveHeader = "# Session archive`n`nArchived on " + (Get-Date -Format 'yyyy-MM-dd HH:mm') + "`n`n"
+$appendEntries = @()
+$appendEntries += $archiveHeader
+
+foreach ($b in $toArchive) {
+  $priority = $b.Metadata.Priority
+  $status = if ($b.IsClosed) { 'closed' } elseif ($b.IsOld) { 'aged-out' } else { 'archived' }
+  $sessionLine = ($b.Header -replace '^.*?(\(Session \d{4}-\d{2}-\d{2} \d{2}:\d{2}\)).*','$1')
+  $appendEntries += "### $sessionLine`n`nPriority: $priority | Status: $status`n`n"
+  $appendEntries += $b.Text
+  $appendEntries += "`n`n"
+}
+
+$archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $appendEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
+
+if (-not $archiveResult.Success) {
+  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
+  Write-Host "Aborting: session-context.md will not be modified to avoid data loss." -ForegroundColor Red
+  exit 2
+}
+$archiveFile = $archiveResult.Path
+
+# Rebuild session-context.md content: keep prefix before first marker and keep last N blocks; replace archived blocks with pointers
+$newSections = @()
+foreach ($blk in $blocks) {
+  if ($toArchive -contains $blk) {
+    $sessionLine = ($blk.Header -replace '^.*?(\(Session \d{4}-\d{2}-\d{2} \d{2}:\d{2}\)).*','$1')
+    $priority = $blk.Metadata.Priority
+    $status = if ($blk.IsClosed) { 'closed' } elseif ($blk.IsOld) { 'aged-out' } else { 'archived' }
+    $newSections += "- $sessionLine -- Archived ($status). See ``archives/$archiveFileName``. Priority: $priority"
+  } else {
+    $newSections += $blk.Text
+  }
+}
+
+$firstStart = $blocks[0].Start
+if ($firstStart -gt 0) { $prefix = $lines[0..($firstStart - 1)] -join "`n" } else { $prefix = '' }
+
+$final = ($prefix + "`n`n" + ($newSections -join "`n`n")).Trim()
+Set-Content -LiteralPath $sessionFile -Value $final
+
+Write-Host "Pruned $($toArchive.Count) sessions; kept $Keep most recent sessions. Archived to $archiveFile" -ForegroundColor Green
+
+## Compact old archives via shared helper
+. (Join-Path $PSScriptRoot 'lib\ArchiveHelpers.ps1')
+Compact-Archives -ArchiveDir $archiveDir -Pattern 'session-archive-*.md' -Keep 10 -Description 'session archives'
+
+Write-Host "Running pointer audit..." -ForegroundColor Cyan
+powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'scripts\audit.ps1')
+
+exit 0

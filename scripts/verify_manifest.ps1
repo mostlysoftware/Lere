@@ -1,14 +1,14 @@
-param(
+﻿param(
   [string]$ManifestPath
 )
 
-if (-not $ManifestPath) { Write-Host "Usage: verify_manifest.ps1 -ManifestPath <path>"; exit 2 }
-if (-not (Test-Path $ManifestPath)) { Write-Host "Manifest not found: $ManifestPath"; exit 3 }
+if (-not $ManifestPath) { Write-Info "Usage: verify_manifest.ps1 -ManifestPath <path>"; exit 2 }
+if (-not (Test-Path $ManifestPath)) { Write-Info "Manifest not found: $ManifestPath"; exit 3 }
 
 try {
   $manifest = Get-Content -Raw -LiteralPath $ManifestPath | ConvertFrom-Json
 } catch {
-  Write-Host "Failed to read manifest: $($_.Exception.Message)"; exit 4
+  Write-Info "Failed to read manifest: $($_.Exception.Message)"; exit 4
 }
 
 $errors = @()
@@ -27,10 +27,11 @@ foreach ($entry in $manifest.files) {
 }
 
 if ($errors.Count -gt 0) {
-  Write-Host "Manifest verification failed with the following issues:" -ForegroundColor Red
-  $errors | ForEach-Object { Write-Host " - $_" }
+  Write-Info "Manifest verification failed with the following issues:" -ForegroundColor Red
+  $errors | ForEach-Object { Write-Info " - $_" }
   exit 1
 } else {
-  Write-Host "Manifest verified OK: $ManifestPath" -ForegroundColor Green
+  Write-Info "Manifest verified OK: $ManifestPath" -ForegroundColor Green
   exit 0
 }
+

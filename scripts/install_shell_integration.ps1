@@ -1,4 +1,4 @@
-<#!
+﻿<#!
 Installs shell integration for the Lere repo by adding the LereTools module to the user's PowerShell profile.
 - Adds Import-Module line for scripts/shell/LereTools.psm1
 - Creates the profile if it doesn't exist
@@ -22,11 +22,12 @@ $importLine = "Import-Module '" + $modulePath.Replace("'","''") + "' -Force"
 $current = Get-Content -LiteralPath $profilePath -Raw -ErrorAction SilentlyContinue
 if ($null -eq $current -or $current -notmatch [regex]::Escape($modulePath)) {
   Add-Content -LiteralPath $profilePath -Value "`n# Lere shell integration`n$importLine`n"
-  Write-Host "Updated profile: $profilePath" -ForegroundColor Green
+  Write-Info "Updated profile: $profilePath" -ForegroundColor Green
 } else {
-  Write-Host "Profile already imports LereTools module." -ForegroundColor Yellow
+  Write-Info "Profile already imports LereTools module." -ForegroundColor Yellow
 }
 
 # Import now for current session
 Import-Module $modulePath -Force
-Write-Host "Lere shell integration installed. Try: 'hc -Scope context' or 'offload -Push'" -ForegroundColor Cyan
+Write-Info "Lere shell integration installed. Try: 'hc -Scope context' or 'offload -Push'" -ForegroundColor Cyan
+

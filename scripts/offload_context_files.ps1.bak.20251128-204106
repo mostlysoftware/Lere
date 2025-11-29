@@ -1,0 +1,48 @@
+param(
+  [string]$ContextDir = "chat_context",
+  [string[]]$Files = @('ATTACHMENTS.md','knowledge-compartmentalization.md'),
+  [switch]$Push
+)
+
+$ErrorActionPreference = 'Stop'
+
+$root = (Resolve-Path -Path "$PSScriptRoot\.." -ErrorAction SilentlyContinue).Path
+$ctx = Join-Path $root $ContextDir
+$archives = Join-Path $ctx 'archives'
+
+if (-not (Test-Path $archives)) { New-Item -ItemType Directory -Path $archives | Out-Null }
+
+Push-Location $root
+try {
+  foreach ($name in $Files) {
+    $src = Join-Path $ctx $name
+    if (-not (Test-Path $src)) { Write-Host "Skip: $name (not found)" -ForegroundColor DarkYellow; continue }
+    $dst = Join-Path $archives $name
+    try {
+      git mv -f -- "$src" "$dst" 2>$null
+      Write-Host "git mv: $name -> archives/" -ForegroundColor Green
+    } catch {
+      Move-Item -LiteralPath $src -Destination $dst -Force
+      Write-Host "Moved (fs): $name -> archives/" -ForegroundColor Green
+    }
+  }
+
+  # Purge top-level .summary.md duplicates (centralized copies live under .summaries/)
+  Get-ChildItem -Path $ctx -File -Filter '*.summary.md' | Where-Object { $_.DirectoryName -eq $ctx } | ForEach-Object {
+    Write-Host ("DEL: " + $_.Name) -ForegroundColor Yellow
+    Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue
+  }
+
+  git add -A 2>$null
+  $status = git status --porcelain
+  if ($status) {
+    git commit -m "chore(context): offload optional files to archives and purge top-level .summary.md duplicates"
+    if ($Push) { git push origin HEAD }
+    Write-Host "Committed$(if ($Push) { ' and pushed' }) offload+cleanup changes." -ForegroundColor Cyan
+  } else {
+    Write-Host "No changes to commit." -ForegroundColor Gray
+  }
+}
+finally {
+  Pop-Location
+}

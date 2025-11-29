@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Helper to push the current branch to origin. Intended for use by local git hooks.
 #>
@@ -11,22 +11,23 @@ try {
   Push-Location $PSScriptRoot
 }
 
-Write-Output "Autopush: pushing HEAD to origin..."
+Write-Info "Autopush: pushing HEAD to origin..."
 try {
   $out = git push origin HEAD 2>&1
   if ($LASTEXITCODE -eq 0) {
-    Write-Output "Autopush: push succeeded"
-    Write-Output $out
+    Write-Info "Autopush: push succeeded"
+    Write-Info $out
     Pop-Location
     exit 0
   } else {
-    Write-Output "Autopush: push failed (exit $LASTEXITCODE)"
-    Write-Output $out
+    Write-Info "Autopush: push failed (exit $LASTEXITCODE)"
+    Write-Info $out
     Pop-Location
     exit $LASTEXITCODE
   }
 } catch {
-  Write-Output "Autopush: exception: $($_.Exception.Message)"
+  Write-Info "Autopush: exception: $($_.Exception.Message)"
   Pop-Location
   exit 2
 }
+

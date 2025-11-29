@@ -17,41 +17,50 @@ param(
     [string]$GradleVersion = '8.4.1'
 )
 
-# Prefer shared helper if present; fall back to local definition for compatibility
-$shared = Join-Path $PSScriptRoot 'lib\Test-CommandExists.ps1'
-if (Test-Path $shared) {
-    . $shared
-} else {
-    function Test-CommandExists {
-        param([string]$Cmd)
-        return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null
+ 
+# Use shared logging helpers and start run log
+. "$PSScriptRoot\lib\logging.ps1"
+$root = (Resolve-Path -Path "$PSScriptRoot\..").Path
+Start-RunLog -Root $root -ScriptName 'setup_gradle_wrapper' -Note "Gradle wrapper setup"
+try {
+    # Prefer shared helper if present; fall back to local definition for compatibility
+    $shared = Join-Path $PSScriptRoot 'lib\Test-CommandExists.ps1'
+    if (Test-Path $shared) {
+        . $shared
+    } else {
+        function Test-CommandExists {
+            param([string]$Cmd)
+            return (Get-Command $Cmd -ErrorAction SilentlyContinue) -ne $null
+        }
     }
+
+    Write-Info "Setting up Gradle wrapper (preferred Gradle version: $GradleVersion)"
+
+    if (-not (Test-CommandExists -Cmd 'gradle')) {
+        Write-Warn "Gradle is not available on PATH. Please install Gradle or run this script on a machine with Gradle."
+        Write-Info "Suggested install on Windows (Chocolatey):  choco install gradle -y"
+        exit 2
+    }
+
+    Write-Info "Gradle found. Generating wrapper..."
+
+    # Run gradle wrapper at repo root
+    & gradle wrapper --gradle-version $GradleVersion
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Err "Gradle wrapper generation failed (exit $LASTEXITCODE)."
+        exit $LASTEXITCODE
+    }
+
+    Write-Info "Gradle wrapper generated successfully."
+    Write-Info "Next steps (commit these files):"
+    Write-Info "  gradlew"
+    Write-Info "  gradlew.bat"
+    Write-Info "  gradle/wrapper/gradle-wrapper.jar"
+    Write-Info "  gradle/wrapper/gradle-wrapper.properties"
+    Write-Info "Then you can run builds via: .\gradlew.bat -p plugins\lere_core build"
+
+    exit 0
+} finally {
+    try { Save-RunLogToSummaries -Root $root } catch { }
 }
-
-Write-Host "Setting up Gradle wrapper (preferred Gradle version: $GradleVersion)" -ForegroundColor Cyan
-
-if (-not (Test-CommandExists -Cmd 'gradle')) {
-    Write-Host "Gradle is not available on PATH. Please install Gradle or run this script on a machine with Gradle." -ForegroundColor Yellow
-    Write-Host "Suggested install on Windows (Chocolatey):  choco install gradle -y" -ForegroundColor DarkGray
-    exit 2
-}
-
-Write-Host "Gradle found. Generating wrapper..." -ForegroundColor Green
-
-# Run gradle wrapper at repo root
-& gradle wrapper --gradle-version $GradleVersion
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Gradle wrapper generation failed (exit $LASTEXITCODE)." -ForegroundColor Red
-    exit $LASTEXITCODE
-}
-
-Write-Host "Gradle wrapper generated successfully." -ForegroundColor Green
-Write-Host "Next steps (commit these files):" -ForegroundColor Cyan
-Write-Host "  gradlew" -ForegroundColor DarkGray
-Write-Host "  gradlew.bat" -ForegroundColor DarkGray
-Write-Host "  gradle/wrapper/gradle-wrapper.jar" -ForegroundColor DarkGray
-Write-Host "  gradle/wrapper/gradle-wrapper.properties" -ForegroundColor DarkGray
-Write-Host "Then you can run builds via: .\gradlew.bat -p plugins\lere_core build" -ForegroundColor Cyan
-
-exit 0

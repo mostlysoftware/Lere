@@ -1,0 +1,18 @@
+#!/bin/sh
+# Pre-push hook (POSIX shell)
+# Runs the local plugin build helper and prevents push on failure.
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+if command -v pwsh >/dev/null 2>&1; then
+  pwsh -NoProfile -ExecutionPolicy Bypass -File "$ROOT/scripts/dev_setup.ps1" -RunBuild
+  STATUS=$?
+  exit $STATUS
+elif command -v powershell >/dev/null 2>&1; then
+  powershell -NoProfile -ExecutionPolicy Bypass -File "$ROOT/scripts/dev_setup.ps1" -RunBuild
+  STATUS=$?
+  exit $STATUS
+else
+  echo "Warning: No PowerShell found; cannot run pre-push build. Install PowerShell or bypass with --no-verify." >&2
+  exit 1
+fi

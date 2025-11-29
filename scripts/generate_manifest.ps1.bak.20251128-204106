@@ -1,0 +1,73 @@
+param(
+  [string]$Root = "$PSScriptRoot\..",
+  [string]$OutDir = "$PSScriptRoot\audit-data\manifests"
+)
+
+ $root = Resolve-Path -Path $Root
+ $root = $root.Path
+ if (-not $root.EndsWith('\')) { $root = $root + '\' }
+if (-not (Test-Path $root)) { Write-Error "Root path not found: $root"; exit 1 }
+
+if (-not (Test-Path $OutDir)) { New-Item -ItemType Directory -Path $OutDir | Out-Null }
+
+$ts = (Get-Date).ToString('yyyyMMdd-HHmmss')
+$manifestFile = Join-Path $OutDir "manifest-$ts.json"
+
+$targetDir = Join-Path $root 'chat_context'
+if (-not (Test-Path $targetDir)) { Write-Error "chat_context directory not found under root: $targetDir"; exit 1 }
+try {
+  $files = Get-ChildItem -LiteralPath $targetDir -Recurse -File -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch '\.git\\' }
+} catch {
+  Write-Host "Warning: file enumeration failed: $($_.Exception.Message)" -ForegroundColor Yellow
+  $files = @()
+}
+
+$manifest = [PSCustomObject]@{
+  generated = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
+  root = $root
+  files = @()
+}
+
+foreach ($f in $files) {
+  try {
+    $full = $f.FullName
+  if ($full.Length -gt $root.Length) { $rel = $full.Substring($root.Length).TrimStart('\') } else { $rel = [System.IO.Path]::GetFileName($full) }
+    $hashObj = Get-FileHash -Algorithm SHA256 -Path $full
+    $size = $f.Length
+    # read first 4 bytes to detect BOM
+    $fs = [System.IO.File]::OpenRead($full)
+    $bomBytes = New-Object byte[] 4
+    $read = $fs.Read($bomBytes, 0, 4)
+    $fs.Close()
+    $bom = $null
+    if ($read -ge 3 -and $bomBytes[0] -eq 0xEF -and $bomBytes[1] -eq 0xBB -and $bomBytes[2] -eq 0xBF) { $bom = 'UTF8-BOM' }
+    elseif ($read -ge 2 -and $bomBytes[0] -eq 0xFF -and $bomBytes[1] -eq 0xFE) { $bom = 'UTF16-LE' }
+    elseif ($read -ge 2 -and $bomBytes[0] -eq 0xFE -and $bomBytes[1] -eq 0xFF) { $bom = 'UTF16-BE' }
+    else { $bom = 'None/Unknown' }
+    # detect newline style by sampling the file text (if small) or first 16KB
+    $sample = Get-Content -LiteralPath $full -Raw -ErrorAction SilentlyContinue
+    $newline = $null
+    if ($sample -ne $null) {
+      $crlf = ($sample -split "`r`n").Count - 1
+      $lf = ($sample -split "`n").Count - 1 - $crlf
+      if ($crlf -gt $lf) { $newline = 'CRLF' } elseif ($lf -gt 0) { $newline = 'LF' } else { $newline = 'Unknown' }
+    }
+
+    $entry = [PSCustomObject]@{
+      path = $rel -replace '\\','/'
+      fullPath = $full
+      size = $size
+      sha256 = $hashObj.Hash
+      bom = $bom
+      newline = $newline
+      lastWrite = $f.LastWriteTimeUtc.ToString('o')
+    }
+    $manifest.files += $entry
+  } catch {
+    Write-Host "Warning: failed to inspect file $($f.FullName): $($_.Exception.Message)" -ForegroundColor Yellow
+  }
+}
+
+$manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifestFile -Encoding UTF8
+Write-Host $manifestFile
+exit 0

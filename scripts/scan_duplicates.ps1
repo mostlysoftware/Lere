@@ -1,3 +1,5 @@
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "scan_duplicates" -Note "auto-applied" } catch { }
+. $PSScriptRoot\\lib\\logging.ps1
 <#
 .SYNOPSIS
   Scan repository text files to find duplicated blocks of consecutive lines (copy-paste).
@@ -47,7 +49,7 @@ try {
   exit 2
 }
 
-Write-Host "Duplicate scanner starting. Root: $RootPath" -ForegroundColor Cyan
+Write-Info "Duplicate scanner starting. Root: $RootPath" -ForegroundColor Cyan
 
 $dups = $null
 try {
@@ -61,27 +63,28 @@ $outDir = Join-Path -Path $RootPath -ChildPath 'scripts\audit-data'
 if ($null -ne $dups) {
   try {
     $outJson = Write-DuplicateReport -Duplicates $dups -OutDir $outDir -Prefix 'duplicates'
-    Write-Host "Scan complete. Found $($dups.Count) duplicated block(s). Report: $outJson" -ForegroundColor Green
+    Write-Info "Scan complete. Found $($dups.Count) duplicated block(s). Report: $outJson" -ForegroundColor Green
   } catch {
     Write-Error "Failed to write duplicates report: $($_.Exception.Message)"
   }
 } else {
-  Write-Host "No duplicates data returned by Get-DuplicateBlocks; nothing to report." -ForegroundColor Yellow
+  Write-Info "No duplicates data returned by Get-DuplicateBlocks; nothing to report." -ForegroundColor Yellow
 }
 
 if ($dups -and $dups.Count -gt 0) {
   foreach ($d in $dups) {
-    Write-Host "---" -ForegroundColor DarkGray
-    Write-Host "Hash: $($d.Hash)  Count: $($d.Count)" -ForegroundColor Cyan
-    Write-Host "Sample (first instance):" -ForegroundColor Gray
+    Write-Info "---" -ForegroundColor DarkGray
+    Write-Info "Hash: $($d.Hash)  Count: $($d.Count)" -ForegroundColor Cyan
+    Write-Info "Sample (first instance):" -ForegroundColor Gray
     $sampleLines = $d.Sample -split "`n"
-    $sampleLines[0..([Math]::Min($sampleLines.Count - 1, 20))] | ForEach-Object { Write-Host "  $_" }
-    Write-Host "Instances:" -ForegroundColor Gray
+    $sampleLines[0..([Math]::Min($sampleLines.Count - 1, 20))] | ForEach-Object { Write-Info "  $_" }
+    Write-Info "Instances:" -ForegroundColor Gray
     foreach ($inst in $d.Instances) {
-      Write-Host "  $($inst.File) : line $($inst.Line)" -ForegroundColor Yellow
+      Write-Info "  $($inst.File) : line $($inst.Line)" -ForegroundColor Yellow
     }
   }
 }
 
-Write-Host "Duplicate scanner finished." -ForegroundColor Cyan
+Write-Info "Duplicate scanner finished." -ForegroundColor Cyan
+
 

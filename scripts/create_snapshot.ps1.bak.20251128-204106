@@ -1,0 +1,138 @@
+<#
+.SYNOPSIS
+Create a timestamped snapshot of important repo data (audit-data and chat_context).
+
+.DESCRIPTION
+Copies configured paths into a timestamped directory under the backups folder, writes a manifest.json containing file list and SHA256 hashes, and creates a zip archive next to the snapshot folder.
+
+.PARAMETER Root
+Repository root. Defaults to parent of this script.
+
+.PARAMETER OutDir
+Destination backups directory relative to Root (defaults to 'backups').
+
+.PARAMETER Paths
+Array of relative paths to include in the snapshot (defaults to 'scripts/audit-data' and 'chat_context').
+
+.EXAMPLE
+  .\scripts\create_snapshot.ps1 -Root .. -OutDir backups
+#>
+
+param(
+  [string]$Root = (Resolve-Path -Path (Join-Path -Path (Split-Path -Path $MyInvocation.MyCommand.Path -Parent) -ChildPath '..')).Path,
+  [string]$OutDir = 'backups',
+  [string[]]$Paths = @('scripts/audit-data','chat_context'),
+  [switch]$Compress,
+  [int]$RetentionDays = 0,
+  [int]$RetryCount = 3,
+  [int]$RetryDelaySec = 2
+)
+
+Set-StrictMode -Version Latest
+
+function Write-JsonAtomic($obj, $outPath) {
+  $tmp = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetFileName($outPath) + ".tmp.$([System.Diagnostics.Process]::GetCurrentProcess().Id)")
+  $obj | ConvertTo-Json -Depth 10 | Out-File -FilePath $tmp -Encoding UTF8 -Force
+  Move-Item -Path $tmp -Destination $outPath -Force
+}
+
+$timestamp = (Get-Date).ToString('yyyyMMdd-HHmmss')
+$outRoot = Join-Path $Root $OutDir
+if (-not (Test-Path $outRoot)) { New-Item -ItemType Directory -Path $outRoot | Out-Null }
+
+$snapshotDir = Join-Path $outRoot ("snapshot-$timestamp")
+New-Item -ItemType Directory -Path $snapshotDir | Out-Null
+
+$manifest = [ordered]@{
+  Timestamp = (Get-Date).ToString('o')
+  Root = $Root
+  SnapshotDir = $snapshotDir
+  Items = @()
+  Skipped = @()
+}
+
+foreach ($p in $Paths) {
+  $src = Join-Path $Root $p
+  if (-not (Test-Path $src)) { continue }
+  $dest = Join-Path $snapshotDir $p
+  $parent = Split-Path -Path $dest -Parent
+  if (-not (Test-Path $parent)) { New-Item -ItemType Directory -Path $parent -Force | Out-Null }
+  Copy-Item -Path $src -Destination $dest -Recurse -Force -ErrorAction SilentlyContinue
+
+  # Walk copied files to record hashes
+  $files = Get-ChildItem -Path $dest -Recurse -File -ErrorAction SilentlyContinue
+  foreach ($f in $files) {
+    $attempt = 0
+    $h = @{ Hash = $null }
+    while ($attempt -lt $RetryCount) {
+      try {
+        $h = Get-FileHash -Path $f.FullName -Algorithm SHA256 -ErrorAction Stop
+        break
+      } catch {
+        $attempt++
+        Start-Sleep -Seconds $RetryDelaySec
+      }
+    }
+    if ($h.Hash -eq $null) {
+      $manifest.Skipped += [ordered]@{ Path = $f.FullName; Reason = 'Could not compute hash (locked or unreadable)'; Attempts = $attempt }
+    }
+    $manifest.Items += [ordered]@{
+      Path = $f.FullName -replace [regex]::Escape($snapshotDir), '.'
+      FullPath = $f.FullName
+      Length = $f.Length
+      Hash = $h.Hash
+      LastWrite = $f.LastWriteTimeUtc.ToString('o')
+    }
+  }
+}
+
+$manifestPath = Join-Path $snapshotDir 'manifest.json'
+Write-JsonAtomic $manifest $manifestPath
+
+if ($Compress) {
+  $zipPath = Join-Path $outRoot ("snapshot-$timestamp.zip")
+  if (Test-Path $zipPath) { Remove-Item -Force $zipPath }
+
+  # Use per-file add to zip to avoid failing whole archive when a single file is locked.
+  Add-Type -AssemblyName System.IO.Compression.FileSystem -ErrorAction SilentlyContinue
+  $filesToZip = Get-ChildItem -Path $snapshotDir -Recurse -File -ErrorAction SilentlyContinue
+  $skippedFiles = @()
+  try {
+    # Fallback per-file compress using built-in Compress-Archive to avoid dependency on .NET zip types.
+    $firstAdded = $false
+    foreach ($f in $filesToZip) {
+      try {
+        if (-not $firstAdded) {
+          Compress-Archive -Path $f.FullName -DestinationPath $zipPath -Force -ErrorAction Stop
+          $firstAdded = $true
+        } else {
+          Compress-Archive -Path $f.FullName -DestinationPath $zipPath -Update -Force -ErrorAction Stop
+        }
+      } catch {
+        $manifest.Skipped += [ordered]@{ Path = $f.FullName; Reason = $_.Exception.Message }
+      }
+    }
+    if ($manifest.Skipped.Count -gt 0) { Write-Host "Warning: Some files were skipped during compression (see manifest.Skipped)" -ForegroundColor Yellow }
+    if (Test-Path $zipPath) { Write-Output $zipPath } else { Write-Output $snapshotDir }
+  } catch {
+    Write-Host "Compression failed: $($_.Exception.Message)" -ForegroundColor Yellow
+    Write-Output $snapshotDir
+  }
+} else {
+  Write-Output $snapshotDir
+}
+
+# Retention: remove older snapshots if requested
+if ($RetentionDays -gt 0) {
+  $cutoff = (Get-Date).AddDays(-1 * $RetentionDays)
+  $oldDirs = Get-ChildItem -Path $outRoot -Directory -Filter 'snapshot-*' | Where-Object { $_.LastWriteTime -lt $cutoff }
+  foreach ($d in $oldDirs) {
+    try { Remove-Item -LiteralPath $d.FullName -Recurse -Force -ErrorAction Stop; Write-Host "Removed old snapshot: $($d.FullName)" -ForegroundColor Gray } catch { Write-Host "Failed to remove $($d.FullName): $($_.Exception.Message)" -ForegroundColor Yellow }
+  }
+  $oldZips = Get-ChildItem -Path $outRoot -File -Filter 'snapshot-*.zip' | Where-Object { $_.LastWriteTime -lt $cutoff }
+  foreach ($z in $oldZips) {
+    try { Remove-Item -LiteralPath $z.FullName -Force -ErrorAction Stop; Write-Host "Removed old zip: $($z.FullName)" -ForegroundColor Gray } catch { Write-Host "Failed to remove $($z.FullName): $($_.Exception.Message)" -ForegroundColor Yellow }
+  }
+}
+
+exit 0

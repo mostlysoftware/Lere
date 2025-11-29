@@ -1,4 +1,4 @@
-<#
+﻿<#
 .\scripts\dev-run.ps1
 
 Purpose: small helper to run the common dev flow on Windows PowerShell:
@@ -17,11 +17,18 @@ param(
 
 Set-StrictMode -Version Latest
 
-$root = Split-Path -Parent $MyInvocation.MyCommand.Path
-Write-Host "Project root: $root"
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$repoRoot = (Resolve-Path -Path (Join-Path $scriptDir '..')).Path
+
+# Use shared logging helpers
+. "$PSScriptRoot\lib\logging.ps1"
+Start-RunLog -Root $repoRoot -ScriptName 'dev-run' -Note 'Developer run helper'
+
+Write-Info "Project root: $repoRoot"
+try {
 
 if (-not $SkipAudit) {
-    Write-Host "Running pointer audit..."
+    Write-Info "Running pointer audit..."
     $audit = Join-Path $root 'scripts\audit.ps1'
     if (Test-Path $audit) {
         pwsh -NoProfile -ExecutionPolicy Bypass -File $audit
@@ -41,10 +48,10 @@ if (-not $SkipBuild) {
         if (-not (Test-Path $proj)) { Write-Warning "Project path missing: $proj"; continue }
         Push-Location $proj
         if (Test-Path '.\gradlew.bat') {
-            Write-Host "Building $p with gradlew.bat"
+            Write-Info "Building $p with gradlew.bat"
             .\gradlew.bat build --quiet
         } else {
-            Write-Host "Building $p with system gradle"
+            Write-Info "Building $p with system gradle"
             gradle build --quiet
         }
         if ($LASTEXITCODE -ne 0) { Write-Error "Build failed for $p"; Pop-Location; exit $LASTEXITCODE }
@@ -53,14 +60,18 @@ if (-not $SkipBuild) {
 }
 
 if (-not $SkipDatapack) {
-    Write-Host "Packaging datapack lere_guardian..."
+    Write-Info "Packaging datapack lere_guardian..."
     $dp = Join-Path $root 'datapacks\lere_guardian'
     $out = Join-Path $root 'release\lere_guardian_datapack.zip'
     if (-not (Test-Path $dp)) { Write-Warning "Datapack folder not found: $dp" } else {
         if (-not (Test-Path (Split-Path $out))) { New-Item -ItemType Directory -Path (Split-Path $out) | Out-Null }
         Compress-Archive -Path (Join-Path $dp '*') -DestinationPath $out -Force
-        Write-Host "Datapack packaged to $out"
+        Write-Info "Datapack packaged to $out"
     }
 }
 
-Write-Host "dev-run completed successfully."
+Write-Info "dev-run completed successfully."
+} finally {
+    try { Save-RunLogToSummaries -Root $repoRoot } catch { }
+}
+

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Detect repeated manual tasks (documentation code blocks, TODOs, repeated script sequences) and surface low-risk automation opportunities.
 
@@ -24,6 +24,12 @@ param(
 )
 
 Set-StrictMode -Version Latest
+
+# Use shared logging helpers
+. "$PSScriptRoot\lib\logging.ps1"
+
+$rootPath = Resolve-Path -LiteralPath $Root -ErrorAction Stop
+Start-RunLog -Root $rootPath.Path -ScriptName 'find_repetitive_tasks' -Note 'Find repetitive tasks'
 
 function Write-JsonAtomic($obj, $outPath) {
   $tmp = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetFileName($outPath) + ".tmp.$([System.Diagnostics.Process]::GetCurrentProcess().Id)")
@@ -151,6 +157,9 @@ $report = [PSCustomObject]@{
 }
 
 Write-JsonAtomic $report $outFile
-Write-Output $outFile
+Write-Info $outFile
+
+try { Save-RunLogToSummaries -Root $rootPath.Path } catch { }
 
 exit 0
+

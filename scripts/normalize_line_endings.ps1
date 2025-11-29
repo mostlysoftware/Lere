@@ -1,9 +1,9 @@
-Param(
+﻿Param(
     [string]$Root = "./chat_context"
 )
 
 $files = Get-ChildItem -Path $Root -Recurse -Include *.md,*.summary.md -File -ErrorAction SilentlyContinue
-if (!$files) { Write-Output "No files found under $Root"; exit 0 }
+if (!$files) { Write-Info "No files found under $Root"; exit 0 }
 
 foreach ($f in $files) {
     $path = $f.FullName
@@ -19,5 +19,6 @@ foreach ($f in $files) {
     if (-not $normalized.EndsWith("`r`n")) { $normalized += "`r`n" }
 
     Set-Content -Encoding UTF8 -Force -Value $normalized $path
-    Write-Output "Normalized: $path"
+    Write-Info "Normalized: $path"
 }
+

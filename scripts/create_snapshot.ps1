@@ -1,3 +1,4 @@
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "create_snapshot" -Note "auto-applied" } catch { }
 <#
 .SYNOPSIS
 Create a timestamped snapshot of important repo data (audit-data and chat_context).
@@ -112,14 +113,14 @@ if ($Compress) {
         $manifest.Skipped += [ordered]@{ Path = $f.FullName; Reason = $_.Exception.Message }
       }
     }
-    if ($manifest.Skipped.Count -gt 0) { Write-Host "Warning: Some files were skipped during compression (see manifest.Skipped)" -ForegroundColor Yellow }
-    if (Test-Path $zipPath) { Write-Output $zipPath } else { Write-Output $snapshotDir }
+    if ($manifest.Skipped.Count -gt 0) { Write-Info "Warning: Some files were skipped during compression (see manifest.Skipped)" -ForegroundColor Yellow }
+    if (Test-Path $zipPath) { Write-Info $zipPath } else { Write-Info $snapshotDir }
   } catch {
-    Write-Host "Compression failed: $($_.Exception.Message)" -ForegroundColor Yellow
-    Write-Output $snapshotDir
+    Write-Info "Compression failed: $($_.Exception.Message)" -ForegroundColor Yellow
+    Write-Info $snapshotDir
   }
 } else {
-  Write-Output $snapshotDir
+  Write-Info $snapshotDir
 }
 
 # Retention: remove older snapshots if requested
@@ -127,12 +128,13 @@ if ($RetentionDays -gt 0) {
   $cutoff = (Get-Date).AddDays(-1 * $RetentionDays)
   $oldDirs = Get-ChildItem -Path $outRoot -Directory -Filter 'snapshot-*' | Where-Object { $_.LastWriteTime -lt $cutoff }
   foreach ($d in $oldDirs) {
-    try { Remove-Item -LiteralPath $d.FullName -Recurse -Force -ErrorAction Stop; Write-Host "Removed old snapshot: $($d.FullName)" -ForegroundColor Gray } catch { Write-Host "Failed to remove $($d.FullName): $($_.Exception.Message)" -ForegroundColor Yellow }
+    try { Remove-Item -LiteralPath $d.FullName -Recurse -Force -ErrorAction Stop; Write-Info "Removed old snapshot: $($d.FullName)" -ForegroundColor Gray } catch { Write-Info "Failed to remove $($d.FullName): $($_.Exception.Message)" -ForegroundColor Yellow }
   }
   $oldZips = Get-ChildItem -Path $outRoot -File -Filter 'snapshot-*.zip' | Where-Object { $_.LastWriteTime -lt $cutoff }
   foreach ($z in $oldZips) {
-    try { Remove-Item -LiteralPath $z.FullName -Force -ErrorAction Stop; Write-Host "Removed old zip: $($z.FullName)" -ForegroundColor Gray } catch { Write-Host "Failed to remove $($z.FullName): $($_.Exception.Message)" -ForegroundColor Yellow }
+    try { Remove-Item -LiteralPath $z.FullName -Force -ErrorAction Stop; Write-Info "Removed old zip: $($z.FullName)" -ForegroundColor Gray } catch { Write-Info "Failed to remove $($z.FullName): $($_.Exception.Message)" -ForegroundColor Yellow }
   }
 }
 
 exit 0
+

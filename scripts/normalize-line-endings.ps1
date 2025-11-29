@@ -1,4 +1,4 @@
-<#
+﻿<#
 Normalize line endings to CRLF for a set of files or patterns.
 Usage:
   .\scripts\normalize-line-endings.ps1 -Paths 'chat_context\reasoning-context.md'
@@ -16,9 +16,9 @@ function Fix-FileEol($file) {
     # Normalize to CRLF
     $normalized = ($text -replace "\r\n|\n|\r", "`r`n")
     Set-Content -LiteralPath $file -Value $normalized -NoNewline -Encoding UTF8
-    Write-Host "Normalized EOL for: $file" -ForegroundColor Green
+    Write-Info "Normalized EOL for: $file" -ForegroundColor Green
   } catch {
-    Write-Host ("Failed to normalize " + $file + ": " + $_.Exception.Message) -ForegroundColor Yellow
+    Write-Info ("Failed to normalize " + $file + ": " + $_.Exception.Message) -ForegroundColor Yellow
   }
 }
 
@@ -26,8 +26,9 @@ $targets = @()
 if ($Paths -and $Paths.Count -gt 0) { $targets += $Paths }
 if ($Glob) { $targets += (Get-ChildItem -Path $Glob -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName }) }
 
-if ($targets.Count -eq 0) { Write-Host "No files specified. Use -Paths or -Glob."; exit 1 }
+if ($targets.Count -eq 0) { Write-Info "No files specified. Use -Paths or -Glob."; exit 1 }
 
 foreach ($t in $targets) {
-  if (Test-Path $t) { Fix-FileEol $t } else { Write-Host "Not found: $t" -ForegroundColor Yellow }
+  if (Test-Path $t) { Fix-FileEol $t } else { Write-Info "Not found: $t" -ForegroundColor Yellow }
 }
+

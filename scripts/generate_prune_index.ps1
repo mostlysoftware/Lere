@@ -1,3 +1,4 @@
+﻿. $PSScriptRoot\\lib\\logging.ps1
 <#
 generate_prune_index.ps1
 
@@ -69,4 +70,5 @@ $tmp = "$OutFile.tmp"
 $sb.ToString() | Out-File -FilePath $tmp -Encoding UTF8
 Move-Item -Force -LiteralPath $tmp -Destination $OutFile
 
-Write-Output $OutFile
+Write-Info $OutFile
+

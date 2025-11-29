@@ -1,3 +1,5 @@
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "generate_context_summaries" -Note "auto-applied" } catch { }
+. $PSScriptRoot\\lib\\logging.ps1
 <#
 .SYNOPSIS
 Generates per-file context summaries (.summary.md) for large markdown context files.
@@ -74,7 +76,8 @@ Get-ChildItem -Path $Root -Recurse -File -Include *.md -ErrorAction SilentlyCont
     $tmp = [System.IO.Path]::GetTempFileName()
     $out | Out-File -FilePath $tmp -Encoding UTF8
     Move-Item -Force -Path $tmp -Destination $summaryPath
-    Write-Host "Wrote summary: $summaryPath (lines=$lineCount)"
+    Write-Info "Wrote summary: $summaryPath (lines=$lineCount)"
   }
 
 exit 0
+

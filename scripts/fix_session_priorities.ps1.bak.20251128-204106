@@ -1,0 +1,99 @@
+<#
+Fix session blocks missing a Priority line by inserting a default 'Priority: low'.
+
+Usage:
+  # dry-run (default): shows sessions that would be modified
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\fix_session_priorities.ps1
+
+  # apply changes
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\fix_session_priorities.ps1 -Apply
+
+This script only edits files under chat_context and preserves file encoding.
+#>
+
+param(
+  [switch]$Apply = $false,
+  [string]$Root = "$PSScriptRoot\.."
+)
+
+$chatDir = Join-Path $Root 'chat_context'
+if (-not (Test-Path $chatDir)) {
+  Write-Error "chat_context directory not found at $chatDir"
+  exit 1
+}
+
+$mdFiles = Get-ChildItem -Path $chatDir -Recurse -Include *.md | Select-Object -ExpandProperty FullName
+
+$markerPattern = [regex]'^\s*(?:[-*]\s*)?\(Session \d{4}-\d{2}-\d{2} \d{2}:\d{2}\)'
+$blockPattern = [regex]'(\(Session \d{4}-\d{2}-\d{2} \d{2}:\d{2}\))(?s)(.*?)(?=(\(Session \d{4}-\d{2}-\d{2} \d{2}:\d{2}\))|$)'
+
+$toFix = @()
+
+foreach ($f in $mdFiles) {
+  try { $lines = Get-Content -LiteralPath $f -ErrorAction Stop } catch { continue }
+
+  # find marker line indices
+  $indices = @()
+  for ($i = 0; $i -lt $lines.Count; $i++) {
+    if ($lines[$i] -match $markerPattern) { $indices += $i }
+  }
+
+  if ($indices.Count -eq 0) { continue }
+
+  for ($k = 0; $k -lt $indices.Count; $k++) {
+    $start = $indices[$k]
+    if ($k -lt ($indices.Count - 1)) { $end = $indices[$k+1] - 1 } else { $end = $lines.Count - 1 }
+    $blockLines = $lines[$start..$end]
+    $blockText = $blockLines -join "`n"
+    if ($blockText -notmatch '(?i)Priority\s*:') {
+      # capture session timestamp from header
+      if ($lines[$start] -match '\(Session (\d{4}-\d{2}-\d{2} \d{2}:\d{2})\)') { $ts = $matches[1] } else { $ts = '(unknown)' }
+      $toFix += [PSCustomObject]@{ File = $f; Start = $start; End = $end; Session = $ts }
+    }
+  }
+}
+
+if ($toFix.Count -eq 0) {
+  Write-Host "No session blocks missing Priority were found." -ForegroundColor Green
+  exit 0
+}
+
+Write-Host "Found $($toFix.Count) session(s) missing Priority:" -ForegroundColor Yellow
+$toFix | ForEach-Object { Write-Host " - $($_.File): session $($_.Session) (lines $($_.Start + 1)-$($_.End + 1))" }
+
+if (-not $Apply) {
+  Write-Host "Run with -Apply to insert 'Priority: low' for these sessions." -ForegroundColor Cyan
+  exit 0
+}
+
+Write-Host "Applying changes..." -ForegroundColor Cyan
+
+# Group by file for efficient edits
+$groups = $toFix | Group-Object -Property File
+foreach ($g in $groups) {
+  $file = $g.Name
+  $info = $g.Group | Sort-Object -Property Start
+  $lines = Get-Content -LiteralPath $file
+  $offset = 0
+  foreach ($item in $info) {
+    $insertAt = $item.Start + 1 + $offset
+    # determine prefix from header line (preserve leading bullet/whitespace if present)
+    $header = $lines[$item.Start + $offset]
+    if ($header -match '^\s*([-*]\s*)') { $prefix = $matches[1] } else { $prefix = '' }
+    $insertLine = "$prefix`Priority: low"
+    # insert the line
+    $before = $lines[0..($insertAt - 1)]
+    if ($insertAt -lt $lines.Count) { $after = $lines[$insertAt..($lines.Count - 1)] } else { $after = @() }
+    $lines = $before + $insertLine + $after
+    $offset += 1
+  }
+  # Write file back preserving encoding
+  $enc = (Get-Item -LiteralPath $file).OpenText().CurrentEncoding
+  Set-Content -LiteralPath $file -Value $lines -Encoding $enc
+  Write-Host "Patched $file" -ForegroundColor Green
+}
+
+Write-Host "Re-running audit..." -ForegroundColor Cyan
+powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'scripts\audit.ps1')
+
+exit 0

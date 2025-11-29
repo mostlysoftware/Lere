@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Health diagnostics for the Lere project.
 
@@ -40,6 +40,8 @@ if (Test-Path (Join-Path $libDir 'FileCache.ps1')) {
   . (Join-Path $libDir 'New-Manifest.ps1')
 }
 
+ 
+
 # Optional: Reasoning critique library (conservative, rule-based)
 $reasoningCritiquePath = Join-Path $libDir 'ReasoningCritique.ps1'
 if (Test-Path $reasoningCritiquePath) { . $reasoningCritiquePath }
@@ -49,6 +51,10 @@ $root = (Resolve-Path -Path "$PSScriptRoot\..").Path
 $scriptDir = Join-Path $root 'scripts'
 $pluginDir = Join-Path $root 'plugins'
 $contextDir = Join-Path $root 'chat_context'
+
+# Use shared logging helpers and initialize run log
+. "$PSScriptRoot\lib\logging.ps1"
+Start-RunLog -Root $root -ScriptName 'health_check' -Note 'Repository health check'
 
 # Thresholds - adjust these to tune sensitivity
 $config = @{
@@ -68,6 +74,10 @@ if (Test-Path $projCfgPath) {
   . $projCfgPath
   if ($null -ne $ProjectConfig.Duplicate.MinLines) { $config.MaxDuplicateThreshold = $ProjectConfig.Duplicate.MinLines }
 }
+
+# Auto-fix marker: if file ./.dev/auto_fix_enabled exists, enable autofix behavior by default
+$autoFixMarkerPath = Join-Path $root '.dev\auto_fix_enabled'
+$autoFixEnabled = $Fix -or (Test-Path $autoFixMarkerPath)
 
 # Global excludes (used when enumerating files in checks). Populated from ProjectConfig if present.
 $GlobalExcludes = @()
@@ -286,50 +296,71 @@ function Test-UnicodeEncoding {
   }
 }
 
-function Test-ContextSize {
-  param(
-    [string]$Root = "$PSScriptRoot\..\chat_context",
-    [int]$WarnLines = 800,
-    [int]$ErrorLines = 2000,
-    [switch]$AutoFix
-  )
+function Test-ChatContextChangePolicy {
+  param()
 
-  $rootPath = Resolve-Path -LiteralPath $Root -ErrorAction SilentlyContinue
-  if (-not $rootPath) { return }
+  $gitDir = Join-Path $root '.git'
+  if (-not (Test-Path $gitDir)) { return }
 
-  $files = Get-ChildItem -Path $rootPath -Recurse -File -Include *.md -ErrorAction SilentlyContinue |
-    Where-Object { $_.FullName -notmatch '\\archives\\' }
+  try {
+    Push-Location $root
+    # Prefer origin/main as base if available
+    $base = 'origin/main'
+    try { git rev-parse --verify $base > $null 2>&1 } catch { $base = 'main' }
 
-  foreach ($f in $files) {
-    try {
-      $count = (Get-Content -Path $f.FullName -ErrorAction Stop).Count
-    } catch {
-      Add-Finding -Category 'context' -Severity 'warning' -File $f.FullName -Message "Unreadable file: $($_.Exception.Message)"
-      continue
-    }
+    $diffNames = git diff --name-only $base..HEAD 2>$null
+    Pop-Location
+  } catch {
+    Add-Finding -Category 'context' -Severity 'warning' -File $root `
+      -Message "Could not determine git diff for chat_context policy: $($_.Exception.Message)" `
+      -Suggestion "Ensure this script runs in a git repo with origin/main fetched before running health_check in CI"
+    return
+  }
 
-    if ($count -ge $ErrorLines) {
-      Add-Finding -Category 'context' -Severity 'error' -File $f.FullName -Message "File has $count lines (>= $ErrorLines) - may exceed LLM context limits"
-    } elseif ($count -ge $WarnLines) {
-      Add-Finding -Category 'context' -Severity 'warning' -File $f.FullName -Message "File has $count lines (>= $WarnLines) - consider summarizing"
-      if ($AutoFix) {
-        # Attempt to generate summaries for large files
-        $gen = Join-Path $PSScriptRoot 'generate_context_summaries.ps1'
-        if (Test-Path $gen) {
-          & $gen -Root $rootPath.Path -Force
-          Add-Finding -Category 'context' -Severity 'info' -File $f.FullName -Message "Generated summary for large files under $Root" -Fixed $true
-        } else {
-          Add-Finding -Category 'context' -Severity 'warning' -File $f.FullName -Message "Summary generator not found: $gen"
-        }
+  if (-not $diffNames) { return }
+
+  $changed = $diffNames | Where-Object { $_ -like 'chat_context/*' -or $_ -like 'chat_context\\*' }
+  if (-not $changed -or $changed.Count -eq 0) { return }
+
+  # If chat_context/changes exists, use its files as structured rationale docs
+  $changesDir = Join-Path $contextDir 'changes'
+  $changesFiles = @()
+  if (Test-Path $changesDir) { $changesFiles = Get-ChildItem -Path $changesDir -File -ErrorAction SilentlyContinue }
+
+  $changelogPath = Join-Path $contextDir 'changelog-context.md'
+  $changelogText = ''
+  if (Test-Path $changelogPath) { $changelogText = Get-Content -Raw -Path $changelogPath -ErrorAction SilentlyContinue }
+
+  $missing = @()
+  foreach ($f in $changed) {
+    $name = Split-Path $f -Leaf
+    $documented = $false
+    if ($changelogText -and $changelogText -match [regex]::Escape($name)) { $documented = $true }
+    if (-not $documented -and $changesFiles.Count -gt 0) {
+      foreach ($cf in $changesFiles) {
+        $txt = Get-Content -Raw -Path $cf.FullName -ErrorAction SilentlyContinue
+        if ($txt -and $txt -match [regex]::Escape($name)) { $documented = $true; break }
       }
     }
+    if (-not $documented) { $missing += $f }
   }
-}
 
+  if ($missing.Count -gt 0) {
+    $msg = "Detected changes to chat_context files that lack documentation: $($missing -join ', ')"
+    $suggest = "Either add short entries mentioning these files to chat_context/changelog-context.md OR create one or more files under chat_context/changes/ describing the rationale, authors, and reviewer for the change. Use chat_context/changes/CHANGE_TEMPLATE.md as a template."
+    Add-Finding -Category 'context' -Severity 'error' -File $changesDir `
+      -Message $msg `
+      -Suggestion $suggest
+  } else {
+    Add-Finding -Category 'context' -Severity 'info' -File $changesDir `
+      -Message "chat_context changes detected and documented" `
+      -Suggestion "Good: context changes included rationale documentation."
+  }
+  }
 function Test-ContextTopLevelCount {
   param(
-    [string]$Root = "${PSScriptRoot}\..\chat_context",
-    [int]$MaxItems = 20,
+    [string]$Root,
+    [int]$MaxItems,
     [switch]$AutoFix
   )
 
@@ -478,6 +509,148 @@ function Test-PowerShellQuality {
   }
 }
 
+# --- Test-SemanticConsoleQuality ---
+# Detect patterns that lead to noisy/non-semantic console output and recommend
+# using the shared logging helpers (Write-Info/Write-Warn/Write-Err), Start-RunLog,
+# and avoiding Write-Info for programmatic status messages.
+function Test-SemanticConsoleQuality {
+  param([string]$Path)
+
+  $scripts = Get-ChildItem -Path $Path -Recurse -File -Filter '*.ps1' -ErrorAction SilentlyContinue
+  $excludeFulls = @()
+  foreach ($ex in $GlobalExcludes) { $excludeFulls += (Join-Path $root $ex) }
+  if ($excludeFulls.Count -gt 0) {
+    $scripts = $scripts | Where-Object {
+      $skip = $false
+      foreach ($exFull in $excludeFulls) { if ($_.FullName -like "$exFull*") { $skip = $true; break } }
+      -not $skip
+    }
+  }
+
+  foreach ($s in $scripts) {
+    $content = Get-Content -LiteralPath $s.FullName -Raw -ErrorAction SilentlyContinue
+    if (-not $content) { continue }
+
+    $rel = $s.FullName
+
+    # Detect use of Write-Info for status messages (prefer structured Write-Info)
+    if ($content -match '\bWrite-Host\b') {
+      Add-Finding -Category 'console' -Severity 'warning' -File $rel -Message "Uses Write-Info for console output" `
+        -Suggestion "Prefer shared logging helpers (Write-Info/Write-Warn/Write-Err) to produce semantic output and enable structured logs."
+    }
+
+    # Detect raw Write-Info/echo used for status (should be structured)
+    if ($content -match '\bWrite-Output\b' -or $content -match '^\s*echo\s') {
+      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Uses Write-Info/echo for messages" `
+        -Suggestion "Use structured logging helpers so consumers (LLMs/CI) can parse output reliably."
+    }
+
+    # Detect missing dot-source of shared logging helper
+    if ($content -notmatch "lib\\logging\.ps1" -and $content -match "Write-Info|Write-Warn|Write-Err") {
+      # If script uses Write-Info but doesn't source logging helper, suggest centralizing
+      Add-Finding -Category 'console' -Severity 'warning' -File $rel -Message "Uses Write-Info/Write-Warn/Write-Err but does not dot-source lib/logging.ps1" `
+        -Suggestion "Dot-source 'scripts/lib/logging.ps1' at top of the script to ensure consistent semantic logging output." 
+    }
+
+    # Detect scripts that don't initialize a run log (Start-RunLog)
+    if ($content -notmatch "Start-RunLog\b") {
+      # Exclude small utility scripts where run logs may be unnecessary (heuristic: lines < 40)
+      $lineCount = ($content -split '\r?\n').Count
+      if ($lineCount -gt 40) {
+        Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Does not call Start-RunLog; run logs improve traceability" `
+          -Suggestion "Call Start-RunLog -Root <repoRoot> -ScriptName '<name>' early so per-run logs are captured in ./.dev/logs and chat_context/.summaries." 
+      }
+    }
+
+    # Suggest emitting structured JSON for machine-readable status when appropriate
+    if ($content -match "ConvertTo-Json" -or $content -match "Out-File .*\.json") {
+      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Emits JSON artifacts; ensure they're written to ./.dev or chat_context/.summaries for AI consumption" `
+        -Suggestion "Write JSON artifacts to ./.dev or copy timestamped copies into chat_context/.summaries/ so the assistant can read them." 
+    }
+  }
+}
+
+# --- Apply-SemanticConsoleAutoFix ---
+# Perform safe, reversible edits to improve console output semantics:
+#  - Insert dot-source of scripts/lib/logging.ps1 when script uses Write-Info/Write-Warn/Write-Err but doesn't source it
+#  - Add a defensive Start-RunLog call after dot-sourcing for longer scripts
+#  - Replace Write-Info / Write-Info / echo with Write-Info where safe
+# Files are backed up as <file>.bak.<timestamp> before modification.
+function Invoke-SemanticConsoleAutoFix {
+  param([string]$Path)
+
+  $scripts = Get-ChildItem -Path $Path -Recurse -File -Filter '*.ps1' -ErrorAction SilentlyContinue
+  foreach ($s in $scripts) {
+    # Skip library and test folders to avoid fragile changes
+    if ($s.FullName -match '\\lib\\' -or $s.FullName -match '\\tests\\' -or $s.FullName -match '\\test') { continue }
+
+    try {
+      $orig = Get-Content -LiteralPath $s.FullName -Raw -ErrorAction Stop
+    } catch { continue }
+
+    $modified = $orig
+    $changed = $false
+
+    $rel = $s.FullName -replace [regex]::Escape($root), '.'
+
+    # If script uses Write-Info/Write-Warn/Write-Err but doesn't dot-source logging helper, add it at top
+    if ($modified -match 'Write-Info|Write-Warn|Write-Err' -and $modified -notmatch 'lib\\logging\.ps1') {
+      $insert = ". `$PSScriptRoot\\lib\\logging.ps1`n"
+      $modified = $insert + $modified
+      $changed = $true
+      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Auto-fixed: dot-sourced lib/logging.ps1" -Suggestion "Added dot-source for shared logging" -Fixed $true
+    }
+
+    # If script is longer than 80 lines and doesn't call Start-RunLog, add a defensive Start-RunLog call (after dot-source if present)
+    $lineCount = ($modified -split '\r?\n').Count
+    if ($lineCount -gt 80 -and $modified -notmatch 'Start-RunLog\b') {
+      # attempt to insert after the logging dot-source if present, otherwise at top
+  # Build insertion string that references the target script's $PSScriptRoot at runtime (do not expand here)
+  $insertion = 'try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "' + $s.BaseName + '" -Note "auto-applied" } catch { }' + "`n"
+      if ($modified -match 'lib\\logging\.ps1') {
+        try {
+          $pattern = '(?ms)(^.*?lib\\logging\.ps1.*?\r?\n)'
+          $modified = [regex]::Replace($modified, $pattern, { param($m) return $m.Value + $insertion })
+        } catch {
+          # fall back to prefixing if replace fails
+          $modified = $insertion + $modified
+        }
+      } else {
+        $modified = $insertion + $modified
+      }
+      $changed = $true
+      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Auto-fixed: added Start-RunLog" -Suggestion "Start-RunLog improves traceability" -Fixed $true
+    }
+
+    # Replace Write-Info with Write-Info (best-effort). Keep arguments intact.
+    if ($modified -match '\bWrite-Host\b') {
+      $modified = $modified -replace '\bWrite-Host\b','Write-Info'
+      $changed = $true
+      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Auto-fixed: replaced Write-Info -> Write-Info" -Fixed $true
+    }
+
+    # Replace Write-Info / echo with Write-Info
+    if ($modified -match '\bWrite-Output\b' -or $modified -match '^\s*echo\s') {
+      $modified = $modified -replace '\bWrite-Output\b','Write-Info'
+      $modified = $modified -replace '(^\s*)echo\s', '$1Write-Info '
+      $changed = $true
+      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Auto-fixed: replaced Write-Info/echo -> Write-Info" -Fixed $true
+    }
+
+    if ($changed) {
+      try {
+        $bak = "$($s.FullName).bak.$((Get-Date).ToString('yyyyMMdd-HHmmss'))"
+        Copy-Item -LiteralPath $s.FullName -Destination $bak -Force
+        Set-Content -LiteralPath $s.FullName -Value $modified -Encoding UTF8 -Force
+        Write-Info "Auto-fixed file: $($s.FullName) (backup: $bak)"
+      } catch {
+        Add-Finding -Category 'console' -Severity 'warning' -File $rel -Message "Auto-fix failed: $($_.Exception.Message)" -Suggestion "Manual review required"
+      }
+    }
+  }
+}
+
+
 # --- Test-DuplicateContent ---
 # Runs the external scan_duplicates.ps1 and ingests its JSON report
 function Test-DuplicateContent {
@@ -486,7 +659,7 @@ function Test-DuplicateContent {
     [string]$Category = 'project'
   )
 
-  Write-Host "  Running duplicate content scanner for: $($IncludePaths -join ', ')" -ForegroundColor Gray
+  Write-Info "  Running duplicate content scanner for: $($IncludePaths -join ', ')" -ForegroundColor Gray
 
   $includeArg = $IncludePaths -join ','
   try {
@@ -666,7 +839,7 @@ function Test-AutomationOpportunities {
   }
 
   try {
-    Write-Host "  Scanning for repetitive tasks and automation opportunities..." -ForegroundColor Gray
+    Write-Info "  Scanning for repetitive tasks and automation opportunities..." -ForegroundColor Gray
     $out = & $finder -Root $RootPath 2>&1
     $jsonPath = $out | Select-Object -Last 1
     if (-not $jsonPath -or -not (Test-Path $jsonPath)) {
@@ -723,7 +896,7 @@ function Test-ChangeLoopDetection {
   }
 
   try {
-    Write-Host "  Running change-loop detection (last $($loopConfig.LookbackCommits) commits)..." -ForegroundColor Gray
+    Write-Info "  Running change-loop detection (last $($loopConfig.LookbackCommits) commits)..." -ForegroundColor Gray
   $output = & $detector -LookbackCommits $loopConfig.LookbackCommits -Threshold $loopConfig.Threshold -ExcludePaths $loopConfig.ExcludePaths 2>&1
     $output = $output | Where-Object { $_ -ne '' }
     $script:Results.ChangeLoopDetection = @{
@@ -740,7 +913,7 @@ function Test-ChangeLoopDetection {
         if ($line -match '^\s*-\s+(.+)$') { $loopFiles += $Matches[1].Trim() }
       }
       $targetFile = if ($loopFiles.Count -gt 0) { Join-Path $RootPath $loopFiles[0] } else { $RootPath }
-      $message = "Change loop detected: a file appeared in ≥$($loopConfig.Threshold) commits over the last $($loopConfig.LookbackCommits) commits."
+      $message = "Change loop detected: a file appeared in â‰¥$($loopConfig.Threshold) commits over the last $($loopConfig.LookbackCommits) commits."
       $suggestion = "Review conflicting directives per docs/CHANGE_LOOP_POLICY.md and inspect listed commits. Details:\n$($output -join '\n')"
       Add-Finding -Category 'automation' -Severity 'warning' -File $targetFile `
         -Message $message `
@@ -1053,7 +1226,7 @@ function Test-ContextHealth {
   }
   
   # Open questions triage check
-  Write-Host "  Checking open questions..." -ForegroundColor Gray
+  Write-Info "  Checking open questions..." -ForegroundColor Gray
   $questionsSummary = Get-OpenQuestionsSummary -Path $Path
   if ($questionsSummary -and $questionsSummary.Open -gt 0) {
     $script:Results.QuestionsSummary = $questionsSummary
@@ -1070,7 +1243,7 @@ function Test-ContextHealth {
   }
   
   # Philosophy age check
-  Write-Host "  Checking philosophy freshness..." -ForegroundColor Gray
+  Write-Info "  Checking philosophy freshness..." -ForegroundColor Gray
   $philosophyAge = Get-PhilosophyAge -Path $Path
   if ($philosophyAge -and $philosophyAge -gt 90) {
     Add-Finding -Category 'context' -Severity 'info' -File (Join-Path $Path 'general-chat-context.md') `
@@ -1080,7 +1253,7 @@ function Test-ContextHealth {
   $script:Results.PhilosophyAgeDays = $philosophyAge
   
   # Run pointer integrity check (call existing audit)
-  Write-Host "  Running pointer integrity check..." -ForegroundColor Gray
+  Write-Info "  Running pointer integrity check..." -ForegroundColor Gray
   try {
     $auditResult = & "$PSScriptRoot\audit.ps1" 2>&1
     $auditText = $auditResult -join "`n"
@@ -1107,7 +1280,7 @@ function Test-ReasoningQuality {
   if (-not (Test-Path $libOut)) { New-Item -ItemType Directory -Path $libOut | Out-Null }
 
   try {
-    Write-Host "  Running reasoning critique..." -ForegroundColor Gray
+    Write-Info "  Running reasoning critique..." -ForegroundColor Gray
     $cfg = @{}
     if ($null -ne $ProjectConfig -and $null -ne $ProjectConfig.ReasoningCritique) { $cfg = $ProjectConfig.ReasoningCritique }
 
@@ -1176,18 +1349,18 @@ function Test-ProjectStructure {
   }
 }
 
-Write-Host "`n=== Lere Project Health Check ===" -ForegroundColor Cyan
-Write-Host "Scope: $Scope | Report: $Report | Fix: $Fix" -ForegroundColor Gray
-Write-Host ""
+Write-Info "`n=== Lere Project Health Check ===" -ForegroundColor Cyan
+Write-Info "Scope: $Scope | Report: $Report | Fix: $Fix" -ForegroundColor Gray
+Write-Info ""
 
 $startTime = Get-Date
 
 # Run checks based on scope
 switch ($Scope) {
   'all' {
-    Write-Host "Checking project structure..." -ForegroundColor Yellow
+    Write-Info "Checking project structure..." -ForegroundColor Yellow
     Test-ProjectStructure
-    Write-Host "Checking scripts..." -ForegroundColor Yellow
+    Write-Info "Checking scripts..." -ForegroundColor Yellow
     Test-FileHygiene -Path $scriptDir -Category 'scripts'
   Test-UnicodeEncoding -Path $scriptDir -Category 'scripts'
     Test-PowerShellQuality -Path $scriptDir
@@ -1199,10 +1372,10 @@ switch ($Scope) {
     Test-AutomationOpportunities -RootPath $root
     Test-ChangeLoopDetection -RootPath $root
     
-    Write-Host "Checking plugins..." -ForegroundColor Yellow
+    Write-Info "Checking plugins..." -ForegroundColor Yellow
     Test-PluginQuality -Path $pluginDir
     
-    Write-Host "Checking context files..." -ForegroundColor Yellow
+    Write-Info "Checking context files..." -ForegroundColor Yellow
     Test-ContextHealth -Path $contextDir
     Test-UnicodeEncoding -Path $contextDir -Category 'context'
   Test-ContextSize -Root $contextDir -WarnLines 800 -ErrorLines 2000 -AutoFix:$false
@@ -1216,17 +1389,20 @@ switch ($Scope) {
   Test-DuplicateContent -IncludePaths @('chat_context') -Category 'context'
   }
   'project' {
-    Write-Host "Checking project structure..." -ForegroundColor Yellow
+    Write-Info "Checking project structure..." -ForegroundColor Yellow
     Test-ProjectStructure
     Test-UnicodeEncoding -Path $root -Category 'project'
 
     Test-ChangeLoopDetection -RootPath $root
   }
   'scripts' {
-    Write-Host "Checking scripts..." -ForegroundColor Yellow
+    Write-Info "Checking scripts..." -ForegroundColor Yellow
     Test-FileHygiene -Path $scriptDir -Category 'scripts'
   Test-UnicodeEncoding -Path $scriptDir -Category 'scripts'
     Test-PowerShellQuality -Path $scriptDir
+  # Prioritize checks that improve console output semantics
+  Test-SemanticConsoleQuality -Path $scriptDir
+  if ($autoFixEnabled) { Invoke-SemanticConsoleAutoFix -Path $scriptDir }
     Test-DuplicateContent -IncludePaths @('scripts') -Category 'scripts'
     # Verify SCRIPTS.md freshness when running scripts-only checks
     Test-ScriptsSummaryFreshness -OutFile 'SCRIPTS.md'
@@ -1234,11 +1410,11 @@ switch ($Scope) {
     Test-AutomationOpportunities -RootPath $root
   }
   'plugins' {
-    Write-Host "Checking plugins..." -ForegroundColor Yellow
+    Write-Info "Checking plugins..." -ForegroundColor Yellow
     Test-PluginQuality -Path $pluginDir
   }
   'context' {
-    Write-Host "Checking context files..." -ForegroundColor Yellow
+    Write-Info "Checking context files..." -ForegroundColor Yellow
     Test-ContextHealth -Path $contextDir
     Test-UnicodeEncoding -Path $contextDir -Category 'context'
   Test-ContextSize -Root $contextDir -WarnLines 800 -ErrorLines 2000 -AutoFix:$false
@@ -1294,7 +1470,7 @@ switch ($Report) {
         $md += "### $($g.Name)"
         $md += ""
         foreach ($c in $g.Group) {
-          $icon = switch ($c.Severity) { 'error' { '❌' } 'warning' { '⚠️' } 'info' { 'ℹ️' } }
+          $icon = switch ($c.Severity) { 'error' { 'âŒ' } 'warning' { 'âš ï¸' } 'info' { 'â„¹ï¸' } }
           $md += "- $icon **$($c.File)**$(if ($c.Line) { ":$($c.Line)" }): $($c.Message)"
           if ($c.Suggestion) { $md += "  - _$($c.Suggestion)_" }
         }
@@ -1305,98 +1481,107 @@ switch ($Report) {
     $md -join "`n"
   }
   'console' {
-    Write-Host ""
-    Write-Host "=== Summary ===" -ForegroundColor White
+    Write-Info ""
+    Write-Info "=== Summary ===" -ForegroundColor White
     
     $errColor = if ($script:Results.Summary.Errors -gt 0) { 'Red' } else { 'Green' }
     $warnColor = if ($script:Results.Summary.Warnings -gt 0) { 'Yellow' } else { 'Green' }
     
-    Write-Host "  Errors:   $($script:Results.Summary.Errors)" -ForegroundColor $errColor
-    Write-Host "  Warnings: $($script:Results.Summary.Warnings)" -ForegroundColor $warnColor
-    Write-Host "  Info:     $($script:Results.Summary.Info)" -ForegroundColor Cyan
+    Write-Info "  Errors:   $($script:Results.Summary.Errors)" -ForegroundColor $errColor
+    Write-Info "  Warnings: $($script:Results.Summary.Warnings)" -ForegroundColor $warnColor
+    Write-Info "  Info:     $($script:Results.Summary.Info)" -ForegroundColor Cyan
     if ($Fix) {
-      Write-Host "  Fixed:    $($script:Results.Summary.Fixed)" -ForegroundColor Green
+      Write-Info "  Fixed:    $($script:Results.Summary.Fixed)" -ForegroundColor Green
     }
-    Write-Host "  Duration: $($script:Results.ElapsedSeconds)s" -ForegroundColor Gray
-    Write-Host ""
+    Write-Info "  Duration: $($script:Results.ElapsedSeconds)s" -ForegroundColor Gray
+    Write-Info ""
     
     if ($script:Results.Checks.Count -gt 0) {
+      # Group findings by category but prefer 'console' suggestions first so semantic output improvements are visible
       $grouped = $script:Results.Checks | Group-Object Category
-      foreach ($g in $grouped) {
-        Write-Host "--- $($g.Name) ---" -ForegroundColor White
+      $orderedGroups = @()
+      $consoleGroup = $grouped | Where-Object { $_.Name -eq 'console' }
+      if ($consoleGroup) { $orderedGroups += $consoleGroup }
+      foreach ($g in ($grouped | Where-Object { $_.Name -ne 'console' })) { $orderedGroups += $g }
+
+      foreach ($g in $orderedGroups) {
+        Write-Info "--- $($g.Name) ---" -ForegroundColor White
         foreach ($c in ($g.Group | Sort-Object Severity)) {
           $color = switch ($c.Severity) { 'error' { 'Red' } 'warning' { 'Yellow' } 'info' { 'Cyan' } }
           $prefix = switch ($c.Severity) { 'error' { '[ERR]' } 'warning' { '[WRN]' } 'info' { '[INF]' } }
           
-          Write-Host "  $prefix " -NoNewline -ForegroundColor $color
-          Write-Host "$($c.File)$(if ($c.Line) { ":$($c.Line)" })" -NoNewline -ForegroundColor White
-          Write-Host " - $($c.Message)" -ForegroundColor Gray
+          Write-Info "  $prefix " -NoNewline -ForegroundColor $color
+          Write-Info "$($c.File)$(if ($c.Line) { ":$($c.Line)" })" -NoNewline -ForegroundColor White
+          Write-Info " - $($c.Message)" -ForegroundColor Gray
           
           if ($c.Suggestion -and $Verbose) {
-            Write-Host "         -> $($c.Suggestion)" -ForegroundColor DarkGray
+            Write-Info "         -> $($c.Suggestion)" -ForegroundColor DarkGray
           }
         }
-        Write-Host ""
+        Write-Info ""
       }
     } else {
-      Write-Host "No issues found!" -ForegroundColor Green
+      Write-Info "No issues found!" -ForegroundColor Green
     }
     
-    Write-Host ""
-    Write-Host "=== Hygiene Prompts ===" -ForegroundColor Magenta
-    Write-Host ""
+    Write-Info ""
+    Write-Info "=== Hygiene Prompts ===" -ForegroundColor Magenta
+    Write-Info ""
     
     if ($null -ne $script:Results.PhilosophyAgeDays) {
       $age = $script:Results.PhilosophyAgeDays
       if ($age -gt 90) {
-        Write-Host "  [REVIEW] Philosophy last updated $age days ago" -ForegroundColor Yellow
-        Write-Host "           -> Do principles still reflect actual decision-making?" -ForegroundColor DarkGray
+        Write-Info "  [REVIEW] Philosophy last updated $age days ago" -ForegroundColor Yellow
+        Write-Info "           -> Do principles still reflect actual decision-making?" -ForegroundColor DarkGray
       } elseif ($age -gt 30) {
-        Write-Host "  [OK] Philosophy updated $age days ago" -ForegroundColor Green
+        Write-Info "  [OK] Philosophy updated $age days ago" -ForegroundColor Green
       } else {
-        Write-Host "  [OK] Philosophy recently updated ($age days ago)" -ForegroundColor Green
+        Write-Info "  [OK] Philosophy recently updated ($age days ago)" -ForegroundColor Green
       }
     } else {
-      Write-Host "  [??] Philosophy age unknown" -ForegroundColor Gray
+      Write-Info "  [??] Philosophy age unknown" -ForegroundColor Gray
     }
     
     if ($script:Results.QuestionsSummary) {
       $qs = $script:Results.QuestionsSummary
       if ($qs.Open -gt 10) {
-        Write-Host "  [TRIAGE] $($qs.Open) open questions need review" -ForegroundColor Yellow
-        Write-Host "           -> Mark resolved, defer low-priority, prioritize blockers" -ForegroundColor DarkGray
+        Write-Info "  [TRIAGE] $($qs.Open) open questions need review" -ForegroundColor Yellow
+        Write-Info "           -> Mark resolved, defer low-priority, prioritize blockers" -ForegroundColor DarkGray
       } elseif ($qs.Open -gt 0) {
-        Write-Host "  [OK] $($qs.Open) open questions ($($qs.Deferred) deferred)" -ForegroundColor Green
+        Write-Info "  [OK] $($qs.Open) open questions ($($qs.Deferred) deferred)" -ForegroundColor Green
       } else {
-        Write-Host "  [OK] No open questions" -ForegroundColor Green
+        Write-Info "  [OK] No open questions" -ForegroundColor Green
       }
       
       if ($qs.OpenHigh -gt 0) {
-        Write-Host "        High priority: $($qs.OpenHigh)" -ForegroundColor Red
+        Write-Info "        High priority: $($qs.OpenHigh)" -ForegroundColor Red
       }
     } else {
-      Write-Host "  [??] Questions not checked" -ForegroundColor Gray
+      Write-Info "  [??] Questions not checked" -ForegroundColor Gray
     }
     
     $bloatFindings = @($script:Results.Checks | Where-Object { 
       $_.Message -match 'lines \(' -or $_.Message -match 'size.*KB' -or $_.Message -match 'exceeds.*threshold'
     })
     if ($bloatFindings.Count -gt 0) {
-      Write-Host "  [BLOAT] $($bloatFindings.Count) file(s) over size/line threshold" -ForegroundColor Yellow
+      Write-Info "  [BLOAT] $($bloatFindings.Count) file(s) over size/line threshold" -ForegroundColor Yellow
       foreach ($bf in $bloatFindings) {
-        Write-Host "          - $($bf.File): $($bf.Message)" -ForegroundColor DarkYellow
+        Write-Info "          - $($bf.File): $($bf.Message)" -ForegroundColor DarkYellow
       }
-      Write-Host "          -> Consider archiving or splitting" -ForegroundColor DarkGray
+      Write-Info "          -> Consider archiving or splitting" -ForegroundColor DarkGray
     } else {
-      Write-Host "  [OK] No bloated files" -ForegroundColor Green
+      Write-Info "  [OK] No bloated files" -ForegroundColor Green
     }
     
-    Write-Host ""
+    Write-Info ""
   }
 }
 
 # Exit with error code if errors found
 if ($script:Results.Summary.Errors -gt 0) {
+  try { Save-RunLogToSummaries -Root $root } catch { }
   exit 1
 }
+try { Save-RunLogToSummaries -Root $root } catch { }
 exit 0
+

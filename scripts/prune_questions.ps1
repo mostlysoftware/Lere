@@ -1,3 +1,5 @@
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "prune_questions" -Note "auto-applied" } catch { }
+. $PSScriptRoot\\lib\\logging.ps1
 <#
 Prune resolved questions from open-questions-context.md to questions-archive.md.
 
@@ -79,7 +81,7 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
 }
 
 if ($questions.Count -eq 0) {
-  Write-Host "No questions with status metadata found." -ForegroundColor Yellow
+  Write-Info "No questions with status metadata found." -ForegroundColor Yellow
   exit 0
 }
 
@@ -87,17 +89,17 @@ $resolved = $questions | Where-Object { $_.Status -eq 'resolved' }
 $open = $questions | Where-Object { $_.Status -eq 'open' }
 $deferred = $questions | Where-Object { $_.Status -eq 'deferred' }
 
-Write-Host "Found $($questions.Count) questions: $($open.Count) open, $($resolved.Count) resolved, $($deferred.Count) deferred." -ForegroundColor Cyan
+Write-Info "Found $($questions.Count) questions: $($open.Count) open, $($resolved.Count) resolved, $($deferred.Count) deferred." -ForegroundColor Cyan
 
 # Archive resolved questions (optionally keep some)
 $toArchive = $resolved | Select-Object -Skip $KeepResolved
 
 if ($toArchive.Count -eq 0) {
-  Write-Host "No resolved questions to archive." -ForegroundColor Green
+  Write-Info "No resolved questions to archive." -ForegroundColor Green
   exit 0
 }
 
-Write-Host "Archiving $($toArchive.Count) resolved questions..." -ForegroundColor Cyan
+Write-Info "Archiving $($toArchive.Count) resolved questions..." -ForegroundColor Cyan
 
 # Ensure archives dir exists
 if (-not (Test-Path $archiveDir)) { New-Item -ItemType Directory -Path $archiveDir | Out-Null }
@@ -131,7 +133,7 @@ foreach ($sec in $sections) {
 $archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $archiveEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
 
 if (-not $archiveResult.Success) {
-  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
+  Write-Info "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
   exit 2
 }
 $archiveFile = $archiveResult.Path
@@ -158,17 +160,18 @@ $final = ($newLines -join "`n").TrimEnd() + "`n"
 # Write updated questions file
 Set-Content -LiteralPath $questionsFile -Value $final -Encoding UTF8 -NoNewline
 
-Write-Host "Pruned $($toArchive.Count) resolved questions. Archived to $archiveFile" -ForegroundColor Green
+Write-Info "Pruned $($toArchive.Count) resolved questions. Archived to $archiveFile" -ForegroundColor Green
 
 ## Compact old question archives via shared helper
 . (Join-Path $PSScriptRoot 'lib\ArchiveHelpers.ps1')
 Compact-Archives -ArchiveDir $archiveDir -Pattern 'questions-archive-*.md' -Keep 10 -Description 'question archives'
 
 # Print summary
-Write-Host ""
-Write-Host "Remaining questions:" -ForegroundColor White
-Write-Host "  Open: $($open.Count)" -ForegroundColor Yellow
-Write-Host "  Deferred: $($deferred.Count)" -ForegroundColor Gray
-Write-Host "  Resolved (kept): $KeepResolved" -ForegroundColor Green
+Write-Info ""
+Write-Info "Remaining questions:" -ForegroundColor White
+Write-Info "  Open: $($open.Count)" -ForegroundColor Yellow
+Write-Info "  Deferred: $($deferred.Count)" -ForegroundColor Gray
+Write-Info "  Resolved (kept): $KeepResolved" -ForegroundColor Green
 
 exit 0
+

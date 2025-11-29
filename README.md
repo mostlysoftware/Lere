@@ -53,4 +53,17 @@ If you prefer one command to run audit → build → package (useful for local i
 .\scripts\dev-run.ps1 -SkipDatapack
 ```
 
+First-time setup (recommended)
+------------------------------
+
+After you clone or pull the repository for the first time, run the interactive first-time helper. It probes your environment, runs repository health checks, offers to install Git hooks, and can perform user-local JDK installation and an initial build.
+
+Run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\first_time_setup.ps1
+```
+
+When you're done, copy the output into the AI assistant and ask: "Any additional first-time setup tasks for my environment?" — the assistant will suggest any missing tools or steps specific to your machine.
+
 License: MIT (see `LICENSE`)

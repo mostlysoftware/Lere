@@ -1,0 +1,3 @@
+# Marker file to enable automatic health-check autofixes.
+# Created by assistant on user request: enable auto-fix now and always.
+enabled=true

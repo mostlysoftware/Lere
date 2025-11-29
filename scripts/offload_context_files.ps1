@@ -1,4 +1,4 @@
-param(
+﻿param(
   [string]$ContextDir = "chat_context",
   [string[]]$Files = @('ATTACHMENTS.md','knowledge-compartmentalization.md'),
   [switch]$Push
@@ -16,20 +16,20 @@ Push-Location $root
 try {
   foreach ($name in $Files) {
     $src = Join-Path $ctx $name
-    if (-not (Test-Path $src)) { Write-Host "Skip: $name (not found)" -ForegroundColor DarkYellow; continue }
+    if (-not (Test-Path $src)) { Write-Info "Skip: $name (not found)" -ForegroundColor DarkYellow; continue }
     $dst = Join-Path $archives $name
     try {
       git mv -f -- "$src" "$dst" 2>$null
-      Write-Host "git mv: $name -> archives/" -ForegroundColor Green
+      Write-Info "git mv: $name -> archives/" -ForegroundColor Green
     } catch {
       Move-Item -LiteralPath $src -Destination $dst -Force
-      Write-Host "Moved (fs): $name -> archives/" -ForegroundColor Green
+      Write-Info "Moved (fs): $name -> archives/" -ForegroundColor Green
     }
   }
 
   # Purge top-level .summary.md duplicates (centralized copies live under .summaries/)
   Get-ChildItem -Path $ctx -File -Filter '*.summary.md' | Where-Object { $_.DirectoryName -eq $ctx } | ForEach-Object {
-    Write-Host ("DEL: " + $_.Name) -ForegroundColor Yellow
+    Write-Info ("DEL: " + $_.Name) -ForegroundColor Yellow
     Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue
   }
 
@@ -38,11 +38,12 @@ try {
   if ($status) {
     git commit -m "chore(context): offload optional files to archives and purge top-level .summary.md duplicates"
     if ($Push) { git push origin HEAD }
-    Write-Host "Committed$(if ($Push) { ' and pushed' }) offload+cleanup changes." -ForegroundColor Cyan
+    Write-Info "Committed$(if ($Push) { ' and pushed' }) offload+cleanup changes." -ForegroundColor Cyan
   } else {
-    Write-Host "No changes to commit." -ForegroundColor Gray
+    Write-Info "No changes to commit." -ForegroundColor Gray
   }
 }
 finally {
   Pop-Location
 }
+

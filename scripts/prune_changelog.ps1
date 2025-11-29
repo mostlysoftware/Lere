@@ -1,4 +1,4 @@
-<#
+﻿<#
 Prune old changelog entries from changelog-context.md to changelog-archive.md.
 
 === FLOW ===
@@ -27,7 +27,8 @@ param(
   [string]$Root = "$PSScriptRoot\.."
 )
 
-# Load shared libraries
+# Use shared logging helpers and load other libraries
+. "$PSScriptRoot\lib\logging.ps1"
 $libDir = Join-Path $PSScriptRoot 'lib'
 
 $writeLibPath = Join-Path $libDir 'Write-Atomically.ps1'
@@ -37,6 +38,10 @@ if (Test-Path $writeLibPath) {
 } else {
   $hasWriteLib = $false
 }
+
+$root = (Resolve-Path -Path $Root).Path
+Start-RunLog -Root $root -ScriptName 'prune_changelog' -Note 'Prune changelog entries'
+try {
 
 $changelogFile = Join-Path $Root 'chat_context\changelog-context.md'
 $archiveDir = Join-Path $Root 'chat_context\archives'
@@ -62,7 +67,7 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
 }
 
 if ($changesStart -lt 0) {
-  Write-Host "No '## Changes' section found in changelog-context.md" -ForegroundColor Yellow
+  Write-Info "No '## Changes' section found in changelog-context.md" -ForegroundColor Yellow
   exit 0
 }
 
@@ -106,11 +111,11 @@ for ($i = $changesStart; $i -lt $lines.Count; $i++) {
 }
 
 if ($entries.Count -eq 0) {
-  Write-Host "No changelog entries found to prune." -ForegroundColor Green
+  Write-Info "No changelog entries found to prune." -ForegroundColor Green
   exit 0
 }
 
-Write-Host "Found $($entries.Count) changelog entries." -ForegroundColor Cyan
+Write-Info "Found $($entries.Count) changelog entries." -ForegroundColor Cyan
 
 # Sort by date descending (newest first)
 $sorted = $entries | Sort-Object { if ($_.Date) { $_.Date } else { [datetime]::MinValue } } -Descending
@@ -130,11 +135,11 @@ $toArchive = $candidates | Where-Object {
 }
 
 if ($toArchive.Count -eq 0) {
-  Write-Host "No entries eligible for archiving (keeping $Keep most recent; others are not old enough)." -ForegroundColor Green
+  Write-Info "No entries eligible for archiving (keeping $Keep most recent; others are not old enough)." -ForegroundColor Green
   exit 0
 }
 
-Write-Host "Archiving $($toArchive.Count) entries..." -ForegroundColor Cyan
+Write-Info "Archiving $($toArchive.Count) entries..." -ForegroundColor Cyan
 
 # Build archive content
 $archiveHeader = @"
@@ -161,7 +166,7 @@ foreach ($e in ($toArchive | Sort-Object Date -Descending)) {
 $archiveResult = Save-ArchiveDocument -ArchiveDir $archiveDir -FileName $archiveFileName -Sections $archiveEntries -MaxRetries 5 -DelayMs 250 -Encoding UTF8
 
 if (-not $archiveResult.Success) {
-  Write-Host "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
+  Write-Info "Error: Unable to create archive file after 5 attempts: $($archiveResult.Path)" -ForegroundColor Red
   exit 2
 }
 $archiveFile = $archiveResult.Path
@@ -191,10 +196,15 @@ $final = ($newLines -join "`n").TrimEnd() + "`n"
 # Write updated changelog
 Set-Content -LiteralPath $changelogFile -Value $final -Encoding UTF8 -NoNewline
 
-Write-Host "Pruned $($toArchive.Count) changelog entries; kept $($toKeep.Count) most recent. Archived to $archiveFile" -ForegroundColor Green
+Write-Info "Pruned $($toArchive.Count) changelog entries; kept $($toKeep.Count) most recent. Archived to $archiveFile" -ForegroundColor Green
 
 ## Compact old changelog archives via shared helper
 . (Join-Path $PSScriptRoot 'lib\ArchiveHelpers.ps1')
 Compact-Archives -ArchiveDir $archiveDir -Pattern 'changelog-archive-*.md' -Keep 10 -Description 'changelog archives'
 
+} finally {
+  try { Save-RunLogToSummaries -Root $root } catch { }
+}
+
 exit 0
+

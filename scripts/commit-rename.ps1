@@ -1,4 +1,4 @@
-# Create and commit the chat_context filename normalization on a branch.
+﻿# Create and commit the chat_context filename normalization on a branch.
 #
 # Usage:
 #   # Create branch, commit staged deletions/changes, and show result
@@ -14,14 +14,14 @@ param(
   [string]$Branch = 'rename/chat-context-lowercase'
 )
 
-function Write-Log($msg) { Write-Host $msg }
+function Write-Log($msg) { Write-Info $msg }
 
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-  Write-Host "git is not available in this environment. Run these commands locally where git is installed:" -ForegroundColor Yellow
-  Write-Host "  git checkout -b $Branch"
-  Write-Host "  git add -A"
-  Write-Host "  git commit -m 'chore: normalize chat_context filenames to lowercase'"
-  Write-Host "  git push -u origin $Branch  # optional"
+  Write-Info "git is not available in this environment. Run these commands locally where git is installed:" -ForegroundColor Yellow
+  Write-Info "  git checkout -b $Branch"
+  Write-Info "  git add -A"
+  Write-Info "  git commit -m 'chore: normalize chat_context filenames to lowercase'"
+  Write-Info "  git push -u origin $Branch  # optional"
   exit 1
 }
 
@@ -48,6 +48,7 @@ try {
     Write-Log "Run 'git push -u origin $Branch' to push the branch when ready."
   }
 } catch {
-  Write-Host "Git operation failed: $($_.Exception.Message)" -ForegroundColor Red
+  Write-Info "Git operation failed: $($_.Exception.Message)" -ForegroundColor Red
   exit 2
 }
+

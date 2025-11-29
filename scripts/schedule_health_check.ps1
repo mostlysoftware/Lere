@@ -1,3 +1,4 @@
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "schedule_health_check" -Note "auto-applied" } catch { }
 <#
 .SYNOPSIS
   Set up Windows Task Scheduler to run health checks at regular intervals.
@@ -101,10 +102,10 @@ $logFile = Join-Path $logDir "health-check-$timestamp.log"
   # Check if task already exists
   $existing = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
   if ($existing) {
-    Write-Host "Updating existing task '$taskName'..." -ForegroundColor Yellow
+    Write-Info "Updating existing task '$taskName'..." -ForegroundColor Yellow
     Set-ScheduledTask -TaskName $taskName -Trigger $trigger -Action $action -Settings $settings | Out-Null
   } else {
-    Write-Host "Creating new task '$taskName'..." -ForegroundColor Cyan
+    Write-Info "Creating new task '$taskName'..." -ForegroundColor Cyan
     Register-ScheduledTask -TaskName $taskName `
       -Trigger $trigger `
       -Action $action `
@@ -112,61 +113,61 @@ $logFile = Join-Path $logDir "health-check-$timestamp.log"
       -Description "Lere Project Health Check - runs $Frequency at $Time" | Out-Null
   }
   
-  Write-Host "Health check scheduled: $Frequency at $Time" -ForegroundColor Green
-  Write-Host "  Logs will be saved to: $logDir" -ForegroundColor Gray
+  Write-Info "Health check scheduled: $Frequency at $Time" -ForegroundColor Green
+  Write-Info "  Logs will be saved to: $logDir" -ForegroundColor Gray
 }
 
 function Uninstall-HealthCheckTask {
   $existing = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
   if ($existing) {
     Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
-    Write-Host "Task '$taskName' removed" -ForegroundColor Green
+    Write-Info "Task '$taskName' removed" -ForegroundColor Green
   } else {
-    Write-Host "Task '$taskName' not found" -ForegroundColor Yellow
+    Write-Info "Task '$taskName' not found" -ForegroundColor Yellow
   }
 }
 
 function Get-HealthCheckStatus {
   $task = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
   if (-not $task) {
-    Write-Host "Task '$taskName' is not installed" -ForegroundColor Yellow
-    Write-Host ""
-    Write-Host "To install, run:" -ForegroundColor Gray
-    Write-Host "  .\schedule_health_check.ps1 -Action install" -ForegroundColor White
+    Write-Info "Task '$taskName' is not installed" -ForegroundColor Yellow
+    Write-Info ""
+    Write-Info "To install, run:" -ForegroundColor Gray
+    Write-Info "  .\schedule_health_check.ps1 -Action install" -ForegroundColor White
     return
   }
   
   $taskInfo = Get-ScheduledTaskInfo -TaskName $taskName
   
-  Write-Host "=== Health Check Task Status ===" -ForegroundColor Cyan
-  Write-Host ""
-  Write-Host "Task Name:    $taskName" -ForegroundColor White
+  Write-Info "=== Health Check Task Status ===" -ForegroundColor Cyan
+  Write-Info ""
+  Write-Info "Task Name:    $taskName" -ForegroundColor White
   
   $stateColor = if ($task.State -eq 'Ready') { 'Green' } else { 'Yellow' }
-  Write-Host "State:        $($task.State)" -ForegroundColor $stateColor
+  Write-Info "State:        $($task.State)" -ForegroundColor $stateColor
   
-  Write-Host "Last Run:     $($taskInfo.LastRunTime)" -ForegroundColor Gray
+  Write-Info "Last Run:     $($taskInfo.LastRunTime)" -ForegroundColor Gray
   
   $resultColor = if ($taskInfo.LastTaskResult -eq 0) { 'Green' } else { 'Red' }
-  Write-Host "Last Result:  $($taskInfo.LastTaskResult)" -ForegroundColor $resultColor
+  Write-Info "Last Result:  $($taskInfo.LastTaskResult)" -ForegroundColor $resultColor
   
-  Write-Host "Next Run:     $($taskInfo.NextRunTime)" -ForegroundColor Gray
-  Write-Host ""
+  Write-Info "Next Run:     $($taskInfo.NextRunTime)" -ForegroundColor Gray
+  Write-Info ""
   
   # Show recent logs
   if (Test-Path $logDir) {
     $logs = Get-ChildItem -Path $logDir -Filter 'health-check-*.log' | Sort-Object LastWriteTime -Descending | Select-Object -First 5
     if ($logs.Count -gt 0) {
-      Write-Host "Recent logs:" -ForegroundColor White
+      Write-Info "Recent logs:" -ForegroundColor White
       foreach ($log in $logs) {
-        Write-Host "  $($log.Name) ($([math]::Round($log.Length / 1024, 1))KB)" -ForegroundColor Gray
+        Write-Info "  $($log.Name) ($([math]::Round($log.Length / 1024, 1))KB)" -ForegroundColor Gray
       }
     }
   }
 }
 
 function Invoke-HealthCheckNow {
-  Write-Host "Running health check now..." -ForegroundColor Cyan
+  Write-Info "Running health check now..." -ForegroundColor Cyan
   
   # Ensure log directory exists
   if (-not (Test-Path $logDir)) {
@@ -179,8 +180,8 @@ function Invoke-HealthCheckNow {
   # Run health check
   & $scriptPath -Scope all -Report console 2>&1 | Tee-Object -FilePath $logFile
   
-  Write-Host ""
-  Write-Host "Log saved to: $logFile" -ForegroundColor Gray
+  Write-Info ""
+  Write-Info "Log saved to: $logFile" -ForegroundColor Gray
 }
 
 # Main
@@ -190,3 +191,4 @@ switch ($Action) {
   'run' { Invoke-HealthCheckNow }
   'status' { Get-HealthCheckStatus }
 }
+

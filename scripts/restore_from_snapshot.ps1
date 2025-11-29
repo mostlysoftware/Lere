@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Restore a single file from a snapshot and verify its hash against the snapshot manifest.
 
@@ -50,9 +50,10 @@ try {
 }
 
 if ($h.Hash -ne $entry.Hash) {
-  Write-Host "WARNING: Restored file hash does not match manifest. Manifest: $($entry.Hash) Restored: $($h.Hash)" -ForegroundColor Yellow
+  Write-Info "WARNING: Restored file hash does not match manifest. Manifest: $($entry.Hash) Restored: $($h.Hash)" -ForegroundColor Yellow
   exit 2
 } else {
-  Write-Host "Restored and verified: $dest" -ForegroundColor Green
+  Write-Info "Restored and verified: $dest" -ForegroundColor Green
   exit 0
 }
+
