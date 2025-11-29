@@ -18,6 +18,8 @@ param(
 
 # Use shared logging helpers
 . "$PSScriptRoot\lib\logging.ps1"
+. "$PSScriptRoot\lib\runlog.ps1"
+. "$PSScriptRoot\lib\checksum.ps1"
 
 $root = Resolve-Path -Path "$PSScriptRoot\.." | Select-Object -ExpandProperty Path
 Set-Location -Path $root

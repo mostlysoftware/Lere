@@ -1,6 +1,4 @@
-﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "generate_manifest" -Note "auto-applied" } catch { }
-. $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
+﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
 param(
@@ -76,7 +74,6 @@ foreach ($f in $files) {
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifestFile -Encoding UTF8
 Write-Info $manifestFile
 exit 0
-
 
 
 

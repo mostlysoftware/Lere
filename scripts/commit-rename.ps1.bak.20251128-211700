@@ -1,6 +1,5 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 # Create and commit the chat_context filename normalization on a branch.
 #
 # Usage:
@@ -54,7 +53,6 @@ try {
   Write-Info "Git operation failed: $($_.Exception.Message)" -ForegroundColor Red
   exit 2
 }
-
 
 
 

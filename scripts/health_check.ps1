@@ -56,6 +56,12 @@ $contextDir = Join-Path $root 'chat_context'
 . "$PSScriptRoot\lib\logging.ps1"
 Start-RunLog -Root $root -ScriptName 'health_check' -Note 'Repository health check'
 
+# Dot-source extracted helper libraries (autofix and policy were moved to scripts/lib/)
+$libAutofix = Join-Path $PSScriptRoot 'lib\autofix.ps1'
+if (Test-Path $libAutofix) { . $libAutofix }
+$libPolicy = Join-Path $PSScriptRoot 'lib\policy.ps1'
+if (Test-Path $libPolicy) { . $libPolicy }
+
 # Thresholds - adjust these to tune sensitivity
 $config = @{
   MaxFileSizeKB = 50           # Warn if file exceeds this size
@@ -296,67 +302,10 @@ function Test-UnicodeEncoding {
   }
 }
 
-function Test-ChatContextChangePolicy {
-  param()
-
-  $gitDir = Join-Path $root '.git'
-  if (-not (Test-Path $gitDir)) { return }
-
-  try {
-    Push-Location $root
-    # Prefer origin/main as base if available
-    $base = 'origin/main'
-    try { git rev-parse --verify $base > $null 2>&1 } catch { $base = 'main' }
-
-    $diffNames = git diff --name-only $base..HEAD 2>$null
-    Pop-Location
-  } catch {
-    Add-Finding -Category 'context' -Severity 'warning' -File $root `
-      -Message "Could not determine git diff for chat_context policy: $($_.Exception.Message)" `
-      -Suggestion "Ensure this script runs in a git repo with origin/main fetched before running health_check in CI"
-    return
-  }
-
-  if (-not $diffNames) { return }
-
-  $changed = $diffNames | Where-Object { $_ -like 'chat_context/*' -or $_ -like 'chat_context\\*' }
-  if (-not $changed -or $changed.Count -eq 0) { return }
-
-  # If chat_context/changes exists, use its files as structured rationale docs
-  $changesDir = Join-Path $contextDir 'changes'
-  $changesFiles = @()
-  if (Test-Path $changesDir) { $changesFiles = Get-ChildItem -Path $changesDir -File -ErrorAction SilentlyContinue }
-
-  $changelogPath = Join-Path $contextDir 'changelog-context.md'
-  $changelogText = ''
-  if (Test-Path $changelogPath) { $changelogText = Get-Content -Raw -Path $changelogPath -ErrorAction SilentlyContinue }
-
-  $missing = @()
-  foreach ($f in $changed) {
-    $name = Split-Path $f -Leaf
-    $documented = $false
-    if ($changelogText -and $changelogText -match [regex]::Escape($name)) { $documented = $true }
-    if (-not $documented -and $changesFiles.Count -gt 0) {
-      foreach ($cf in $changesFiles) {
-        $txt = Get-Content -Raw -Path $cf.FullName -ErrorAction SilentlyContinue
-        if ($txt -and $txt -match [regex]::Escape($name)) { $documented = $true; break }
-      }
-    }
-    if (-not $documented) { $missing += $f }
-  }
-
-  if ($missing.Count -gt 0) {
-    $msg = "Detected changes to chat_context files that lack documentation: $($missing -join ', ')"
-    $suggest = "Either add short entries mentioning these files to chat_context/changelog-context.md OR create one or more files under chat_context/changes/ describing the rationale, authors, and reviewer for the change. Use chat_context/changes/CHANGE_TEMPLATE.md as a template."
-    Add-Finding -Category 'context' -Severity 'error' -File $changesDir `
-      -Message $msg `
-      -Suggestion $suggest
-  } else {
-    Add-Finding -Category 'context' -Severity 'info' -File $changesDir `
-      -Message "chat_context changes detected and documented" `
-      -Suggestion "Good: context changes included rationale documentation."
-  }
-  }
+## Chat-context policy checks extracted to scripts/lib/policy.ps1
+## The function `Test-ChatContextChangePolicy` has been moved to that library and
+## is dot-sourced earlier in this script when available. Call that implementation
+## (it accepts an optional -Root parameter) to run the policy checks in CI or locally.
 function Test-ContextTopLevelCount {
   param(
     [string]$Root,
@@ -570,85 +519,9 @@ function Test-SemanticConsoleQuality {
   }
 }
 
-# --- Apply-SemanticConsoleAutoFix ---
-# Perform safe, reversible edits to improve console output semantics:
-#  - Insert dot-source of scripts/lib/logging.ps1 when script uses Write-Info/Write-Warn/Write-Err but doesn't source it
-#  - Add a defensive Start-RunLog call after dot-sourcing for longer scripts
-#  - Replace Write-Info / Write-Info / echo with Write-Info where safe
-# Files are backed up as <file>.bak.<timestamp> before modification.
-function Invoke-SemanticConsoleAutoFix {
-  param([string]$Path)
-
-  $scripts = Get-ChildItem -Path $Path -Recurse -File -Filter '*.ps1' -ErrorAction SilentlyContinue
-  foreach ($s in $scripts) {
-    # Skip library and test folders to avoid fragile changes
-    if ($s.FullName -match '\\lib\\' -or $s.FullName -match '\\tests\\' -or $s.FullName -match '\\test') { continue }
-
-    try {
-      $orig = Get-Content -LiteralPath $s.FullName -Raw -ErrorAction Stop
-    } catch { continue }
-
-    $modified = $orig
-    $changed = $false
-
-    $rel = $s.FullName -replace [regex]::Escape($root), '.'
-
-    # If script uses Write-Info/Write-Warn/Write-Err but doesn't dot-source logging helper, add it at top
-    if ($modified -match 'Write-Info|Write-Warn|Write-Err' -and $modified -notmatch 'lib\\logging\.ps1') {
-      $insert = ". `$PSScriptRoot\\lib\\logging.ps1`n"
-      $modified = $insert + $modified
-      $changed = $true
-      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Auto-fixed: dot-sourced lib/logging.ps1" -Suggestion "Added dot-source for shared logging" -Fixed $true
-    }
-
-    # If script is longer than 80 lines and doesn't call Start-RunLog, add a defensive Start-RunLog call (after dot-source if present)
-    $lineCount = ($modified -split '\r?\n').Count
-    if ($lineCount -gt 80 -and $modified -notmatch 'Start-RunLog\b') {
-      # attempt to insert after the logging dot-source if present, otherwise at top
-  # Build insertion string that references the target script's $PSScriptRoot at runtime (do not expand here)
-  $insertion = 'try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "' + $s.BaseName + '" -Note "auto-applied" } catch { }' + "`n"
-      if ($modified -match 'lib\\logging\.ps1') {
-        try {
-          $pattern = '(?ms)(^.*?lib\\logging\.ps1.*?\r?\n)'
-          $modified = [regex]::Replace($modified, $pattern, { param($m) return $m.Value + $insertion })
-        } catch {
-          # fall back to prefixing if replace fails
-          $modified = $insertion + $modified
-        }
-      } else {
-        $modified = $insertion + $modified
-      }
-      $changed = $true
-      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Auto-fixed: added Start-RunLog" -Suggestion "Start-RunLog improves traceability" -Fixed $true
-    }
-
-    # Replace Write-Info with Write-Info (best-effort). Keep arguments intact.
-    if ($modified -match '\bWrite-Host\b') {
-      $modified = $modified -replace '\bWrite-Host\b','Write-Info'
-      $changed = $true
-      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Auto-fixed: replaced Write-Info -> Write-Info" -Fixed $true
-    }
-
-    # Replace Write-Info / echo with Write-Info
-    if ($modified -match '\bWrite-Output\b' -or $modified -match '^\s*echo\s') {
-      $modified = $modified -replace '\bWrite-Output\b','Write-Info'
-      $modified = $modified -replace '(^\s*)echo\s', '$1Write-Info '
-      $changed = $true
-      Add-Finding -Category 'console' -Severity 'info' -File $rel -Message "Auto-fixed: replaced Write-Info/echo -> Write-Info" -Fixed $true
-    }
-
-    if ($changed) {
-      try {
-        $bak = "$($s.FullName).bak.$((Get-Date).ToString('yyyyMMdd-HHmmss'))"
-        Copy-Item -LiteralPath $s.FullName -Destination $bak -Force
-        Set-Content -LiteralPath $s.FullName -Value $modified -Encoding UTF8 -Force
-        Write-Info "Auto-fixed file: $($s.FullName) (backup: $bak)"
-      } catch {
-        Add-Finding -Category 'console' -Severity 'warning' -File $rel -Message "Auto-fix failed: $($_.Exception.Message)" -Suggestion "Manual review required"
-      }
-    }
-  }
-}
+## Auto-fix implementation moved to scripts/lib/autofix.ps1
+## The function `Invoke-SemanticConsoleAutoFix` is now provided by that library and
+## is dot-sourced earlier in this script when available.
 
 
 # --- Test-DuplicateContent ---

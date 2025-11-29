@@ -1,0 +1,39 @@
+{
+  "scannedAt": "2025-11-28T00:00:00Z",
+  "components": {
+    "RunLog/Logging": {
+      "lib": "scripts/lib/logging.ps1",
+      "exportedFunctions": ["Start-RunLog","Save-RunLogToSummaries","Write-Info","Write-Warn","Write-Error"],
+      "callSites": [
+        "scripts/dev-run.ps1",
+        "scripts/setup_gradle_wrapper.ps1",
+        "scripts/audit.ps1",
+        "scripts/prune_questions.ps1",
+        "scripts/normalize-line-endings.ps1",
+        "scripts/dev_setup.ps1",
+        "scripts/first_time_setup.ps1",
+        "scripts/health_check.ps1",
+        "tools/run_prune.ps1",
+        "tests/restore_snapshot.tests.ps1"
+      ]
+    },
+    "Checksum": {
+      "lib": "scripts/lib/Verify-FileChecksum.ps1",
+      "exportedFunctions": ["Verify-FileChecksum"],
+      "callSites": ["scripts/dev_setup.ps1","scripts/tests/test_verify_checksum.ps1"]
+    },
+    "JdkInstallerLogic": {
+      "currentLocation": "scripts/dev_setup.ps1 (function: Install-TemurinJdk)",
+      "callSites": ["scripts/dev_setup.ps1","scripts/first_time_setup.ps1",".dev/run_dev_setup_with_jdk.ps1","scripts/check_build_env.ps1"]
+    },
+    "AutoFixFramework": {
+      "currentLocation": "scripts/health_check.ps1 (Invoke-SemanticConsoleAutoFix and autoFixEnabled handling)",
+      "callSites": ["scripts/health_check.ps1","scripts/audit.ps1"]
+    },
+    "ChatContextPolicy": {
+      "currentLocation": "scripts/health_check.ps1 (function: Test-ChatContextChangePolicy)",
+      "callSites": ["scripts/health_check.ps1","scripts/first_time_setup.ps1 (reports)"]
+    }
+  },
+  "notes": "RunLog/Logging and Verify-FileChecksum are already implemented under scripts/lib. JDK installer logic and AutoFix/Policy live inside scripts/dev_setup.ps1 and scripts/health_check.ps1 respectively and would benefit from extraction to scripts/lib/*.ps1. Many callers reference logging helpers directly; refactor should provide compatibility shims or update all callers and keep backups."
+}

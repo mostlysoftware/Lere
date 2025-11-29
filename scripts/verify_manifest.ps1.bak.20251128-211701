@@ -1,6 +1,5 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 param(
   [string]$ManifestPath
 )
@@ -37,7 +36,6 @@ if ($errors.Count -gt 0) {
   Write-Info "Manifest verified OK: $ManifestPath" -ForegroundColor Green
   exit 0
 }
-
 
 
 

@@ -1,6 +1,5 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 param(
   [string]$ContextDir = "chat_context",
   [string[]]$Files = @('ATTACHMENTS.md','knowledge-compartmentalization.md'),
@@ -49,7 +48,6 @@ try {
 finally {
   Pop-Location
 }
-
 
 
 

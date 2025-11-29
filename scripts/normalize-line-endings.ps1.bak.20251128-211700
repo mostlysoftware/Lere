@@ -1,6 +1,5 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 <#
 Normalize line endings to CRLF for a set of files or patterns.
 Usage:
@@ -34,7 +33,6 @@ if ($targets.Count -eq 0) { Write-Info "No files specified. Use -Paths or -Glob.
 foreach ($t in $targets) {
   if (Test-Path $t) { Fix-FileEol $t } else { Write-Info "Not found: $t" -ForegroundColor Yellow }
 }
-
 
 
 

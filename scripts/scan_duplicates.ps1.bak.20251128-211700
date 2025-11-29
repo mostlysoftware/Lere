@@ -1,6 +1,5 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "scan_duplicates" -Note "auto-applied" } catch { }
 . $PSScriptRoot\\lib\\logging.ps1
 <#
@@ -89,7 +88,6 @@ if ($dups -and $dups.Count -gt 0) {
 }
 
 Write-Info "Duplicate scanner finished." -ForegroundColor Cyan
-
 
 
 
