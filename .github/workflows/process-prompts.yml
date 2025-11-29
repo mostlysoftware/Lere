@@ -1,0 +1,190 @@
+name: Process pending prompts
+
+on:
+  push:
+    paths:
+      - 'chat_context/pending_prompts.json'
+      - 'chat_context/pending_prompts.md'
+  schedule:
+    - cron: '0 9 * * *' # daily at 09:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  process-prompts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Import prompts from MD, create issues, and open PR to mark processed
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const repo = context.repo;
+
+            function nowTag() {
+              return new Date().toISOString().replace(/[:.]/g, '-');
+            }
+
+            // Read MD and extract human prompts section, supporting bullets and multi-line paragraphs
+            const mdPath = 'chat_context/pending_prompts.md';
+            let mdPrompts = [];
+            if (fs.existsSync(mdPath)) {
+              const md = fs.readFileSync(mdPath, 'utf8');
+              const lines = md.split(/\r?\n/);
+              let inHuman = false;
+              let paragraph = [];
+              for (let rawLine of lines) {
+                let line = rawLine.replace(/^>\s?/, '').replace(/\u00A0/g, ' '); // strip blockquote markers and NBSP
+                const t = line.trim();
+                if (!inHuman) {
+                  if (/^##\s*Human Prompts/i.test(t)) { inHuman = true; }
+                  continue;
+                }
+                // Stop if we hit another top-level header after Human Prompts
+                if (/^##\s+/.test(t)) break;
+
+                // ignore standard sub-headings and empty spacer lines trigger paragraph boundaries
+                if (!t) {
+                  if (paragraph.length > 0) {
+                    mdPrompts.push(paragraph.join(' ').trim());
+                    paragraph = [];
+                  }
+                  continue;
+                }
+
+                // strip bullet list markers (-, *, or numbered lists)
+                const bulletStripped = t.replace(/^([-*+]\s+|\d+\.\s+)/, '').trim();
+
+                // accept the cleaned line as part of the current paragraph
+                paragraph.push(bulletStripped);
+              }
+              if (paragraph.length > 0) mdPrompts.push(paragraph.join(' ').trim());
+            }
+
+            const jsonPath = 'chat_context/pending_prompts.json';
+            let jsonPrompts = [];
+            if (fs.existsSync(jsonPath)) {
+              try {
+                const raw = fs.readFileSync(jsonPath, 'utf8') || '[]';
+                const parsed = JSON.parse(raw);
+                // support legacy string-array format by converting to normalized prompt-queue objects
+                if (Array.isArray(parsed)) {
+                  jsonPrompts = parsed.map(p => {
+                    if (typeof p === 'string') {
+                      // try to extract a leading tag like '#idea: text'
+                      const m = p.match(/^#(idea|bug|question|task)\s*[:\-]?\s*(.*)/i);
+                      const tag = m ? m[1].toLowerCase() : 'uncategorized';
+                      const text = m ? m[2].trim() : p.trim();
+                      return { id: null, prompt: text, tag: tag, source: 'imported', created_at: new Date().toISOString(), author: 'imported', processed: false };
+                    }
+                    if (p && typeof p === 'object') {
+                      // if already new-shape, pass through
+                      if (p.prompt) return p;
+                      // if legacy object with 'text', normalize it
+                      if (p.prompt || p.text) {
+                        const rawText = (p.prompt || p.text || '');
+                        const m = (rawText || '').match(/^#(idea|bug|question|task)\s*[:\-]?\s*(.*)/i);
+                        const tag = p.tag || (m ? m[1].toLowerCase() : 'uncategorized');
+                        const text = m ? m[2].trim() : rawText;
+                        return { id: p.id || null, prompt: text, tag: tag, source: p.source || 'imported', created_at: p.created_at || p.added_at || new Date().toISOString(), author: p.author || 'imported', processed: p.processed || false };
+                      }
+                    }
+                    return null;
+                  }).filter(Boolean);
+                }
+              } catch (e) { core.setFailed(`Failed to parse ${jsonPath}: ${e.message}`); return; }
+            }
+
+            // Normalize MD prompts into structured objects: support optional tag at start like '#idea:'
+            function parseTagAndText(raw) {
+              const m = raw.match(/^#(idea|bug|question|task)\s*[:\-]?\s*(.*)/i);
+              if (m) return { tag: m[1].toLowerCase(), text: m[2].trim() };
+              // also accept patterns like 'idea: ...' without leading '#'
+              const m2 = raw.match(/^(idea|bug|question|task)\s*[:\-]?\s*(.*)/i);
+              if (m2) return { tag: m2[1].toLowerCase(), text: m2[2].trim() };
+              return { tag: 'uncategorized', text: raw.trim() };
+            }
+
+            const now = new Date().toISOString();
+            const mdObjects = mdPrompts.map(raw => {
+              const parsed = parseTagAndText(raw);
+              return { id: null, prompt: parsed.text, tag: parsed.tag, source: 'md', created_at: now, author: 'imported', processed: false };
+            });
+
+            // Merge MD prompts into JSON (if any new), create a PR for import of structured objects
+            const existingTexts = new Set(jsonPrompts.map(p => (p.prompt || p.text || '').trim()));
+            const newFromMdObjects = mdObjects.filter(o => o.prompt && !existingTexts.has(o.prompt));
+            const defaultBranch = (await github.rest.repos.get({ owner: repo.owner, repo: repo.repo })).data.default_branch;
+
+            if (newFromMdObjects.length > 0) {
+              const branchName = `auto/import-prompts-${nowTag()}`;
+              const baseRef = await github.rest.git.getRef({ owner: repo.owner, repo: repo.repo, ref: `heads/${defaultBranch}` });
+              await github.rest.git.createRef({ owner: repo.owner, repo: repo.repo, ref: `refs/heads/${branchName}`, sha: baseRef.data.object.sha });
+
+              // merged by prompt text (prefer existing entries)
+              const merged = Array.from(new Map([...jsonPrompts.map(p=>[(p.prompt||p.text||'').trim(),p]), ...newFromMdObjects.map(p=>[p.prompt.trim(),p])]).values());
+              const content = Buffer.from(JSON.stringify(merged, null, 2)).toString('base64');
+              await github.rest.repos.createOrUpdateFileContents({ owner: repo.owner, repo: repo.repo, path: jsonPath, message: 'Import prompts from MD', content, branch: branchName });
+
+              await github.rest.pulls.create({ owner: repo.owner, repo: repo.repo, title: 'Import pending prompts from MD', head: branchName, base: defaultBranch, body: `Automated import of ${newFromMdObjects.length} prompts from \\`${mdPath}\\`.` });
+              core.info(`Opened PR to import ${newFromMdObjects.length} prompts from MD.`);
+              // Update in-memory jsonPrompts to include merged values for processing
+              jsonPrompts = merged;
+            }
+
+            // Fetch recent open issues labeled 'prompt' to avoid duplicates
+            const existingIssues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: repo.owner,
+              repo: repo.repo,
+              state: 'open',
+              labels: 'prompt',
+              per_page: 100
+            });
+
+            function alreadyHasIssue(promptText) {
+              return existingIssues.some(i => i.body && i.body.includes(promptText));
+            }
+
+            const processedIds = [];
+            const processedTexts = [];
+            for (const p of jsonPrompts) {
+              const promptText = String(p.prompt || p.text || p).trim();
+              if (!promptText) continue;
+              if (alreadyHasIssue(promptText)) { core.info('Skipping (already has issue): ' + promptText.slice(0, 80)); continue; }
+
+              const title = promptText.length > 72 ? promptText.slice(0, 69) + '...' : promptText;
+              const body = `Prompt from \`chat_context/pending_prompts.json\`:\n\n${promptText}\n\n---\nAutomated: created by Process pending prompts workflow.`;
+
+              const labels = ['prompt','automation'];
+              const tag = (p.tag || '').toLowerCase();
+              if (tag && tag !== 'uncategorized') labels.push(tag);
+
+              await github.rest.issues.create({ owner: repo.owner, repo: repo.repo, title: `[prompt] ${title}`, body, labels });
+              core.info('Created issue for prompt: ' + title);
+              if (p.id) processedIds.push(p.id);
+              processedTexts.push(promptText);
+            }
+
+            // If we processed any prompts (created issues), open a PR that removes them from JSON so a human can review the cleanup
+            if (processed.length > 0) {
+              const remaining = jsonPrompts.filter(p => {
+                const idOk = p.id && processedIds.includes(p.id);
+                const text = (p.prompt || p.text || '').trim();
+                const textOk = text && processedTexts.includes(text);
+                return !(idOk || textOk);
+              });
+              const branchName = `auto/mark-processed-prompts-${nowTag()}`;
+              const baseRef = await github.rest.git.getRef({ owner: repo.owner, repo: repo.repo, ref: `heads/${defaultBranch}` });
+              await github.rest.git.createRef({ owner: repo.owner, repo: repo.repo, ref: `refs/heads/${branchName}`, sha: baseRef.data.object.sha });
+
+              const content = Buffer.from(JSON.stringify(remaining, null, 2)).toString('base64');
+              await github.rest.repos.createOrUpdateFileContents({ owner: repo.owner, repo: repo.repo, path: jsonPath, message: 'Mark processed prompts (remove after creating issues)', content, branch: branchName });
+
+              await github.rest.pulls.create({ owner: repo.owner, repo: repo.repo, title: 'Mark prompts processed (remove from pending list)', head: branchName, base: defaultBranch, body: `Automated PR removing ${processed.length} processed prompts after issue creation.` });
+              core.info(`Opened PR to remove ${processed.length} processed prompts.`);
+            } else {
+              core.info('No prompts were processed (no new issues created).');
+            }
