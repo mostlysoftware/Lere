@@ -1,7 +1,6 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 <#
 .SYNOPSIS
   Helper to push the current branch to origin. Intended for use by local git hooks.
@@ -34,7 +33,6 @@ try {
   Pop-Location
   exit 2
 }
-
 
 
 

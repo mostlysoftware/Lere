@@ -1,7 +1,6 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "schedule_health_check" -Note "auto-applied" } catch { }
 <#
 .SYNOPSIS
@@ -195,7 +194,6 @@ switch ($Action) {
   'run' { Invoke-HealthCheckNow }
   'status' { Get-HealthCheckStatus }
 }
-
 
 
 

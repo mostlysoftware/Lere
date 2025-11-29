@@ -1,7 +1,6 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
 . $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 <#
 .SYNOPSIS
 Restore a single file from a snapshot and verify its hash against the snapshot manifest.
@@ -60,7 +59,6 @@ if ($h.Hash -ne $entry.Hash) {
   Write-Info "Restored and verified: $dest" -ForegroundColor Green
   exit 0
 }
-
 
 
 
