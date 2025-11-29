@@ -1,5 +1,4 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 param(
   [string]$Root = "$PSScriptRoot\..",
   [string]$OutDir = "$PSScriptRoot\audit-data\manifests"
@@ -73,5 +72,4 @@ foreach ($f in $files) {
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifestFile -Encoding UTF8
 Write-Info $manifestFile
 exit 0
-
 

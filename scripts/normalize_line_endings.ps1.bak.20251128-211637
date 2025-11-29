@@ -1,5 +1,4 @@
-﻿. $PSScriptRoot\\lib\\logging.ps1
-Param(
+﻿Param(
     [string]$Root = "./chat_context"
 )
 
@@ -22,5 +21,4 @@ foreach ($f in $files) {
     Set-Content -Encoding UTF8 -Force -Value $normalized $path
     Write-Info "Normalized: $path"
 }
-
 

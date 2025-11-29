@@ -1,5 +1,4 @@
-﻿. $PSScriptRoot\\lib\\logging.ps1
-<#
+﻿<#
 Simple helper to check for Java and Gradle in PATH and provide guidance to the developer.
 Usage: PowerShell: .\scripts\check_build_env.ps1
 #>
@@ -48,5 +47,4 @@ Write-Info "  .\gradlew.bat -p plugins\lere_core build # on Windows" -Foreground
 Write-Info "I also added a CI workflow (.github/workflows/build-plugins.yml) that will attempt these builds on GitHub Actions (Java 17 + Gradle)." -ForegroundColor Cyan
 
 exit 0
-
 

@@ -1,5 +1,4 @@
-﻿. $PSScriptRoot\\lib\\logging.ps1
-try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "schedule_health_check" -Note "auto-applied" } catch { }
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "schedule_health_check" -Note "auto-applied" } catch { }
 <#
 .SYNOPSIS
   Set up Windows Task Scheduler to run health checks at regular intervals.
@@ -192,5 +191,4 @@ switch ($Action) {
   'run' { Invoke-HealthCheckNow }
   'status' { Get-HealthCheckStatus }
 }
-
 

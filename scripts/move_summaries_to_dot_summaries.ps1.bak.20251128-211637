@@ -1,5 +1,4 @@
-﻿. $PSScriptRoot\\lib\\logging.ps1
-Param(
+﻿Param(
     [string]$Root = 'chat_context'
 )
 
@@ -15,5 +14,4 @@ foreach ($f in $files) {
     git mv -f -- "$($f.FullName)" "$dest" | Out-Null
     Write-Info "Moved: $($f.FullName) -> $dest"
 }
-
 

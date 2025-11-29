@@ -1,5 +1,4 @@
-﻿. $PSScriptRoot\\lib\\logging.ps1
-try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "create_snapshot" -Note "auto-applied" } catch { }
+﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "create_snapshot" -Note "auto-applied" } catch { }
 <#
 .SYNOPSIS
 Create a timestamped snapshot of important repo data (audit-data and chat_context).
@@ -138,5 +137,4 @@ if ($RetentionDays -gt 0) {
 }
 
 exit 0
-
 

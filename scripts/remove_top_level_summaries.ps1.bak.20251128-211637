@@ -1,5 +1,4 @@
-﻿. $PSScriptRoot\\lib\\logging.ps1
-param(
+﻿param(
     [string]$ContextDir = "chat_context"
 )
 $ErrorActionPreference = 'Stop'
@@ -25,5 +24,4 @@ if (-not [string]::IsNullOrWhiteSpace($pending)) {
 } else {
     Write-Info 'No changes to commit.'
 }
-
 
