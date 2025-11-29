@@ -1,6 +1,4 @@
-﻿try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "import_prompts_from_md" -Note "auto-applied" } catch { }
-. $PSScriptRoot\\lib\\logging.ps1
-<#
+﻿<#
 .SYNOPSIS
 Imports prompts from a markdown file into the canonical queue, using a conservative rule: only lines that start with a blockquote `> ` are imported.
 
@@ -26,6 +24,10 @@ param(
     [string]$AuditDir = "chat_context/.summaries",
     [switch]$Force = $false
 )
+
+# Load logging helpers and start run log
+. $PSScriptRoot\..\lib\logging.ps1
+try { Start-RunLog -Root (Resolve-Path -Path "$PSScriptRoot\.." | Select-Object -ExpandProperty Path) -ScriptName "import_prompts_from_md" -Note "auto-applied" } catch { }
 
 # If DryRun not explicitly provided, consult repository preferences (if available)
 if (-not $PSBoundParameters.ContainsKey('DryRun')) {
@@ -178,4 +180,5 @@ if (Get-Command -Name Add-PromptToQueue -ErrorAction SilentlyContinue) {
         exit 4
     }
 }
+
 
