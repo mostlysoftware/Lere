@@ -1,0 +1,46 @@
+﻿[
+    {
+        "prompt":  "let\u0027s run a full audit â€” with the results, identify pain points and implement appropriate fixes; consider adding hooks where LLM input would be useful.",
+        "id":  "a1b2c3d4e5f60123456789abcdef0001",
+        "tag":  "idea",
+        "author":  "imported",
+        "created_at":  "2025-11-29T00:00:00.000Z",
+        "processed":  false,
+        "processed_at":  null,
+        "note":  "",
+        "source":  "md"
+    },
+    {
+        "prompt":  "identify areas that would benefit from more robust automatic error checking (CI, runtime assertions, monitoring).",
+        "id":  "a1b2c3d4e5f60123456789abcdef0002",
+        "tag":  "idea",
+        "author":  "imported",
+        "created_at":  "2025-11-29T00:00:00.000Z",
+        "processed":  false,
+        "processed_at":  null,
+        "note":  "",
+        "source":  "md"
+    },
+    {
+        "prompt":  "refine conflict-resolution: when comparing conflicting directives/merges, accept the newer change only if it advances project goals and doesn\u0027t introduce regressions; otherwise reject and emit a non-blocking warning.",
+        "id":  "a1b2c3d4e5f60123456789abcdef0003",
+        "tag":  "idea",
+        "author":  "imported",
+        "created_at":  "2025-11-29T00:00:00.000Z",
+        "processed":  false,
+        "processed_at":  null,
+        "note":  "",
+        "source":  "md"
+    },
+    {
+        "prompt":  "add prompt-formatting-check to the audit â€” ensure prompts in `chat_context/pending_prompts.md` are import-ready (one-per-line, tag present).",
+        "id":  "a1b2c3d4e5f60123456789abcdef0004",
+        "tag":  "idea",
+        "author":  "imported",
+        "created_at":  "2025-11-29T00:00:00.000Z",
+        "processed":  false,
+        "processed_at":  null,
+        "note":  "",
+        "source":  "md"
+    }
+]
