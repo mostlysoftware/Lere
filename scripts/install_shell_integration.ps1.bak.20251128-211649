@@ -1,5 +1,4 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 <#!
 Installs shell integration for the Lere repo by adding the LereTools module to the user's PowerShell profile.
 - Adds Import-Module line for scripts/shell/LereTools.psm1
@@ -32,6 +31,5 @@ if ($null -eq $current -or $current -notmatch [regex]::Escape($modulePath)) {
 # Import now for current session
 Import-Module $modulePath -Force
 Write-Info "Lere shell integration installed. Try: 'hc -Scope context' or 'offload -Push'" -ForegroundColor Cyan
-
 
 

@@ -1,5 +1,4 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "prune_questions" -Note "auto-applied" } catch { }
 . $PSScriptRoot\\lib\\logging.ps1
 <#
@@ -176,6 +175,5 @@ Write-Info "  Deferred: $($deferred.Count)" -ForegroundColor Gray
 Write-Info "  Resolved (kept): $KeepResolved" -ForegroundColor Green
 
 exit 0
-
 
 

@@ -1,5 +1,4 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "fix_session_priorities" -Note "auto-applied" } catch { }
 . $PSScriptRoot\\lib\\logging.ps1
 <#
@@ -101,6 +100,5 @@ Write-Info "Re-running audit..." -ForegroundColor Cyan
 powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'scripts\audit.ps1')
 
 exit 0
-
 
 

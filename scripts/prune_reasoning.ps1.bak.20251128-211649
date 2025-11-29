@@ -1,5 +1,4 @@
 ﻿. $PSScriptRoot\\lib\\logging.ps1
-. $PSScriptRoot\\lib\\logging.ps1
 try { Start-RunLog -Root (Resolve-Path -Path ""$PSScriptRoot\.."" | Select-Object -ExpandProperty Path) -ScriptName "prune_reasoning" -Note "auto-applied" } catch { }
 . $PSScriptRoot\\lib\\logging.ps1
 <#
@@ -232,6 +231,5 @@ Write-Info "Pruned $($toArchive.Count) reasoning threads; kept $($toKeep.Count) 
 Compact-Archives -ArchiveDir $archiveDir -Pattern 'reasoning-archive-*.md' -Keep 10 -Description 'reasoning archives'
 
 exit 0
-
 
 
