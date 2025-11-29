@@ -79,17 +79,28 @@ $lines = Get-Content -LiteralPath $mdPath -ErrorAction Stop
 $results = @()
 for ($i = 0; $i -lt $lines.Count; $i++) {
     $ln = $lines[$i]
+    # Accept either blockquote-style prompts ("> some text") or
+    # tag-prefixed prompts that start with #idea, #bug, #question, or #task
     if ($ln -match '^[ \t]*>\s*(.+)$') {
         $text = $Matches[1].Trim()
-        if ($text -ne '') {
-            $results += [PSCustomObject]@{
-                id = [guid]::NewGuid().ToString()
-                text = $text
-                source = (Split-Path -Path $mdPath -NoQualifier)
-                line = $i + 1
-                importedOn = (Get-Date).ToString('o')
-            }
+        $tag = $null
+    } elseif ($ln -match '^[ \t]*#(?<tag>idea|bug|question|task)(?:\[(?<prio>\d+)\])?:\s*(?<text>.+)$') {
+        $text = $Matches['text'].Trim()
+        $tag = $Matches['tag'].ToLower()
+    } else {
+        continue
+    }
+
+    if ($text -and $text -ne '') {
+        $entry = [PSCustomObject]@{
+            id = [guid]::NewGuid().ToString()
+            text = $text
+            source = (Split-Path -Path $mdPath -NoQualifier)
+            line = $i + 1
+            importedOn = (Get-Date).ToString('o')
         }
+        if ($tag) { $entry | Add-Member -MemberType NoteProperty -Name tag -Value $tag }
+        $results += $entry
     }
 }
 
